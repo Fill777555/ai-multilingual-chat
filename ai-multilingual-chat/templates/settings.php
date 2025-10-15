@@ -8,6 +8,9 @@ $enable_translation = get_option('aic_enable_translation', '1');
 $mobile_api_key = get_option('aic_mobile_api_key', '');
 $widget_position = get_option('aic_chat_widget_position', 'bottom-right');
 $widget_color = get_option('aic_chat_widget_color', '#667eea');
+$enable_emoji = get_option('aic_enable_emoji_picker', '1');
+$enable_dark_theme = get_option('aic_enable_dark_theme', '0');
+$enable_sound = get_option('aic_enable_sound_notifications', '1');
 ?>
 
 <div class="wrap">
@@ -133,6 +136,54 @@ $widget_color = get_option('aic_chat_widget_color', '#667eea');
                            id="aic_chat_widget_color" 
                            value="<?php echo esc_attr($widget_color); ?>">
                     <p class="description">Основной цвет кнопки и элементов чата</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_enable_emoji_picker">Emoji picker</label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox" 
+                               name="aic_enable_emoji_picker" 
+                               id="aic_enable_emoji_picker" 
+                               value="1" 
+                               <?php checked($enable_emoji, '1'); ?>>
+                        Включить выбор эмодзи в чате
+                    </label>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_enable_dark_theme">Темная тема</label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox" 
+                               name="aic_enable_dark_theme" 
+                               id="aic_enable_dark_theme" 
+                               value="1" 
+                               <?php checked($enable_dark_theme, '1'); ?>>
+                        Включить темную тему для чата
+                    </label>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_enable_sound_notifications">Звуковые уведомления</label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox" 
+                               name="aic_enable_sound_notifications" 
+                               id="aic_enable_sound_notifications" 
+                               value="1" 
+                               <?php checked($enable_sound, '1'); ?>>
+                        Включить звуковые уведомления в админке
+                    </label>
                 </td>
             </tr>
         </table>

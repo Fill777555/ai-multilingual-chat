@@ -65,6 +65,28 @@ jQuery(document).ready(function($) {
             $('#aic-message-input').on('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
+                
+                // Send typing indicator
+                clearTimeout(self.typingTimer);
+                self.sendTypingStatus(true);
+                self.typingTimer = setTimeout(function() {
+                    self.sendTypingStatus(false);
+                }, 1000);
+            });
+        },
+
+        sendTypingStatus: function(isTyping) {
+            if (!this.conversationId) return;
+            
+            $.ajax({
+                url: aicFrontend.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'aic_user_typing',
+                    nonce: aicFrontend.nonce,
+                    conversation_id: this.conversationId,
+                    is_typing: isTyping ? 1 : 0
+                }
             });
         },
 
