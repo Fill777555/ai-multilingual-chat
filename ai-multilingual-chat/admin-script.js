@@ -134,6 +134,15 @@ jQuery(document).ready(function($) {
         renderMessages: function(messages) {
             const container = $('#aic-current-chat');
             
+            // Check if input field is currently focused (user is typing)
+            const inputIsFocused = $('#aic_admin_message_input').is(':focus');
+            
+            // If input is focused, skip the update to avoid interrupting user typing
+            if (inputIsFocused) {
+                console.log('Input field is focused, skipping HTML update to preserve user typing');
+                return;
+            }
+            
             // Save current input value before rewriting HTML
             const currentInputValue = $('#aic_admin_message_input').val() || '';
             
