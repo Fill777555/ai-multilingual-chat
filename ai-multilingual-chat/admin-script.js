@@ -86,11 +86,18 @@ jQuery(document).ready(function($) {
             }
         },
 
-        loadConversations: function() {
+        loadConversations: function(retryCount) {
             const self = this;
+            retryCount = retryCount || 0;
             
-            console.log('loadConversations called');
+            console.log('loadConversations called (attempt ' + (retryCount + 1) + ')');
             console.log('aicAdmin object:', aicAdmin);
+            
+            // Verify DOM element exists
+            if (!$('#aic-conversations').length) {
+                console.error('ERROR: #aic-conversations element not found in DOM');
+                return;
+            }
             
             // Show loading indicator
             $('#aic-conversations').html('<div style="text-align: center; padding: 20px; color: #666;"><span class="dashicons dashicons-update" style="animation: rotation 2s infinite linear; font-size: 24px;"></span><p>Загрузка диалогов...</p></div>');
@@ -127,7 +134,16 @@ jQuery(document).ready(function($) {
                     console.error('Ошибка загрузки диалогов:', error);
                     console.error('XHR:', xhr);
                     console.error('Status:', status);
-                    $('#aic-conversations').html('<p style="color: #d32f2f; padding: 15px;">Ошибка загрузки диалогов. Проверьте консоль для деталей.</p>');
+                    
+                    // Retry up to 2 times
+                    if (retryCount < 2) {
+                        console.log('Retrying in 2 seconds...');
+                        setTimeout(function() {
+                            self.loadConversations(retryCount + 1);
+                        }, 2000);
+                    } else {
+                        $('#aic-conversations').html('<div style="padding: 15px; background: #ffebee; border: 1px solid #f44336; border-radius: 4px;"><strong>❌ Ошибка загрузки диалогов</strong><p style="margin: 10px 0 0 0;">Не удалось загрузить список диалогов после нескольких попыток. Попробуйте:</p><ul style="margin: 10px 0; padding-left: 20px;"><li>Обновить страницу (F5)</li><li>Очистить кэш браузера (Ctrl+Shift+Delete)</li><li>Проверить консоль браузера (F12) для деталей</li></ul><button onclick="location.reload()" class="button button-primary">🔄 Обновить страницу</button></div>');
+                    }
                 }
             });
         },
@@ -178,11 +194,18 @@ jQuery(document).ready(function($) {
             container.html(html);
         },
 
-        loadConversation: function(conversationId) {
+        loadConversation: function(conversationId, retryCount) {
             const self = this;
+            retryCount = retryCount || 0;
             this.currentConversationId = conversationId;
             
-            console.log('Loading conversation:', conversationId);
+            console.log('Loading conversation:', conversationId, '(attempt ' + (retryCount + 1) + ')');
+            
+            // Verify DOM element exists
+            if (!$('#aic-current-chat').length) {
+                console.error('ERROR: #aic-current-chat element not found in DOM');
+                return;
+            }
 
             // Обновить активный класс
             $('.aic-conversation-item').removeClass('active');
@@ -211,7 +234,16 @@ jQuery(document).ready(function($) {
                     console.error('Ошибка загрузки сообщений:', error);
                     console.error('XHR:', xhr);
                     console.error('Status:', status);
-                    $('#aic-current-chat').html('<p style="color: #d32f2f; padding: 15px;">Ошибка загрузки сообщений. Проверьте консоль для деталей.</p>');
+                    
+                    // Retry up to 2 times
+                    if (retryCount < 2) {
+                        console.log('Retrying in 2 seconds...');
+                        setTimeout(function() {
+                            self.loadConversation(conversationId, retryCount + 1);
+                        }, 2000);
+                    } else {
+                        $('#aic-current-chat').html('<div style="padding: 15px; background: #ffebee; border: 1px solid #f44336; border-radius: 4px;"><strong>❌ Ошибка загрузки сообщений</strong><p style="margin: 10px 0 0 0;">Не удалось загрузить сообщения после нескольких попыток.</p><button onclick="location.reload()" class="button button-primary" style="margin-top: 10px;">🔄 Обновить страницу</button></div>');
+                    }
                 }
             });
         },
@@ -238,66 +270,75 @@ jQuery(document).ready(function($) {
             // Save current input value before rewriting HTML
             const currentInputValue = $('#aic_admin_message_input').val() || '';
             
-            let html = '<div style="padding: 20px; max-height: 500px; overflow-y: auto; background: #f8f9fa;" id="aic_messages_container">';
+            let html = '';
             
-            if (!messages || messages.length === 0) {
-                html += `
-                    <div style="text-align: center; padding: 50px 20px; color: #666;">
-                        <span class="dashicons dashicons-format-chat" style="font-size: 48px; width: 48px; height: 48px; color: #ccc;"></span>
-                        <h3>Нет сообщений</h3>
-                        <p>Начните диалог с клиентом</p>
-                    </div>
-                `;
-            } else {
-                messages.forEach(function(msg) {
-                    const isAdmin = msg.sender_type === 'admin';
-                    const alignClass = isAdmin ? 'flex-end' : 'flex-start';
-                    const bgColor = isAdmin ? '#667eea' : '#fff';
-                    const textColor = isAdmin ? '#fff' : '#333';
-                    const time = new Date(msg.created_at).toLocaleTimeString('ru-RU', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
+            try {
+                html = '<div style="padding: 20px; max-height: 500px; overflow-y: auto; background: #f8f9fa;" id="aic_messages_container">';
+            
+                if (!messages || messages.length === 0) {
+                    html += `
+                        <div style="text-align: center; padding: 50px 20px; color: #666;">
+                            <span class="dashicons dashicons-format-chat" style="font-size: 48px; width: 48px; height: 48px; color: #ccc;"></span>
+                            <h3>Нет сообщений</h3>
+                            <p>Начните диалог с клиентом</p>
+                        </div>
+                    `;
+                } else {
+                    messages.forEach(function(msg) {
+                        const isAdmin = msg.sender_type === 'admin';
+                        const alignClass = isAdmin ? 'flex-end' : 'flex-start';
+                        const bgColor = isAdmin ? '#667eea' : '#fff';
+                        const textColor = isAdmin ? '#fff' : '#333';
+                        const time = new Date(msg.created_at).toLocaleTimeString('ru-RU', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        });
+
+                        // Show translated text to admin if available, otherwise show original
+                        const displayText = (!isAdmin && msg.translated_text) ? msg.translated_text : msg.message_text;
+                        const hasTranslation = (!isAdmin && msg.translated_text);
+
+                        html += `
+                            <div style="display: flex; justify-content: ${alignClass}; margin-bottom: 15px;">
+                                <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: ${bgColor}; color: ${textColor}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                    ${adminChat.escapeHtml(displayText)}
+                                    ${hasTranslation ? '<div style="font-size: 10px; margin-top: 5px; opacity: 0.6; font-style: italic;">📝 Оригинал: ' + adminChat.escapeHtml(msg.message_text) + '</div>' : ''}
+                                    <div style="font-size: 11px; margin-top: 5px; opacity: 0.7;">${time}</div>
+                                </div>
+                            </div>
+                        `;
                     });
-
-                    // Show translated text to admin if available, otherwise show original
-                    const displayText = (!isAdmin && msg.translated_text) ? msg.translated_text : msg.message_text;
-                    const hasTranslation = (!isAdmin && msg.translated_text);
-
-                    html += `
-                        <div style="display: flex; justify-content: ${alignClass}; margin-bottom: 15px;">
-                            <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: ${bgColor}; color: ${textColor}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-                                ${adminChat.escapeHtml(displayText)}
-                                ${hasTranslation ? '<div style="font-size: 10px; margin-top: 5px; opacity: 0.6; font-style: italic;">📝 Оригинал: ' + adminChat.escapeHtml(msg.message_text) + '</div>' : ''}
-                                <div style="font-size: 11px; margin-top: 5px; opacity: 0.7;">${time}</div>
+                }
+            
+                // Show typing indicator if user is typing
+                if (conversation && conversation.user_typing) {
+                    const typingTime = new Date(conversation.user_typing_at);
+                    const now = new Date();
+                    const timeDiff = (now - typingTime) / 1000; // seconds
+                
+                    // Only show typing indicator if less than 3 seconds old
+                    if (timeDiff < 3) {
+                        html += `
+                            <div style="display: flex; justify-content: flex-start; margin-bottom: 15px;">
+                                <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: #fff; color: #666; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                    <span class="typing-indicator">
+                                        <span style="animation: typing-dot 1.4s infinite; display: inline-block;">●</span>
+                                        <span style="animation: typing-dot 1.4s infinite 0.2s; display: inline-block;">●</span>
+                                        <span style="animation: typing-dot 1.4s infinite 0.4s; display: inline-block;">●</span>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    }
+                }
+
+                html += '</div>';
+            } catch(error) {
+                console.error('Error rendering messages:', error);
+                html = '<div style="padding: 20px; background: #ffebee; border: 1px solid #f44336; border-radius: 4px; margin-bottom: 15px;"><strong>❌ Ошибка отображения сообщений</strong><p>' + error.message + '</p></div>';
             }
             
-            // Show typing indicator if user is typing
-            if (conversation && conversation.user_typing) {
-                const typingTime = new Date(conversation.user_typing_at);
-                const now = new Date();
-                const timeDiff = (now - typingTime) / 1000; // seconds
-                
-                // Only show typing indicator if less than 3 seconds old
-                if (timeDiff < 3) {
-                    html += `
-                        <div style="display: flex; justify-content: flex-start; margin-bottom: 15px;">
-                            <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: #fff; color: #666; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-                                <span class="typing-indicator">
-                                    <span style="animation: typing-dot 1.4s infinite; display: inline-block;">●</span>
-                                    <span style="animation: typing-dot 1.4s infinite 0.2s; display: inline-block;">●</span>
-                                    <span style="animation: typing-dot 1.4s infinite 0.4s; display: inline-block;">●</span>
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-
-            html += '</div>';
+            // Always add input area at the bottom
             html += `
                 <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
                     <div style="display: flex; gap: 5px; align-items: flex-end;">
@@ -328,7 +369,11 @@ jQuery(document).ready(function($) {
             
             // Initialize emoji picker if enabled
             if (aicAdmin.enable_emoji === '1' && window.AICEmojiPicker) {
-                window.AICEmojiPicker.init('#aic_admin_message_input', '#aic_admin_emoji_button');
+                try {
+                    window.AICEmojiPicker.init('#aic_admin_message_input', '#aic_admin_emoji_button');
+                } catch(e) {
+                    console.warn('Could not initialize emoji picker:', e);
+                }
             }
             
             this.scrollToBottom();
@@ -459,17 +504,39 @@ jQuery(document).ready(function($) {
     // Инициализация только на странице чата
     if ($('#aic-conversations').length) {
         console.log('Admin chat page detected, initializing...');
+        console.log('DOM ready state:', document.readyState);
+        console.log('jQuery version:', $.fn.jquery);
         
         // Check if aicAdmin object exists
         if (typeof aicAdmin === 'undefined') {
             console.error('ERROR: aicAdmin object is not defined! Scripts may not be properly enqueued.');
-            $('#aic-conversations').html('<div style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;"><strong>⚠️ Ошибка инициализации:</strong><p>Объект aicAdmin не определен. Пожалуйста, перезагрузите страницу или проверьте консоль браузера.</p></div>');
+            $('#aic-conversations').html('<div style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;"><strong>⚠️ Ошибка инициализации:</strong><p>Объект aicAdmin не определен. Скрипты админки не загружены правильно.</p><p style="margin-top: 10px;">Попробуйте:</p><ul style="margin: 10px 0; padding-left: 20px;"><li>Очистить кэш браузера (Ctrl+Shift+Delete)</li><li>Обновить страницу с очисткой кэша (Ctrl+F5)</li><li>Проверить консоль браузера (F12) для деталей</li></ul><button onclick="location.reload()" class="button button-primary">🔄 Обновить страницу</button></div>');
             return;
         }
         
         console.log('aicAdmin object found:', aicAdmin);
-        adminChat.init();
+        console.log('AJAX URL:', aicAdmin.ajax_url);
+        console.log('Nonce:', aicAdmin.nonce ? 'Present' : 'Missing');
+        
+        // Verify essential properties
+        if (!aicAdmin.ajax_url || !aicAdmin.nonce) {
+            console.error('ERROR: aicAdmin object is incomplete!');
+            $('#aic-conversations').html('<div style="padding: 20px; background: #ffebee; border: 1px solid #f44336; border-radius: 4px;"><strong>❌ Ошибка конфигурации:</strong><p>Объект aicAdmin неполный. Отсутствуют необходимые параметры.</p><button onclick="location.reload()" class="button button-primary">🔄 Обновить страницу</button></div>');
+            return;
+        }
+        
+        // Initialize with slight delay to ensure all DOM is ready
+        setTimeout(function() {
+            try {
+                adminChat.init();
+                console.log('✓ Admin chat initialized successfully');
+            } catch(e) {
+                console.error('ERROR during initialization:', e);
+                $('#aic-conversations').html('<div style="padding: 20px; background: #ffebee; border: 1px solid #f44336; border-radius: 4px;"><strong>❌ Ошибка запуска:</strong><p>' + e.message + '</p><button onclick="location.reload()" class="button button-primary">🔄 Обновить страницу</button></div>');
+            }
+        }, 100);
     } else {
         console.log('Admin chat page not detected, skipping initialization');
+        console.log('Current page URL:', window.location.href);
     }
 });
