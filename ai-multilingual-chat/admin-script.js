@@ -91,6 +91,9 @@ jQuery(document).ready(function($) {
             
             console.log('loadConversations called');
             console.log('aicAdmin object:', aicAdmin);
+            
+            // Show loading indicator
+            $('#aic-conversations').html('<div style="text-align: center; padding: 20px; color: #666;"><span class="dashicons dashicons-update" style="animation: rotation 2s infinite linear; font-size: 24px;"></span><p>Загрузка диалогов...</p></div>');
 
             $.ajax({
                 url: aicAdmin.ajax_url,
@@ -132,34 +135,45 @@ jQuery(document).ready(function($) {
         renderConversations: function(conversations) {
             const container = $('#aic-conversations');
             
+            if (!container.length) {
+                console.error('ERROR: #aic-conversations container not found in DOM');
+                return;
+            }
+            
             if (!conversations || conversations.length === 0) {
                 container.html('<p style="color: #666; padding: 15px; text-align: center;">Нет активных диалогов</p>');
                 return;
             }
 
             let html = '';
-            conversations.forEach(function(conv) {
-                const unreadBadge = conv.unread_count > 0 
-                    ? `<span class="aic-unread-badge">${conv.unread_count}</span>` 
-                    : '';
-                
-                const userName = conv.user_name || 'Гость #' + conv.id;
-                const lastMessage = conv.last_message || 'Нет сообщений';
-                const activeClass = conv.id == adminChat.currentConversationId ? 'active' : '';
+            try {
+                conversations.forEach(function(conv) {
+                    const unreadBadge = conv.unread_count > 0 
+                        ? `<span class="aic-unread-badge">${conv.unread_count}</span>` 
+                        : '';
+                    
+                    const userName = adminChat.escapeHtml(conv.user_name || 'Гость #' + conv.id);
+                    const lastMessage = adminChat.escapeHtml(conv.last_message || 'Нет сообщений');
+                    const activeClass = conv.id == adminChat.currentConversationId ? 'active' : '';
 
-                html += `
-                    <div class="aic-conversation-item ${activeClass}" data-id="${conv.id}">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div class="aic-conversation-name">${userName}</div>
-                            ${unreadBadge}
+                    html += `
+                        <div class="aic-conversation-item ${activeClass}" data-id="${conv.id}">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="aic-conversation-name">${userName}</div>
+                                ${unreadBadge}
+                            </div>
+                            <div class="aic-conversation-preview">${lastMessage.substring(0, 50)}${lastMessage.length > 50 ? '...' : ''}</div>
+                            <div style="font-size: 11px; color: #999; margin-top: 5px;">
+                                ${new Date(conv.updated_at).toLocaleString('ru-RU')}
+                            </div>
                         </div>
-                        <div class="aic-conversation-preview">${lastMessage.substring(0, 50)}${lastMessage.length > 50 ? '...' : ''}</div>
-                        <div style="font-size: 11px; color: #999; margin-top: 5px;">
-                            ${new Date(conv.updated_at).toLocaleString('ru-RU')}
-                        </div>
-                    </div>
-                `;
-            });
+                    `;
+                });
+            } catch(error) {
+                console.error('Error rendering conversations:', error);
+                container.html('<p style="color: #d32f2f; padding: 15px;">Ошибка отображения диалогов. См. консоль.</p>');
+                return;
+            }
 
             container.html(html);
         },
@@ -206,6 +220,11 @@ jQuery(document).ready(function($) {
             const container = $('#aic-current-chat');
             
             console.log('renderMessages called with', messages ? messages.length : 0, 'messages');
+            
+            if (!container.length) {
+                console.error('ERROR: #aic-current-chat container not found in DOM');
+                return;
+            }
             
             // Check if input field is currently focused (user is typing)
             const inputIsFocused = $('#aic_admin_message_input').is(':focus');
@@ -440,6 +459,15 @@ jQuery(document).ready(function($) {
     // Инициализация только на странице чата
     if ($('#aic-conversations').length) {
         console.log('Admin chat page detected, initializing...');
+        
+        // Check if aicAdmin object exists
+        if (typeof aicAdmin === 'undefined') {
+            console.error('ERROR: aicAdmin object is not defined! Scripts may not be properly enqueued.');
+            $('#aic-conversations').html('<div style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;"><strong>⚠️ Ошибка инициализации:</strong><p>Объект aicAdmin не определен. Пожалуйста, перезагрузите страницу или проверьте консоль браузера.</p></div>');
+            return;
+        }
+        
+        console.log('aicAdmin object found:', aicAdmin);
         adminChat.init();
     } else {
         console.log('Admin chat page not detected, skipping initialization');

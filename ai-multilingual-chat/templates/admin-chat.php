@@ -70,4 +70,14 @@ if (!defined('ABSPATH')) exit;
     font-size: 11px;
     font-weight: 600;
 }
+
+/* Ensure containers are visible */
+#aic-admin-chat-container {
+    min-height: 600px;
+}
+
+.aic-conversations-list,
+.aic-chat-area {
+    min-height: 500px;
+}
 </style>

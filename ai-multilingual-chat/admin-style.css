@@ -109,3 +109,13 @@
 .typing-indicator span {
     animation-timing-function: ease-in-out;
 }
+
+/* Loading spinner animation */
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
