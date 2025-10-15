@@ -3,14 +3,14 @@
  * Plugin Name: AI Multilingual Chat
  * Plugin URI: https://web-proekt.com
  * Description: Многоязычный чат с автопереводом через AI
- * Version: 1.1.0
+ * Version: 2.0.0
  * Author: Oleg Filin
  * Text Domain: ai-multilingual-chat
  */
 
 if (!defined('ABSPATH')) exit;
 
-define('AIC_VERSION', '1.1.0');
+define('AIC_VERSION', '2.0.0');
 define('AIC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIC_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIC_PLUGIN_FILE', __FILE__);
@@ -57,6 +57,8 @@ class AI_Multilingual_Chat {
         
         add_action('wp_ajax_aic_user_typing', array($this, 'ajax_user_typing'));
         add_action('wp_ajax_nopriv_aic_user_typing', array($this, 'ajax_user_typing'));
+        
+        add_action('wp_ajax_aic_export_conversation', array($this, 'ajax_export_conversation'));
         
         add_action('rest_api_init', array($this, 'register_rest_routes'));
     }
@@ -226,9 +228,26 @@ class AI_Multilingual_Chat {
         wp_enqueue_style('aic-admin-style', AIC_PLUGIN_URL . 'admin-style.css', array(), AIC_VERSION);
         wp_enqueue_script('aic-admin-script', AIC_PLUGIN_URL . 'admin-script.js', array('jquery'), AIC_VERSION, true);
         
+        // Enqueue emoji picker if enabled
+        if (get_option('aic_enable_emoji_picker', '1') === '1') {
+            wp_enqueue_style('aic-emoji-picker', AIC_PLUGIN_URL . 'emoji-picker.css', array(), AIC_VERSION);
+            wp_enqueue_script('aic-emoji-picker', AIC_PLUGIN_URL . 'emoji-picker.js', array('jquery'), AIC_VERSION, true);
+        }
+        
+        // Enqueue dark theme if enabled
+        if (get_option('aic_enable_dark_theme', '0') === '1') {
+            wp_enqueue_style('aic-dark-theme', AIC_PLUGIN_URL . 'dark-theme.css', array('aic-admin-style'), AIC_VERSION);
+            add_filter('admin_body_class', function($classes) {
+                return $classes . ' aic-dark-theme';
+            });
+        }
+        
         wp_localize_script('aic-admin-script', 'aicAdmin', array(
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('aic_admin_nonce')
+            'nonce' => wp_create_nonce('aic_admin_nonce'),
+            'enable_emoji' => get_option('aic_enable_emoji_picker', '1'),
+            'enable_sound' => get_option('aic_enable_sound_notifications', '1'),
+            'enable_dark_theme' => get_option('aic_enable_dark_theme', '0')
         ));
     }
     
@@ -236,11 +255,28 @@ class AI_Multilingual_Chat {
         wp_enqueue_style('aic-frontend-style', AIC_PLUGIN_URL . 'frontend-style.css', array(), AIC_VERSION);
         wp_enqueue_script('aic-frontend-script', AIC_PLUGIN_URL . 'frontend-script.js', array('jquery'), AIC_VERSION, true);
         
+        // Enqueue emoji picker if enabled
+        if (get_option('aic_enable_emoji_picker', '1') === '1') {
+            wp_enqueue_style('aic-emoji-picker', AIC_PLUGIN_URL . 'emoji-picker.css', array(), AIC_VERSION);
+            wp_enqueue_script('aic-emoji-picker', AIC_PLUGIN_URL . 'emoji-picker.js', array('jquery'), AIC_VERSION, true);
+        }
+        
+        // Enqueue dark theme if enabled
+        if (get_option('aic_enable_dark_theme', '0') === '1') {
+            wp_enqueue_style('aic-dark-theme', AIC_PLUGIN_URL . 'dark-theme.css', array('aic-frontend-style'), AIC_VERSION);
+            add_filter('body_class', function($classes) {
+                $classes[] = 'aic-dark-theme';
+                return $classes;
+            });
+        }
+        
         wp_localize_script('aic-frontend-script', 'aicFrontend', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('aic_frontend_nonce'),
             'user_language' => $this->get_user_language(),
-            'welcome_message' => get_option('aic_welcome_message', 'Здравствуйте!')
+            'welcome_message' => get_option('aic_welcome_message', 'Здравствуйте!'),
+            'enable_emoji' => get_option('aic_enable_emoji_picker', '1'),
+            'enable_dark_theme' => get_option('aic_enable_dark_theme', '0')
         ));
     }
     
@@ -753,6 +789,55 @@ class AI_Multilingual_Chat {
         );
         
         wp_send_json_success();
+    }
+    
+    public function ajax_export_conversation() {
+        check_ajax_referer('aic_admin_nonce', 'nonce');
+        
+        global $wpdb;
+        
+        $conversation_id = isset($_POST['conversation_id']) ? intval($_POST['conversation_id']) : 0;
+        
+        if ($conversation_id <= 0) {
+            wp_send_json_error(array('message' => 'Invalid conversation_id'));
+            return;
+        }
+        
+        $conversation = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$this->table_conversations} WHERE id = %d", 
+            $conversation_id
+        ));
+        
+        if (!$conversation) {
+            wp_send_json_error(array('message' => 'Conversation not found'));
+            return;
+        }
+        
+        $messages = $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM {$this->table_messages} 
+            WHERE conversation_id = %d 
+            ORDER BY created_at ASC",
+            $conversation_id
+        ));
+        
+        // Generate CSV content
+        $csv_output = "Дата,Время,Отправитель,Сообщение,Перевод\n";
+        
+        foreach ($messages as $msg) {
+            $date = date('Y-m-d', strtotime($msg->created_at));
+            $time = date('H:i:s', strtotime($msg->created_at));
+            $sender = $msg->sender_type === 'admin' ? 'Администратор' : $conversation->user_name;
+            $message = str_replace('"', '""', $msg->message_text);
+            $translation = $msg->translated_text ? str_replace('"', '""', $msg->translated_text) : '';
+            
+            $csv_output .= "\"{$date}\",\"{$time}\",\"{$sender}\",\"{$message}\",\"{$translation}\"\n";
+        }
+        
+        // Return CSV as base64 for download
+        wp_send_json_success(array(
+            'csv' => base64_encode($csv_output),
+            'filename' => "conversation_{$conversation_id}_" . date('Y-m-d') . ".csv"
+        ));
     }
     
     public function register_rest_routes() {

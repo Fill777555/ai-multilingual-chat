@@ -52,6 +52,12 @@ jQuery(document).ready(function($) {
                     self.sendTypingStatus(false);
                 }, 1000);
             });
+            
+            // Export conversation
+            $(document).on('click', '#aic_export_conversation', function() {
+                const conversationId = $(this).data('conversation-id');
+                self.exportConversation(conversationId);
+            });
         },
 
         sendTypingStatus: function(isTyping) {
@@ -258,13 +264,21 @@ jQuery(document).ready(function($) {
             html += '</div>';
             html += `
                 <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
-                    <textarea id="aic_admin_message_input" 
-                              placeholder="Введите сообщение..." 
-                              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: vertical; font-family: inherit; box-sizing: border-box;"
-                              rows="3"></textarea>
-                    <button id="aic_admin_send_message" class="button button-primary" style="margin-top: 10px;">
-                        <span class="dashicons dashicons-email" style="vertical-align: middle;"></span> Отправить
-                    </button>
+                    <div style="display: flex; gap: 5px; align-items: flex-end;">
+                        <textarea id="aic_admin_message_input" 
+                                  placeholder="Введите сообщение..." 
+                                  style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: vertical; font-family: inherit; box-sizing: border-box;"
+                                  rows="3"></textarea>
+                        ${aicAdmin.enable_emoji === '1' ? '<button type="button" id="aic_admin_emoji_button" class="aic-emoji-button" title="Выбрать эмодзи">😀</button>' : ''}
+                    </div>
+                    <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button id="aic_admin_send_message" class="button button-primary">
+                            <span class="dashicons dashicons-email" style="vertical-align: middle;"></span> Отправить
+                        </button>
+                        <button id="aic_export_conversation" class="button" data-conversation-id="${self.currentConversationId}">
+                            <span class="dashicons dashicons-download" style="vertical-align: middle;"></span> Экспорт CSV
+                        </button>
+                    </div>
                 </div>
             `;
 
@@ -273,6 +287,11 @@ jQuery(document).ready(function($) {
             // Restore the saved input value after HTML is rewritten
             if (currentInputValue) {
                 $('#aic_admin_message_input').val(currentInputValue);
+            }
+            
+            // Initialize emoji picker if enabled
+            if (aicAdmin.enable_emoji === '1' && window.AICEmojiPicker) {
+                window.AICEmojiPicker.init('#aic_admin_message_input', '#aic_admin_emoji_button');
             }
             
             this.scrollToBottom();
@@ -352,6 +371,51 @@ jQuery(document).ready(function($) {
                 "'": '&#039;'
             };
             return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        },
+        
+        exportConversation: function(conversationId) {
+            if (!conversationId) {
+                alert('Выберите диалог для экспорта');
+                return;
+            }
+            
+            const $button = $('#aic_export_conversation');
+            $button.prop('disabled', true).html('<span class="dashicons dashicons-update"></span> Экспорт...');
+            
+            $.ajax({
+                url: aicAdmin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'aic_export_conversation',
+                    nonce: aicAdmin.nonce,
+                    conversation_id: conversationId
+                },
+                success: function(response) {
+                    if (response.success && response.data.csv) {
+                        // Create download link
+                        const csvContent = atob(response.data.csv);
+                        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                        const link = document.createElement('a');
+                        const url = URL.createObjectURL(blob);
+                        
+                        link.setAttribute('href', url);
+                        link.setAttribute('download', response.data.filename);
+                        link.style.visibility = 'hidden';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        
+                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                    } else {
+                        alert('Ошибка экспорта');
+                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                    }
+                },
+                error: function() {
+                    alert('Ошибка экспорта');
+                    $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                }
+            });
         }
     };
 

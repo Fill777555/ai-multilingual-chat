@@ -1,0 +1,62 @@
+/* Emoji Picker Styles */
+.aic-emoji-picker {
+    position: fixed;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    z-index: 10000;
+    max-width: 320px;
+}
+
+.aic-emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.aic-emoji-item {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.aic-emoji-item:hover {
+    background: #f0f0f0;
+    transform: scale(1.2);
+}
+
+.aic-emoji-button {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.aic-emoji-button:hover {
+    background: #f0f0f0;
+}
+
+/* Dark theme styles */
+body.aic-dark-theme .aic-emoji-picker {
+    background: #2d2d2d;
+    border-color: #444;
+    color: #fff;
+}
+
+body.aic-dark-theme .aic-emoji-item:hover {
+    background: #3a3a3a;
+}
+
+body.aic-dark-theme .aic-emoji-button:hover {
+    background: #3a3a3a;
+}
