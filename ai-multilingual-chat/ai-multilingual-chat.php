@@ -3,14 +3,14 @@
  * Plugin Name: AI Multilingual Chat
  * Plugin URI: https://web-proekt.com
  * Description: Многоязычный чат с автопереводом через AI
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Oleg Filin
  * Text Domain: ai-multilingual-chat
  */
 
 if (!defined('ABSPATH')) exit;
 
-define('AIC_VERSION', '2.0.1');
+define('AIC_VERSION', '2.0.2');
 define('AIC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIC_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIC_PLUGIN_FILE', __FILE__);
