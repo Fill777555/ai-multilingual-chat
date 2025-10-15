@@ -4,7 +4,46 @@ This directory contains comprehensive tests for the AI translation functionality
 
 ## Files
 
-### 1. `test-translation.php`
+### JavaScript Tests (Admin Interface)
+
+#### `test-input-preservation.js`
+Tests the basic input preservation functionality during HTML updates.
+
+**Features:**
+- Tests save/restore mechanism for textarea value
+- Validates that text is not lost during HTML replacement
+- Compares old vs new implementation
+
+**Usage:**
+```bash
+node test-input-preservation.js
+```
+
+**Test Scenarios:**
+- Old version (without fix): Text is lost ❌
+- New version (with fix): Text is preserved ✅
+
+#### `test-focus-preservation.js` ⭐ NEW
+Tests the enhanced focus-aware update mechanism.
+
+**Features:**
+- Tests that updates are skipped when textarea is focused
+- Validates cursor position and focus preservation
+- Tests normal updates when field is not focused
+
+**Usage:**
+```bash
+node test-focus-preservation.js
+```
+
+**Test Scenarios:**
+1. Input NOT focused → Normal update with text preservation ✅
+2. Input IS focused → Update skipped, focus preserved ✅
+3. After blur → Update performed on next poll ✅
+
+### PHP Tests (Translation and API)
+
+#### 1. `test-translation.php`
 Main test script that performs actual API calls to test translation functionality.
 
 **Features:**
@@ -24,7 +63,7 @@ php test-translation.php
 - AI Multilingual Chat plugin activated
 - Valid API key configured in plugin settings
 
-### 2. `test-runner-demo.php`
+#### 2. `test-runner-demo.php`
 Demonstration script that shows all test scenarios without making actual API calls.
 
 **Features:**
@@ -38,7 +77,25 @@ Demonstration script that shows all test scenarios without making actual API cal
 php test-runner-demo.php
 ```
 
-### 3. `TRANSLATION_TESTING_REPORT.md`
+#### 3. `test-api-key-filtering.php`
+Tests API key detection and filtering to prevent sensitive data leakage.
+
+**Features:**
+- Tests detection of various API key formats (OpenAI, Google, etc.)
+- Validates that API keys are not sent to translation services
+- Tests normal text is not blocked
+
+**Usage:**
+```bash
+php test-api-key-filtering.php
+```
+
+**Test Results:**
+- 7 API key detection tests ✅
+- 6 normal text tests ✅
+- 100% success rate
+
+### 4. `TRANSLATION_TESTING_REPORT.md`
 Comprehensive testing documentation including:
 - Test plan and methodology
 - Code analysis
