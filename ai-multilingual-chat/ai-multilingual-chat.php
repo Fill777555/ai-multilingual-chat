@@ -174,6 +174,57 @@ class AI_Multilingual_Chat {
             $this->log('Создана таблица кэша переводов');
         }
         
+        // Create FAQ table
+        $faq_table = $wpdb->prefix . 'ai_chat_faq';
+        $faq_exists = $wpdb->get_var("SHOW TABLES LIKE '{$faq_table}'");
+        
+        if (!$faq_exists) {
+            $charset_collate = $wpdb->get_charset_collate();
+            $sql = "CREATE TABLE {$faq_table} (
+                id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                question text NOT NULL,
+                answer text NOT NULL,
+                keywords text DEFAULT NULL,
+                language varchar(10) DEFAULT 'ru',
+                is_active tinyint(1) DEFAULT 1,
+                created_at datetime DEFAULT CURRENT_TIMESTAMP,
+                updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                PRIMARY KEY (id),
+                KEY is_active (is_active),
+                KEY language (language)
+            ) $charset_collate;";
+            
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            dbDelta($sql);
+            $this->log('Создана таблица FAQ');
+            
+            // Add default FAQs
+            $default_faqs = array(
+                array(
+                    'question' => 'Как с вами связаться?',
+                    'answer' => 'Вы можете написать нам здесь в чате, и мы ответим в ближайшее время.',
+                    'keywords' => 'связаться,контакты,телефон,email',
+                    'language' => 'ru'
+                ),
+                array(
+                    'question' => 'Какой у вас график работы?',
+                    'answer' => 'Мы работаем ежедневно с 9:00 до 18:00.',
+                    'keywords' => 'график,время,работа,часы',
+                    'language' => 'ru'
+                ),
+                array(
+                    'question' => 'How can I contact you?',
+                    'answer' => 'You can write to us here in the chat, and we will reply as soon as possible.',
+                    'keywords' => 'contact,phone,email,reach',
+                    'language' => 'en'
+                )
+            );
+            
+            foreach ($default_faqs as $faq) {
+                $wpdb->insert($faq_table, $faq, array('%s', '%s', '%s', '%s'));
+            }
+        }
+        
         // Add additional indexes for performance
         $indexes = array(
             "CREATE INDEX idx_conv_status_updated ON {$this->table_conversations}(status, updated_at)",
@@ -218,6 +269,7 @@ class AI_Multilingual_Chat {
         add_menu_page('AI Chat', 'AI Chat', 'manage_options', 'ai-multilingual-chat', array($this, 'render_admin_page'), 'dashicons-format-chat', 30);
         add_submenu_page('ai-multilingual-chat', 'Настройки', 'Настройки', 'manage_options', 'ai-chat-settings', array($this, 'render_settings_page'));
         add_submenu_page('ai-multilingual-chat', 'Статистика', 'Статистика', 'manage_options', 'ai-chat-stats', array($this, 'render_stats_page'));
+        add_submenu_page('ai-multilingual-chat', 'FAQ', 'FAQ', 'manage_options', 'ai-chat-faq', array($this, 'render_faq_page'));
     }
     
     public function enqueue_admin_scripts($hook) {
@@ -340,6 +392,34 @@ class AI_Multilingual_Chat {
         include AIC_PLUGIN_DIR . 'templates/stats.php';
     }
     
+    public function render_faq_page() {
+        global $wpdb;
+        $faq_table = $wpdb->prefix . 'ai_chat_faq';
+        
+        // Handle form submissions
+        if (isset($_POST['aic_add_faq']) && check_admin_referer('aic_faq_nonce')) {
+            $wpdb->insert($faq_table, array(
+                'question' => sanitize_text_field($_POST['question']),
+                'answer' => sanitize_textarea_field($_POST['answer']),
+                'keywords' => sanitize_text_field($_POST['keywords']),
+                'language' => sanitize_text_field($_POST['language']),
+                'is_active' => 1
+            ), array('%s', '%s', '%s', '%s', '%d'));
+            
+            echo '<div class="notice notice-success is-dismissible"><p>FAQ добавлен!</p></div>';
+        }
+        
+        if (isset($_POST['aic_delete_faq']) && check_admin_referer('aic_faq_nonce')) {
+            $faq_id = intval($_POST['faq_id']);
+            $wpdb->delete($faq_table, array('id' => $faq_id), array('%d'));
+            echo '<div class="notice notice-success is-dismissible"><p>FAQ удален!</p></div>';
+        }
+        
+        $faqs = $wpdb->get_results("SELECT * FROM {$faq_table} ORDER BY created_at DESC");
+        
+        include AIC_PLUGIN_DIR . 'templates/faq.php';
+    }
+    
     public function admin_notices() {
         if (!current_user_can('manage_options')) return;
         
@@ -367,12 +447,25 @@ class AI_Multilingual_Chat {
         
         $conversation = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_conversations} WHERE session_id = %s", $session_id));
         
+        // Get user_id if logged in
+        $user_id = is_user_logged_in() ? get_current_user_id() : null;
+        
         if ($conversation) {
+            $update_data = array(
+                'user_name' => $user_name, 
+                'user_language' => $user_language, 
+                'status' => 'active'
+            );
+            
+            if ($user_id) {
+                $update_data['user_id'] = $user_id;
+            }
+            
             $result = $wpdb->update(
                 $this->table_conversations, 
-                array('user_name' => $user_name, 'user_language' => $user_language, 'status' => 'active'), 
+                $update_data,
                 array('id' => $conversation->id), 
-                array('%s', '%s', '%s'), 
+                $user_id ? array('%s', '%s', '%s', '%d') : array('%s', '%s', '%s'), 
                 array('%d')
             );
             
@@ -383,16 +476,22 @@ class AI_Multilingual_Chat {
             
             $conversation_id = $conversation->id;
         } else {
+            $insert_data = array(
+                'session_id' => $session_id, 
+                'user_name' => $user_name, 
+                'user_language' => $user_language, 
+                'admin_language' => get_option('aic_admin_language', 'ru'), 
+                'status' => 'active'
+            );
+            
+            if ($user_id) {
+                $insert_data['user_id'] = $user_id;
+            }
+            
             $result = $wpdb->insert(
                 $this->table_conversations, 
-                array(
-                    'session_id' => $session_id, 
-                    'user_name' => $user_name, 
-                    'user_language' => $user_language, 
-                    'admin_language' => get_option('aic_admin_language', 'ru'), 
-                    'status' => 'active'
-                ), 
-                array('%s', '%s', '%s', '%s', '%s')
+                $insert_data,
+                $user_id ? array('%s', '%s', '%s', '%s', '%s', '%d') : array('%s', '%s', '%s', '%s', '%s')
             );
             
             if ($result === false) {
@@ -479,7 +578,51 @@ class AI_Multilingual_Chat {
         
         $this->send_admin_notification($conversation_id, 'new_message', $message);
         
+        // Check for FAQ auto-reply
+        $auto_reply = $this->check_faq_auto_reply($message, $user_language);
+        if ($auto_reply) {
+            // Insert auto-reply message
+            $wpdb->insert($this->table_messages, array(
+                'conversation_id' => $conversation_id,
+                'sender_type' => 'admin',
+                'message_text' => $auto_reply,
+                'translated_text' => null,
+                'original_language' => $user_language,
+                'target_language' => $user_language,
+                'is_read' => 0
+            ), array('%d', '%s', '%s', '%s', '%s', '%s', '%d'));
+        }
+        
         wp_send_json_success(array('message_id' => $message_id, 'conversation_id' => $conversation_id));
+    }
+    
+    private function check_faq_auto_reply($message, $language) {
+        global $wpdb;
+        $faq_table = $wpdb->prefix . 'ai_chat_faq';
+        
+        // Get active FAQs for this language
+        $faqs = $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM {$faq_table} WHERE is_active = 1 AND language = %s",
+            $language
+        ));
+        
+        if (empty($faqs)) {
+            return null;
+        }
+        
+        $message_lower = mb_strtolower($message);
+        
+        foreach ($faqs as $faq) {
+            $keywords = explode(',', $faq->keywords);
+            foreach ($keywords as $keyword) {
+                $keyword = trim(mb_strtolower($keyword));
+                if (strpos($message_lower, $keyword) !== false) {
+                    return $faq->answer;
+                }
+            }
+        }
+        
+        return null;
     }
     
     public function ajax_get_messages() {
@@ -858,6 +1001,13 @@ class AI_Multilingual_Chat {
             'callback' => array($this, 'rest_send_message'),
             'permission_callback' => array($this, 'rest_permission_check')
         ));
+        
+        // Conversation history for logged-in users
+        register_rest_route('ai-chat/v1', '/user/history', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'rest_get_user_history'),
+            'permission_callback' => '__return_true'
+        ));
     }
     
     public function rest_permission_check($request) {
@@ -904,6 +1054,27 @@ class AI_Multilingual_Chat {
         ), array('%d', '%s', '%s', '%d'));
         
         return rest_ensure_response(array('success' => true, 'message_id' => $wpdb->insert_id));
+    }
+    
+    public function rest_get_user_history($request) {
+        global $wpdb;
+        
+        if (!is_user_logged_in()) {
+            return new WP_Error('not_logged_in', 'Необходима авторизация', array('status' => 401));
+        }
+        
+        $user_id = get_current_user_id();
+        
+        $conversations = $wpdb->get_results($wpdb->prepare(
+            "SELECT c.*, 
+            (SELECT COUNT(*) FROM {$this->table_messages} WHERE conversation_id = c.id) as message_count
+            FROM {$this->table_conversations} c 
+            WHERE c.user_id = %d 
+            ORDER BY c.updated_at DESC",
+            $user_id
+        ));
+        
+        return rest_ensure_response($conversations);
     }
     
         private function translate_message($text, $from_lang, $to_lang) {
