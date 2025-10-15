@@ -305,7 +305,10 @@ class AI_Multilingual_Chat {
     
     public function enqueue_frontend_scripts() {
         wp_enqueue_style('aic-frontend-style', AIC_PLUGIN_URL . 'frontend-style.css', array(), AIC_VERSION);
-        wp_enqueue_script('aic-frontend-script', AIC_PLUGIN_URL . 'frontend-script.js', array('jquery'), AIC_VERSION, true);
+        
+        // Enqueue i18n first
+        wp_enqueue_script('aic-i18n', AIC_PLUGIN_URL . 'i18n.js', array('jquery'), AIC_VERSION, true);
+        wp_enqueue_script('aic-frontend-script', AIC_PLUGIN_URL . 'frontend-script.js', array('jquery', 'aic-i18n'), AIC_VERSION, true);
         
         // Enqueue emoji picker if enabled
         if (get_option('aic_enable_emoji_picker', '1') === '1') {
