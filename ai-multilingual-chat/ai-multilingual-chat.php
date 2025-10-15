@@ -943,10 +943,14 @@ class AI_Multilingual_Chat {
         
         global $wpdb;
         
+        // Log export attempt
+        $this->log('Export conversation request received', 'info');
+        
         $conversation_id = isset($_POST['conversation_id']) ? intval($_POST['conversation_id']) : 0;
         
         if ($conversation_id <= 0) {
-            wp_send_json_error(array('message' => 'Invalid conversation_id'));
+            $this->log('Export failed: Invalid conversation ID', 'error');
+            wp_send_json_error(array('message' => 'Неверный ID диалога'));
             return;
         }
         
@@ -956,7 +960,8 @@ class AI_Multilingual_Chat {
         ));
         
         if (!$conversation) {
-            wp_send_json_error(array('message' => 'Conversation not found'));
+            $this->log("Export failed: Conversation {$conversation_id} not found", 'error');
+            wp_send_json_error(array('message' => 'Диалог не найден'));
             return;
         }
         
@@ -967,23 +972,49 @@ class AI_Multilingual_Chat {
             $conversation_id
         ));
         
-        // Generate CSV content
+        if ($messages === null) {
+            $this->log("Export failed: Database error - " . $wpdb->last_error, 'error');
+            wp_send_json_error(array('message' => 'Ошибка базы данных'));
+            return;
+        }
+        
+        if (empty($messages)) {
+            $this->log("Export warning: No messages in conversation {$conversation_id}", 'warning');
+            wp_send_json_error(array('message' => 'В диалоге нет сообщений'));
+            return;
+        }
+        
+        // Generate CSV content with proper escaping
         $csv_output = "Дата,Время,Отправитель,Сообщение,Перевод\n";
         
         foreach ($messages as $msg) {
             $date = date('Y-m-d', strtotime($msg->created_at));
             $time = date('H:i:s', strtotime($msg->created_at));
-            $sender = $msg->sender_type === 'admin' ? 'Администратор' : $conversation->user_name;
-            $message = str_replace('"', '""', $msg->message_text);
+            $sender = $msg->sender_type === 'admin' ? 'Администратор' : ($conversation->user_name ?: 'Гость');
+            
+            // Properly escape CSV fields
+            $message = str_replace('"', '""', $msg->message_text ?: '');
             $translation = $msg->translated_text ? str_replace('"', '""', $msg->translated_text) : '';
             
             $csv_output .= "\"{$date}\",\"{$time}\",\"{$sender}\",\"{$message}\",\"{$translation}\"\n";
         }
         
+        $encoded_csv = base64_encode($csv_output);
+        if ($encoded_csv === false) {
+            $this->log('Export failed: Could not encode CSV', 'error');
+            wp_send_json_error(array('message' => 'Ошибка кодирования CSV'));
+            return;
+        }
+        
+        $filename = "conversation_{$conversation_id}_" . date('Y-m-d_His') . ".csv";
+        
+        $this->log("Export successful: {$filename} (" . count($messages) . " messages)", 'info');
+        
         // Return CSV as base64 for download
         wp_send_json_success(array(
-            'csv' => base64_encode($csv_output),
-            'filename' => "conversation_{$conversation_id}_" . date('Y-m-d') . ".csv"
+            'csv' => $encoded_csv,
+            'filename' => $filename,
+            'message_count' => count($messages)
         ));
     }
     
