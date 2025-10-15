@@ -16,23 +16,23 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     <div id="aic-chat-window" class="aic-chat-window" style="display: none;">
         <div class="aic-chat-header">
             <div>
-                <h3>Чат поддержки</h3>
-                <p class="aic-chat-status">Мы онлайн</p>
+                <h3>Support chat</h3>
+                <p class="aic-chat-status">We are online</p>
             </div>
             <button id="aic-chat-close" class="aic-chat-close">&times;</button>
         </div>
         
         <div id="aic-welcome-screen" class="aic-welcome-screen">
             <div class="aic-welcome-content">
-                <h3>Добро пожаловать!</h3>
-                <p>Представьтесь, пожалуйста, чтобы начать чат</p>
+                <h3>Welcome!</h3>
+                <p>Please introduce yourself to start the chat</p>
                 <input type="text" 
                        id="aic-user-name" 
                        class="aic-input" 
-                       placeholder="Ваше имя">
+                       placeholder="Your name">
                 <select id="aic-user-language" class="aic-input">
-                    <option value="en">English</option>
-                    <option value="ru" selected>Русский</option>
+                    <option value="en" selected>English</option>
+                    <option value="ru">Русский</option>
                     <option value="uk">Українська</option>
                     <option value="es">Español</option>
                     <option value="de">Deutsch</option>
@@ -44,7 +44,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
                     <option value="ko">한국어</option>
                     <option value="ar">العربية</option>
                 </select>
-                <button id="aic-start-chat" class="aic-button">Начать чат</button>
+                <button id="aic-start-chat" class="aic-button">Start a chat</button>
             </div>
         </div>
         
@@ -54,7 +54,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
             <textarea 
                 id="aic-message-input" 
                 class="aic-message-input" 
-                placeholder="Введите сообщение..."
+                placeholder="Enter your message..."
                 rows="1"></textarea>
             <button id="aic-send-button" class="aic-send-button">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -206,8 +206,8 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 
 .aic-welcome-content h3 {
     margin: 0 0 10px 0;
-    font-size: 22px;
-    color: #333;
+    font-size: 62px;
+    color: #357abd;
 }
 
 .aic-welcome-content p {
@@ -299,14 +299,14 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 
 .aic-message-time {
     font-size: 11px;
-    color: #999;
+    color: #382d2d;
     margin-top: 5px;
 }
 
 .aic-chat-input-wrapper {
     padding: 15px;
-    background: white;
-    border-top: 1px solid #eee;
+    background: #1a1a1a;
+    border-top: 1px solid #18adfe;
     display: flex;
     gap: 10px;
 }
