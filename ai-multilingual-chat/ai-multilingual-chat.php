@@ -3,14 +3,14 @@
  * Plugin Name: AI Multilingual Chat
  * Plugin URI: https://web-proekt.com
  * Description: Многоязычный чат с автопереводом через AI
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Oleg Filin
  * Text Domain: ai-multilingual-chat
  */
 
 if (!defined('ABSPATH')) exit;
 
-define('AIC_VERSION', '2.0.0');
+define('AIC_VERSION', '2.0.1');
 define('AIC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIC_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIC_PLUGIN_FILE', __FILE__);
@@ -267,13 +267,14 @@ class AI_Multilingual_Chat {
     
     public function add_admin_menu() {
         add_menu_page('AI Chat', 'AI Chat', 'manage_options', 'ai-multilingual-chat', array($this, 'render_admin_page'), 'dashicons-format-chat', 30);
+        add_submenu_page('ai-multilingual-chat', 'Управление диалогами', 'Управление диалогами', 'manage_options', 'ai-multilingual-chat', array($this, 'render_admin_page'));
         add_submenu_page('ai-multilingual-chat', 'Настройки', 'Настройки', 'manage_options', 'ai-chat-settings', array($this, 'render_settings_page'));
         add_submenu_page('ai-multilingual-chat', 'Статистика', 'Статистика', 'manage_options', 'ai-chat-stats', array($this, 'render_stats_page'));
         add_submenu_page('ai-multilingual-chat', 'FAQ', 'FAQ', 'manage_options', 'ai-chat-faq', array($this, 'render_faq_page'));
     }
     
     public function enqueue_admin_scripts($hook) {
-        if (strpos($hook, 'ai-multilingual-chat') === false && strpos($hook, 'ai-chat-settings') === false && strpos($hook, 'ai-chat-stats') === false) {
+        if (strpos($hook, 'ai-multilingual-chat') === false && strpos($hook, 'ai-chat-settings') === false && strpos($hook, 'ai-chat-stats') === false && strpos($hook, 'ai-chat-faq') === false) {
             return;
         }
         
