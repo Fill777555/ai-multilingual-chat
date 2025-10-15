@@ -705,6 +705,12 @@ class AI_Multilingual_Chat {
     }
     
         private function translate_message($text, $from_lang, $to_lang) {
+        // Skip translation if text contains API key patterns
+        if ($this->contains_api_key($text)) {
+            $this->log('Пропуск перевода: обнаружен API ключ в тексте', 'warning');
+            return null;
+        }
+        
         $api_key = get_option('aic_ai_api_key', '');
         
         if (empty($api_key)) {
@@ -733,6 +739,26 @@ class AI_Multilingual_Chat {
             $this->log('Ошибка перевода: ' . $e->getMessage(), 'error');
             return null;
         }
+    }
+    
+    private function contains_api_key($text) {
+        // Patterns for common API key formats
+        $api_key_patterns = array(
+            '/sk-[a-zA-Z0-9]{32,}/',           // OpenAI keys (sk-...)
+            '/aic_[a-zA-Z0-9]{20,}/',          // Plugin mobile API keys (aic_...)
+            '/AIzaSy[a-zA-Z0-9_-]{33}/',       // Google API keys
+            '/[a-zA-Z0-9]{32,64}/',            // Generic long alphanumeric strings (potential keys)
+            '/Bearer\s+[a-zA-Z0-9._-]+/i',     // Bearer tokens
+            '/api[_-]?key[:\s=]+[a-zA-Z0-9]+/i', // Explicit API key mentions
+        );
+        
+        foreach ($api_key_patterns as $pattern) {
+            if (preg_match($pattern, $text)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     private function translate_openai($text, $from_lang, $to_lang, $api_key) {

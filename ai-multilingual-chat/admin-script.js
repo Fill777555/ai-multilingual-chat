@@ -134,6 +134,9 @@ jQuery(document).ready(function($) {
         renderMessages: function(messages) {
             const container = $('#aic-current-chat');
             
+            // Save current input value before rewriting HTML
+            const currentInputValue = $('#aic_admin_message_input').val() || '';
+            
             let html = '<div style="padding: 20px; max-height: 500px; overflow-y: auto; background: #f8f9fa;" id="aic_messages_container">';
             
             if (!messages || messages.length === 0) {
@@ -185,6 +188,12 @@ jQuery(document).ready(function($) {
             `;
 
             container.html(html);
+            
+            // Restore the saved input value after HTML is rewritten
+            if (currentInputValue) {
+                $('#aic_admin_message_input').val(currentInputValue);
+            }
+            
             this.scrollToBottom();
         },
 
