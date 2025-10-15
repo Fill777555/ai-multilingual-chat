@@ -6,10 +6,13 @@ jQuery(document).ready(function($) {
         notificationSound: null,
 
         init: function() {
+            console.log('Admin chat initialization started');
+            console.log('Checking for #aic-conversations element:', $('#aic-conversations').length > 0);
             this.initNotificationSound();
             this.loadConversations();
             this.bindEvents();
             this.startPolling();
+            console.log('Admin chat initialized successfully');
         },
 
         initNotificationSound: function() {
@@ -85,6 +88,9 @@ jQuery(document).ready(function($) {
 
         loadConversations: function() {
             const self = this;
+            
+            console.log('loadConversations called');
+            console.log('aicAdmin object:', aicAdmin);
 
             $.ajax({
                 url: aicAdmin.ajax_url,
@@ -98,6 +104,7 @@ jQuery(document).ready(function($) {
                     console.log('Диалоги загружены:', response);
                     if (response.success && response.data && response.data.conversations) {
                         const conversations = response.data.conversations;
+                        console.log('Found conversations:', conversations.length);
                         
                         // Check for new unread messages and play sound
                         const totalUnread = conversations.reduce((sum, conv) => sum + (conv.unread_count || 0), 0);
@@ -108,13 +115,16 @@ jQuery(document).ready(function($) {
                         
                         self.renderConversations(conversations);
                     } else {
+                        console.error('Response not successful or missing data:', response);
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
                         $('#aic-conversations').html('<p style="color: #d32f2f; padding: 15px;">Ошибка: ' + errorMsg + '</p>');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('Ошибка загрузки диалогов:', error);
-                    $('#aic-conversations').html('<p style="color: #d32f2f; padding: 15px;">Ошибка загрузки диалогов</p>');
+                    console.error('XHR:', xhr);
+                    console.error('Status:', status);
+                    $('#aic-conversations').html('<p style="color: #d32f2f; padding: 15px;">Ошибка загрузки диалогов. Проверьте консоль для деталей.</p>');
                 }
             });
         },
@@ -157,6 +167,8 @@ jQuery(document).ready(function($) {
         loadConversation: function(conversationId) {
             const self = this;
             this.currentConversationId = conversationId;
+            
+            console.log('Loading conversation:', conversationId);
 
             // Обновить активный класс
             $('.aic-conversation-item').removeClass('active');
@@ -176,19 +188,24 @@ jQuery(document).ready(function($) {
                     if (response.success && response.data && response.data.messages) {
                         self.renderMessages(response.data.messages, response.data.conversation);
                     } else {
+                        console.error('Response not successful or missing data:', response);
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
                         $('#aic-current-chat').html('<p style="color: #d32f2f; padding: 15px;">Ошибка: ' + errorMsg + '</p>');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('Ошибка загрузки сообщений:', error);
-                    $('#aic-current-chat').html('<p style="color: #d32f2f; padding: 15px;">Ошибка загрузки сообщений</p>');
+                    console.error('XHR:', xhr);
+                    console.error('Status:', status);
+                    $('#aic-current-chat').html('<p style="color: #d32f2f; padding: 15px;">Ошибка загрузки сообщений. Проверьте консоль для деталей.</p>');
                 }
             });
         },
 
         renderMessages: function(messages, conversation) {
             const container = $('#aic-current-chat');
+            
+            console.log('renderMessages called with', messages ? messages.length : 0, 'messages');
             
             // Check if input field is currently focused (user is typing)
             const inputIsFocused = $('#aic_admin_message_input').is(':focus');
@@ -283,6 +300,7 @@ jQuery(document).ready(function($) {
             `;
 
             container.html(html);
+            console.log('HTML rendered, input field present:', $('#aic_admin_message_input').length > 0);
             
             // Restore the saved input value after HTML is rewritten
             if (currentInputValue) {
@@ -421,6 +439,9 @@ jQuery(document).ready(function($) {
 
     // Инициализация только на странице чата
     if ($('#aic-conversations').length) {
+        console.log('Admin chat page detected, initializing...');
         adminChat.init();
+    } else {
+        console.log('Admin chat page not detected, skipping initialization');
     }
 });
