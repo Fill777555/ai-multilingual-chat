@@ -273,7 +273,7 @@ class AI_Multilingual_Chat {
     }
     
     public function enqueue_admin_scripts($hook) {
-        if (strpos($hook, 'ai-multilingual-chat') === false && strpos($hook, 'ai-chat-settings') === false && strpos($hook, 'ai-chat-stats') === false) {
+        if (strpos($hook, 'ai-multilingual-chat') === false && strpos($hook, 'ai-chat-settings') === false && strpos($hook, 'ai-chat-stats') === false && strpos($hook, 'ai-chat-faq') === false) {
             return;
         }
         

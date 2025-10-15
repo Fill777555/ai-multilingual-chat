@@ -192,10 +192,12 @@ jQuery(document).ready(function($) {
             
             // Check if input field is currently focused (user is typing)
             const inputIsFocused = $('#aic_admin_message_input').is(':focus');
+            const messageContainer = $('#aic_messages_container');
             
-            // If input is focused, skip the update to avoid interrupting user typing
-            if (inputIsFocused) {
-                console.log('Input field is focused, skipping HTML update to preserve user typing');
+            // If input is focused and messages container already exists, only update messages
+            if (inputIsFocused && messageContainer.length > 0) {
+                console.log('Input field is focused, only updating messages container');
+                this.updateMessagesOnly(messages, conversation);
                 return;
             }
             
@@ -294,6 +296,75 @@ jQuery(document).ready(function($) {
                 window.AICEmojiPicker.init('#aic_admin_message_input', '#aic_admin_emoji_button');
             }
             
+            this.scrollToBottom();
+        },
+        
+        updateMessagesOnly: function(messages, conversation) {
+            const messageContainer = $('#aic_messages_container');
+            if (!messageContainer.length) {
+                // If container doesn't exist, do a full render
+                this.renderMessages(messages, conversation);
+                return;
+            }
+            
+            let html = '';
+            
+            if (!messages || messages.length === 0) {
+                html = `
+                    <div style="text-align: center; padding: 50px 20px; color: #666;">
+                        <span class="dashicons dashicons-format-chat" style="font-size: 48px; width: 48px; height: 48px; color: #ccc;"></span>
+                        <h3>Нет сообщений</h3>
+                        <p>Начните диалог с клиентом</p>
+                    </div>
+                `;
+            } else {
+                messages.forEach(function(msg) {
+                    const isAdmin = msg.sender_type === 'admin';
+                    const alignClass = isAdmin ? 'flex-end' : 'flex-start';
+                    const bgColor = isAdmin ? '#667eea' : '#fff';
+                    const textColor = isAdmin ? '#fff' : '#333';
+                    const time = new Date(msg.created_at).toLocaleTimeString('ru-RU', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+
+                    const displayText = (!isAdmin && msg.translated_text) ? msg.translated_text : msg.message_text;
+                    const hasTranslation = (!isAdmin && msg.translated_text);
+
+                    html += `
+                        <div style="display: flex; justify-content: ${alignClass}; margin-bottom: 15px;">
+                            <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: ${bgColor}; color: ${textColor}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                ${adminChat.escapeHtml(displayText)}
+                                ${hasTranslation ? '<div style="font-size: 10px; margin-top: 5px; opacity: 0.6; font-style: italic;">📝 Оригинал: ' + adminChat.escapeHtml(msg.message_text) + '</div>' : ''}
+                                <div style="font-size: 11px; margin-top: 5px; opacity: 0.7;">${time}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            // Show typing indicator if user is typing
+            if (conversation && conversation.user_typing) {
+                const typingTime = new Date(conversation.user_typing_at);
+                const now = new Date();
+                const timeDiff = (now - typingTime) / 1000;
+                
+                if (timeDiff < 3) {
+                    html += `
+                        <div style="display: flex; justify-content: flex-start; margin-bottom: 15px;">
+                            <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: #fff; color: #666; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                <span class="typing-indicator">
+                                    <span style="animation: typing-dot 1.4s infinite; display: inline-block;">●</span>
+                                    <span style="animation: typing-dot 1.4s infinite 0.2s; display: inline-block;">●</span>
+                                    <span style="animation: typing-dot 1.4s infinite 0.4s; display: inline-block;">●</span>
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            messageContainer.html(html);
             this.scrollToBottom();
         },
 

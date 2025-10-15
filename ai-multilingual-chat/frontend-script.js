@@ -178,6 +178,10 @@ jQuery(document).ready(function($) {
                     console.log('Сообщение отправлено:', response);
                     if (response.success && response.data) {
                         self.conversationId = response.data.conversation_id;
+                        // Update lastMessageId to prevent duplication when polling
+                        if (response.data.message_id) {
+                            self.lastMessageId = parseInt(response.data.message_id);
+                        }
                     } else {
                         console.error('Ошибка:', response.data);
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
