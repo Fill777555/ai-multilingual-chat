@@ -198,7 +198,9 @@ jQuery(document).ready(function($) {
                                 msg.sender_type) {
                                 
                                 if (parseInt(msg.id) > self.lastMessageId) {
-                                    self.addMessage(msg.message_text, msg.sender_type, false);
+                                    // Show translated text for admin messages if available, otherwise show original
+                                    const displayText = (msg.sender_type === 'admin' && msg.translated_text) ? msg.translated_text : msg.message_text;
+                                    self.addMessage(displayText, msg.sender_type, false);
                                     self.lastMessageId = parseInt(msg.id);
                                 }
                             }

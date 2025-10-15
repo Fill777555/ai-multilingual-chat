@@ -359,7 +359,7 @@ class AI_Multilingual_Chat {
         }
         
         $messages = $wpdb->get_results($wpdb->prepare(
-            "SELECT id, sender_type, message_text, created_at 
+            "SELECT id, sender_type, message_text, translated_text, created_at 
             FROM {$this->table_messages} 
             WHERE conversation_id = %d AND id > %d AND message_text IS NOT NULL 
             ORDER BY created_at ASC",
@@ -372,6 +372,7 @@ class AI_Multilingual_Chat {
                 'id' => intval($msg->id),
                 'sender_type' => $msg->sender_type,
                 'message_text' => $msg->message_text,
+                'translated_text' => $msg->translated_text,
                 'created_at' => $msg->created_at,
                 'time' => date('H:i', strtotime($msg->created_at))
             );
