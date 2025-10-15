@@ -49,6 +49,10 @@
         bindEvents: function() {
             const self = this;
             
+            // Unbind previous handlers to prevent multiple emoji insertions
+            $(document).off('click', this.buttonSelector);
+            $(document).off('click', '.aic-emoji-item');
+            
             // Toggle picker
             $(document).on('click', this.buttonSelector, function(e) {
                 e.preventDefault();
