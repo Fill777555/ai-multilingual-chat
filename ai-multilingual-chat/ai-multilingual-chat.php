@@ -314,7 +314,8 @@ class AI_Multilingual_Chat {
         
         global $wpdb;
         
-        $message = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+        // Use wp_kses with no allowed tags to strip HTML but preserve Unicode and line breaks
+        $message = isset($_POST['message']) ? wp_kses(wp_unslash($_POST['message']), array()) : '';
         $session_id = isset($_POST['session_id']) ? sanitize_text_field($_POST['session_id']) : '';
         $user_language = isset($_POST['user_language']) ? sanitize_text_field($_POST['user_language']) : 'en';
         
@@ -405,7 +406,7 @@ class AI_Multilingual_Chat {
         }
         
         $messages = $wpdb->get_results($wpdb->prepare(
-            "SELECT id, sender_type, message_text, created_at 
+            "SELECT id, sender_type, message_text, translated_text, created_at 
             FROM {$this->table_messages} 
             WHERE conversation_id = %d AND id > %d AND message_text IS NOT NULL 
             ORDER BY created_at ASC",
@@ -423,6 +424,7 @@ class AI_Multilingual_Chat {
                 'id' => intval($msg->id),
                 'sender_type' => $msg->sender_type,
                 'message_text' => $msg->message_text,
+                'translated_text' => $msg->translated_text,
                 'created_at' => $msg->created_at,
                 'time' => date('H:i', strtotime($msg->created_at))
             );
@@ -546,7 +548,8 @@ class AI_Multilingual_Chat {
         global $wpdb;
         
         $conversation_id = intval($_POST['conversation_id']);
-        $message = sanitize_textarea_field($_POST['message']);
+        // Use wp_kses with no allowed tags to strip HTML but preserve Unicode and line breaks
+        $message = wp_kses(wp_unslash($_POST['message']), array());
         
         if (empty($message)) {
             wp_send_json_error(array('message' => 'Empty message'));
@@ -688,8 +691,8 @@ class AI_Multilingual_Chat {
         global $wpdb;
         
         $conversation_id = intval($request->get_param('conversation_id'));
-        $message = $request->get_param('message');
-        $sender_type = $request->get_param('sender_type');
+        $message = wp_kses($request->get_param('message'), array());
+        $sender_type = sanitize_text_field($request->get_param('sender_type'));
         
         $wpdb->insert($this->table_messages, array(
             'conversation_id' => $conversation_id,
