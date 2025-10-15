@@ -60,20 +60,20 @@ body.aic-dark-theme #aic-chat-widget .aic-chat-window {
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-chat-header {
-    background: #1a1a1a;
+    background: #0588cf;
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-chat-messages {
-    background: #1a1a1a;
+    background: #1a1a1a00;
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-message.admin {
-    background: #3a3a3a;
+    /*background: #3a3a3a00;*/
     color: #e0e0e0;
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-message.user {
-    background: #4a90e2;
+    /*background: #4a91e200;*/
     color: white;
 }
 
