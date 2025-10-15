@@ -53,6 +53,10 @@ class AI_Multilingual_Chat {
         add_action('wp_ajax_aic_admin_get_messages', array($this, 'ajax_admin_get_messages'));
         add_action('wp_ajax_aic_admin_send_message', array($this, 'ajax_admin_send_message'));
         add_action('wp_ajax_aic_admin_close_conversation', array($this, 'ajax_admin_close_conversation'));
+        add_action('wp_ajax_aic_admin_typing', array($this, 'ajax_admin_typing'));
+        
+        add_action('wp_ajax_aic_user_typing', array($this, 'ajax_user_typing'));
+        add_action('wp_ajax_nopriv_aic_user_typing', array($this, 'ajax_user_typing'));
         
         add_action('rest_api_init', array($this, 'register_rest_routes'));
     }
@@ -127,6 +131,57 @@ class AI_Multilingual_Chat {
             );
             $this->log('Добавлена колонка target_language');
         }
+        
+        // Add typing indicator columns to conversations table
+        $typing_column = $wpdb->get_results(
+            "SHOW COLUMNS FROM {$this->table_conversations} LIKE 'user_typing'"
+        );
+        
+        if (empty($typing_column)) {
+            $wpdb->query(
+                "ALTER TABLE {$this->table_conversations} 
+                ADD COLUMN user_typing tinyint(1) DEFAULT 0,
+                ADD COLUMN admin_typing tinyint(1) DEFAULT 0,
+                ADD COLUMN user_typing_at datetime DEFAULT NULL,
+                ADD COLUMN admin_typing_at datetime DEFAULT NULL"
+            );
+            $this->log('Добавлены колонки для typing indicator');
+        }
+        
+        // Create translation cache table
+        $cache_table = $wpdb->prefix . 'ai_chat_translation_cache';
+        $cache_exists = $wpdb->get_var("SHOW TABLES LIKE '{$cache_table}'");
+        
+        if (!$cache_exists) {
+            $charset_collate = $wpdb->get_charset_collate();
+            $sql = "CREATE TABLE {$cache_table} (
+                id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                source_text text NOT NULL,
+                source_language varchar(10) NOT NULL,
+                target_language varchar(10) NOT NULL,
+                translated_text text NOT NULL,
+                text_hash varchar(64) NOT NULL,
+                created_at datetime DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (id),
+                KEY text_hash (text_hash),
+                KEY languages (source_language, target_language)
+            ) $charset_collate;";
+            
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            dbDelta($sql);
+            $this->log('Создана таблица кэша переводов');
+        }
+        
+        // Add additional indexes for performance
+        $indexes = array(
+            "CREATE INDEX idx_conv_status_updated ON {$this->table_conversations}(status, updated_at)",
+            "CREATE INDEX idx_msg_conv_created ON {$this->table_messages}(conversation_id, created_at)",
+            "CREATE INDEX idx_msg_is_read ON {$this->table_messages}(is_read, sender_type)"
+        );
+        
+        foreach ($indexes as $index_sql) {
+            $wpdb->query($index_sql);
+        }
     }
     
     private function set_default_options() {
@@ -141,6 +196,9 @@ class AI_Multilingual_Chat {
             'aic_enable_email_notifications' => '0',
             'aic_notification_email' => get_option('admin_email'),
             'aic_welcome_message' => 'Здравствуйте! Чем могу помочь?',
+            'aic_enable_emoji_picker' => '1',
+            'aic_enable_dark_theme' => '0',
+            'aic_enable_sound_notifications' => '1',
         );
         
         foreach ($defaults as $key => $value) {
@@ -221,6 +279,9 @@ class AI_Multilingual_Chat {
         
         update_option('aic_enable_translation', isset($post_data['aic_enable_translation']) ? '1' : '0');
         update_option('aic_enable_email_notifications', isset($post_data['aic_enable_email_notifications']) ? '1' : '0');
+        update_option('aic_enable_emoji_picker', isset($post_data['aic_enable_emoji_picker']) ? '1' : '0');
+        update_option('aic_enable_dark_theme', isset($post_data['aic_enable_dark_theme']) ? '1' : '0');
+        update_option('aic_enable_sound_notifications', isset($post_data['aic_enable_sound_notifications']) ? '1' : '0');
         
         $this->log('Настройки обновлены');
     }
@@ -537,7 +598,9 @@ class AI_Multilingual_Chat {
                 'id' => intval($conversation->id),
                 'user_name' => $conversation->user_name,
                 'user_language' => $conversation->user_language,
-                'status' => $conversation->status
+                'status' => $conversation->status,
+                'user_typing' => intval($conversation->user_typing),
+                'user_typing_at' => $conversation->user_typing_at
             )
         ));
     }
@@ -638,6 +701,60 @@ class AI_Multilingual_Chat {
         wp_send_json_success(array('message' => 'Conversation closed'));
     }
     
+    public function ajax_admin_typing() {
+        check_ajax_referer('aic_admin_nonce', 'nonce');
+        
+        global $wpdb;
+        
+        $conversation_id = isset($_POST['conversation_id']) ? intval($_POST['conversation_id']) : 0;
+        $is_typing = isset($_POST['is_typing']) ? intval($_POST['is_typing']) : 0;
+        
+        if ($conversation_id <= 0) {
+            wp_send_json_error(array('message' => 'Invalid conversation_id'));
+            return;
+        }
+        
+        $wpdb->update(
+            $this->table_conversations,
+            array(
+                'admin_typing' => $is_typing,
+                'admin_typing_at' => current_time('mysql')
+            ),
+            array('id' => $conversation_id),
+            array('%d', '%s'),
+            array('%d')
+        );
+        
+        wp_send_json_success();
+    }
+    
+    public function ajax_user_typing() {
+        check_ajax_referer('aic_frontend_nonce', 'nonce');
+        
+        global $wpdb;
+        
+        $conversation_id = isset($_POST['conversation_id']) ? intval($_POST['conversation_id']) : 0;
+        $is_typing = isset($_POST['is_typing']) ? intval($_POST['is_typing']) : 0;
+        
+        if ($conversation_id <= 0) {
+            wp_send_json_error(array('message' => 'Invalid conversation_id'));
+            return;
+        }
+        
+        $wpdb->update(
+            $this->table_conversations,
+            array(
+                'user_typing' => $is_typing,
+                'user_typing_at' => current_time('mysql')
+            ),
+            array('id' => $conversation_id),
+            array('%d', '%s'),
+            array('%d')
+        );
+        
+        wp_send_json_success();
+    }
+    
     public function register_rest_routes() {
         register_rest_route('ai-chat/v1', '/conversations', array(
             'methods' => 'GET',
@@ -711,6 +828,13 @@ class AI_Multilingual_Chat {
             return null;
         }
         
+        // Check cache first
+        $cached_translation = $this->get_cached_translation($text, $from_lang, $to_lang);
+        if ($cached_translation !== null) {
+            $this->log('Использован кэшированный перевод');
+            return $cached_translation;
+        }
+        
         $api_key = get_option('aic_ai_api_key', '');
         
         if (empty($api_key)) {
@@ -721,24 +845,69 @@ class AI_Multilingual_Chat {
         $provider = get_option('aic_ai_provider', 'openai');
         
         try {
+            $translation = null;
             switch ($provider) {
                 case 'openai':
-                    return $this->translate_openai($text, $from_lang, $to_lang, $api_key);
+                    $translation = $this->translate_openai($text, $from_lang, $to_lang, $api_key);
+                    break;
                     
                 case 'anthropic':
-                    return $this->translate_anthropic($text, $from_lang, $to_lang, $api_key);
+                    $translation = $this->translate_anthropic($text, $from_lang, $to_lang, $api_key);
+                    break;
                     
                 case 'google':
-                    return $this->translate_google($text, $from_lang, $to_lang, $api_key);
+                    $translation = $this->translate_google($text, $from_lang, $to_lang, $api_key);
+                    break;
                     
                 default:
                     $this->log('Неизвестный провайдер: ' . $provider, 'error');
                     return null;
             }
+            
+            // Cache the translation
+            if ($translation !== null) {
+                $this->cache_translation($text, $from_lang, $to_lang, $translation);
+            }
+            
+            return $translation;
         } catch (Exception $e) {
             $this->log('Ошибка перевода: ' . $e->getMessage(), 'error');
             return null;
         }
+    }
+    
+    private function get_cached_translation($text, $from_lang, $to_lang) {
+        global $wpdb;
+        $cache_table = $wpdb->prefix . 'ai_chat_translation_cache';
+        
+        $text_hash = hash('sha256', $text);
+        
+        $cached = $wpdb->get_var($wpdb->prepare(
+            "SELECT translated_text FROM {$cache_table} 
+            WHERE text_hash = %s AND source_language = %s AND target_language = %s",
+            $text_hash, $from_lang, $to_lang
+        ));
+        
+        return $cached;
+    }
+    
+    private function cache_translation($text, $from_lang, $to_lang, $translation) {
+        global $wpdb;
+        $cache_table = $wpdb->prefix . 'ai_chat_translation_cache';
+        
+        $text_hash = hash('sha256', $text);
+        
+        $wpdb->insert(
+            $cache_table,
+            array(
+                'source_text' => $text,
+                'source_language' => $from_lang,
+                'target_language' => $to_lang,
+                'translated_text' => $translation,
+                'text_hash' => $text_hash
+            ),
+            array('%s', '%s', '%s', '%s', '%s')
+        );
     }
     
     private function contains_api_key($text) {

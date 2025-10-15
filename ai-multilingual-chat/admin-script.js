@@ -2,11 +2,19 @@ jQuery(document).ready(function($) {
     const adminChat = {
         currentConversationId: null,
         pollInterval: null,
+        lastUnreadCount: 0,
+        notificationSound: null,
 
         init: function() {
+            this.initNotificationSound();
             this.loadConversations();
             this.bindEvents();
             this.startPolling();
+        },
+
+        initNotificationSound: function() {
+            // Create notification sound using Web Audio API
+            this.notificationSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYHGGa77Od/Sh0MTKXi8LJjHAU2jtXyz3kpBSp4x/DckD4KEly06OqnVBIKRp7f8L5sIAUrgs/y2Yk3Bxdlu+znfkkdC0yl4vCyYxwFN47V8c55KgQpecfv3JA+ChJcten')]
         },
 
         bindEvents: function() {
@@ -34,6 +42,39 @@ jQuery(document).ready(function($) {
                     self.sendMessage();
                 }
             });
+
+            // Typing indicator
+            let typingTimer;
+            $(document).on('input', '#aic_admin_message_input', function() {
+                clearTimeout(typingTimer);
+                self.sendTypingStatus(true);
+                typingTimer = setTimeout(function() {
+                    self.sendTypingStatus(false);
+                }, 1000);
+            });
+        },
+
+        sendTypingStatus: function(isTyping) {
+            if (!this.currentConversationId) return;
+            
+            $.ajax({
+                url: aicAdmin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'aic_admin_typing',
+                    nonce: aicAdmin.nonce,
+                    conversation_id: this.currentConversationId,
+                    is_typing: isTyping ? 1 : 0
+                }
+            });
+        },
+
+        playNotificationSound: function() {
+            if (this.notificationSound) {
+                this.notificationSound.play().catch(function(e) {
+                    console.log('Could not play notification sound:', e);
+                });
+            }
         },
 
         loadConversations: function() {
@@ -50,7 +91,16 @@ jQuery(document).ready(function($) {
                 success: function(response) {
                     console.log('Диалоги загружены:', response);
                     if (response.success && response.data && response.data.conversations) {
-                        self.renderConversations(response.data.conversations);
+                        const conversations = response.data.conversations;
+                        
+                        // Check for new unread messages and play sound
+                        const totalUnread = conversations.reduce((sum, conv) => sum + (conv.unread_count || 0), 0);
+                        if (totalUnread > self.lastUnreadCount) {
+                            self.playNotificationSound();
+                        }
+                        self.lastUnreadCount = totalUnread;
+                        
+                        self.renderConversations(conversations);
                     } else {
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
                         $('#aic-conversations').html('<p style="color: #d32f2f; padding: 15px;">Ошибка: ' + errorMsg + '</p>');
@@ -118,7 +168,7 @@ jQuery(document).ready(function($) {
                 success: function(response) {
                     console.log('Сообщения загружены:', response);
                     if (response.success && response.data && response.data.messages) {
-                        self.renderMessages(response.data.messages);
+                        self.renderMessages(response.data.messages, response.data.conversation);
                     } else {
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
                         $('#aic-current-chat').html('<p style="color: #d32f2f; padding: 15px;">Ошибка: ' + errorMsg + '</p>');
@@ -131,7 +181,7 @@ jQuery(document).ready(function($) {
             });
         },
 
-        renderMessages: function(messages) {
+        renderMessages: function(messages, conversation) {
             const container = $('#aic-current-chat');
             
             // Check if input field is currently focused (user is typing)
@@ -181,6 +231,28 @@ jQuery(document).ready(function($) {
                         </div>
                     `;
                 });
+            }
+            
+            // Show typing indicator if user is typing
+            if (conversation && conversation.user_typing) {
+                const typingTime = new Date(conversation.user_typing_at);
+                const now = new Date();
+                const timeDiff = (now - typingTime) / 1000; // seconds
+                
+                // Only show typing indicator if less than 3 seconds old
+                if (timeDiff < 3) {
+                    html += `
+                        <div style="display: flex; justify-content: flex-start; margin-bottom: 15px;">
+                            <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: #fff; color: #666; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                                <span class="typing-indicator">
+                                    <span style="animation: typing-dot 1.4s infinite; display: inline-block;">●</span>
+                                    <span style="animation: typing-dot 1.4s infinite 0.2s; display: inline-block;">●</span>
+                                    <span style="animation: typing-dot 1.4s infinite 0.4s; display: inline-block;">●</span>
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }
             }
 
             html += '</div>';
