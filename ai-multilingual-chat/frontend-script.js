@@ -82,9 +82,15 @@ jQuery(document).ready(function($) {
         createConversation: function() {
             const self = this;
 
+            if (!this.sessionId || !this.userName) {
+                alert('Ошибка: отсутствуют необходимые данные');
+                return;
+            }
+
             $.ajax({
                 url: aicFrontend.ajax_url,
                 type: 'POST',
+                timeout: 30000,
                 data: {
                     action: 'aic_start_conversation',
                     nonce: aicFrontend.nonce,
@@ -94,12 +100,12 @@ jQuery(document).ready(function($) {
                 },
                 success: function(response) {
                     console.log('Разговор создан:', response);
-                    if (response.success) {
+                    if (response.success && response.data && response.data.conversation_id) {
                         self.conversationId = response.data.conversation_id;
                         self.isInitialized = true;
                         self.startChat();
                     } else {
-                        alert('Ошибка создания разговора');
+                        alert('Ошибка создания разговора: ' + (response.data && response.data.message ? response.data.message : 'Unknown error'));
                     }
                 },
                 error: function(xhr, status, error) {
@@ -138,6 +144,7 @@ jQuery(document).ready(function($) {
             $.ajax({
                 url: aicFrontend.ajax_url,
                 type: 'POST',
+                timeout: 30000,
                 data: {
                     action: 'aic_send_message',
                     nonce: aicFrontend.nonce,
@@ -147,11 +154,12 @@ jQuery(document).ready(function($) {
                 },
                 success: function(response) {
                     console.log('Сообщение отправлено:', response);
-                    if (response.success) {
+                    if (response.success && response.data) {
                         self.conversationId = response.data.conversation_id;
                     } else {
                         console.error('Ошибка:', response.data);
-                        self.addSystemMessage('Ошибка отправки сообщения: ' + (response.data.message || 'Unknown error'));
+                        const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
+                        self.addSystemMessage('Ошибка отправки сообщения: ' + errorMsg);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -167,6 +175,7 @@ jQuery(document).ready(function($) {
             $.ajax({
                 url: aicFrontend.ajax_url,
                 type: 'POST',
+                timeout: 30000,
                 data: {
                     action: 'aic_get_messages',
                     nonce: aicFrontend.nonce,
@@ -174,7 +183,7 @@ jQuery(document).ready(function($) {
                     last_message_id: this.lastMessageId
                 },
                 success: function(response) {
-                    if (response.success && response.data.messages && response.data.messages.length > 0) {
+                    if (response.success && response.data && response.data.messages && response.data.messages.length > 0) {
                         
                         // Если это первая загрузка
                         if (self.lastMessageId === 0) {
@@ -213,6 +222,8 @@ jQuery(document).ready(function($) {
                 },
                 error: function(xhr, status, error) {
                     console.error('Ошибка загрузки сообщений:', error);
+                    // Не показываем пользователю ошибки при polling, чтобы не раздражать
+                    // Но в будущем можно показать после нескольких неудачных попыток
                 }
             });
         },
