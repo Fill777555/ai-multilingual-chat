@@ -259,19 +259,51 @@ class AI_Multilingual_Chat {
         
         global $wpdb;
         
-        $session_id = sanitize_text_field($_POST['session_id']);
-        $user_name = sanitize_text_field($_POST['user_name']);
-        $user_language = sanitize_text_field($_POST['user_language']);
+        $session_id = isset($_POST['session_id']) ? sanitize_text_field($_POST['session_id']) : '';
+        $user_name = isset($_POST['user_name']) ? sanitize_text_field($_POST['user_name']) : '';
+        $user_language = isset($_POST['user_language']) ? sanitize_text_field($_POST['user_language']) : '';
+        
+        if (empty($session_id) || empty($user_name)) {
+            wp_send_json_error(array('message' => 'Missing required parameters'));
+            return;
+        }
         
         $conversation = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_conversations} WHERE session_id = %s", $session_id));
         
         if ($conversation) {
-            $wpdb->update($this->table_conversations, array('user_name' => $user_name, 'user_language' => $user_language, 'status' => 'active'), array('id' => $conversation->id), array('%s', '%s', '%s'), array('%d'));
+            $result = $wpdb->update(
+                $this->table_conversations, 
+                array('user_name' => $user_name, 'user_language' => $user_language, 'status' => 'active'), 
+                array('id' => $conversation->id), 
+                array('%s', '%s', '%s'), 
+                array('%d')
+            );
+            
+            if ($result === false) {
+                wp_send_json_error(array('message' => 'Database error: ' . $wpdb->last_error));
+                return;
+            }
+            
             $conversation_id = $conversation->id;
         } else {
-            $wpdb->insert($this->table_conversations, array('session_id' => $session_id, 'user_name' => $user_name, 'user_language' => $user_language, 'admin_language' => get_option('aic_admin_language', 'ru'), 'status' => 'active'), array('%s', '%s', '%s', '%s', '%s'));
+            $result = $wpdb->insert(
+                $this->table_conversations, 
+                array(
+                    'session_id' => $session_id, 
+                    'user_name' => $user_name, 
+                    'user_language' => $user_language, 
+                    'admin_language' => get_option('aic_admin_language', 'ru'), 
+                    'status' => 'active'
+                ), 
+                array('%s', '%s', '%s', '%s', '%s')
+            );
             
-                        $conversation_id = $wpdb->insert_id;
+            if ($result === false) {
+                wp_send_json_error(array('message' => 'Database error: ' . $wpdb->last_error));
+                return;
+            }
+            
+            $conversation_id = $wpdb->insert_id;
         }
         
         wp_send_json_success(array('conversation_id' => $conversation_id));
@@ -335,7 +367,17 @@ class AI_Multilingual_Chat {
         
         $message_id = $wpdb->insert_id;
         
-        $wpdb->update($this->table_conversations, array('updated_at' => current_time('mysql')), array('id' => $conversation_id), array('%s'), array('%d'));
+        $update_result = $wpdb->update(
+            $this->table_conversations, 
+            array('updated_at' => current_time('mysql')), 
+            array('id' => $conversation_id), 
+            array('%s'), 
+            array('%d')
+        );
+        
+        if ($update_result === false) {
+            $this->log('Ошибка обновления времени разговора: ' . $wpdb->last_error, 'error');
+        }
         
         $this->send_admin_notification($conversation_id, 'new_message', $message);
         
@@ -347,8 +389,13 @@ class AI_Multilingual_Chat {
         
         global $wpdb;
         
-        $session_id = sanitize_text_field($_POST['session_id']);
+        $session_id = isset($_POST['session_id']) ? sanitize_text_field($_POST['session_id']) : '';
         $last_message_id = isset($_POST['last_message_id']) ? intval($_POST['last_message_id']) : 0;
+        
+        if (empty($session_id)) {
+            wp_send_json_error(array('message' => 'Missing session_id'));
+            return;
+        }
         
         $conversation = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_conversations} WHERE session_id = %s", $session_id));
         
@@ -364,6 +411,11 @@ class AI_Multilingual_Chat {
             ORDER BY created_at ASC",
             $conversation->id, $last_message_id
         ));
+        
+        if ($messages === null) {
+            wp_send_json_error(array('message' => 'Database error: ' . $wpdb->last_error));
+            return;
+        }
         
         $formatted = array();
         foreach ($messages as $msg) {
@@ -397,6 +449,11 @@ class AI_Multilingual_Chat {
             $status
         ));
         
+        if ($conversations === null) {
+            wp_send_json_error(array('message' => 'Database error: ' . $wpdb->last_error));
+            return;
+        }
+        
         $formatted = array();
         foreach ($conversations as $conv) {
             $formatted[] = array(
@@ -419,8 +476,13 @@ class AI_Multilingual_Chat {
         
         global $wpdb;
         
-        $conversation_id = intval($_POST['conversation_id']);
+        $conversation_id = isset($_POST['conversation_id']) ? intval($_POST['conversation_id']) : 0;
         $last_message_id = isset($_POST['last_message_id']) ? intval($_POST['last_message_id']) : 0;
+        
+        if ($conversation_id <= 0) {
+            wp_send_json_error(array('message' => 'Invalid conversation_id'));
+            return;
+        }
         
         $conversation = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_conversations} WHERE id = %d", $conversation_id));
         
@@ -436,8 +498,23 @@ class AI_Multilingual_Chat {
             $conversation_id, $last_message_id
         ));
         
+        if ($messages === null) {
+            wp_send_json_error(array('message' => 'Database error: ' . $wpdb->last_error));
+            return;
+        }
+        
         if ($last_message_id === 0) {
-            $wpdb->update($this->table_messages, array('is_read' => 1), array('conversation_id' => $conversation_id, 'sender_type' => 'user'), array('%d'), array('%d', '%s'));
+            $update_result = $wpdb->update(
+                $this->table_messages, 
+                array('is_read' => 1), 
+                array('conversation_id' => $conversation_id, 'sender_type' => 'user'), 
+                array('%d'), 
+                array('%d', '%s')
+            );
+            
+            if ($update_result === false) {
+                $this->log('Ошибка обновления статуса прочтения: ' . $wpdb->last_error, 'error');
+            }
         }
         
         $formatted = array();
@@ -508,7 +585,17 @@ class AI_Multilingual_Chat {
         
         $message_id = $wpdb->insert_id;
         
-        $wpdb->update($this->table_conversations, array('updated_at' => current_time('mysql')), array('id' => $conversation_id), array('%s'), array('%d'));
+        $update_result = $wpdb->update(
+            $this->table_conversations, 
+            array('updated_at' => current_time('mysql')), 
+            array('id' => $conversation_id), 
+            array('%s'), 
+            array('%d')
+        );
+        
+        if ($update_result === false) {
+            $this->log('Ошибка обновления времени разговора: ' . $wpdb->last_error, 'error');
+        }
         
         wp_send_json_success(array('message_id' => $message_id));
     }
@@ -518,9 +605,32 @@ class AI_Multilingual_Chat {
         
         global $wpdb;
         
-        $conversation_id = intval($_POST['conversation_id']);
+        $conversation_id = isset($_POST['conversation_id']) ? intval($_POST['conversation_id']) : 0;
         
-        $wpdb->update($this->table_conversations, array('status' => 'closed'), array('id' => $conversation_id), array('%s'), array('%d'));
+        if ($conversation_id <= 0) {
+            wp_send_json_error(array('message' => 'Invalid conversation_id'));
+            return;
+        }
+        
+        $conversation = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_conversations} WHERE id = %d", $conversation_id));
+        
+        if (!$conversation) {
+            wp_send_json_error(array('message' => 'Conversation not found'));
+            return;
+        }
+        
+        $result = $wpdb->update(
+            $this->table_conversations, 
+            array('status' => 'closed'), 
+            array('id' => $conversation_id), 
+            array('%s'), 
+            array('%d')
+        );
+        
+        if ($result === false) {
+            wp_send_json_error(array('message' => 'Database error: ' . $wpdb->last_error));
+            return;
+        }
         
         wp_send_json_success(array('message' => 'Conversation closed'));
     }
@@ -877,7 +987,12 @@ add_action('wp_ajax_aic_generate_api_key', function() {
     }
     
     $new_key = 'aic_' . bin2hex(random_bytes(32));
-    update_option('aic_mobile_api_key', $new_key);
+    $result = update_option('aic_mobile_api_key', $new_key);
+    
+    if ($result === false) {
+        wp_send_json_error(array('message' => 'Failed to save API key'));
+        return;
+    }
     
     wp_send_json_success(array('api_key' => $new_key));
 });
