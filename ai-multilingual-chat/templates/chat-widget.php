@@ -355,7 +355,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 /* Мобильная адаптация */
 @media (max-width: 480px) {
     .aic-chat-window {
-        width: calc(100vw - 20px);
+        width: calc(100vw - 50px);
         height: calc(100vh - 100px);
         bottom: 10px;
         right: 10px;
