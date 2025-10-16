@@ -454,7 +454,7 @@ jQuery(document).ready(function($) {
                 if (self.currentConversationId) {
                     self.loadConversation(self.currentConversationId);
                 }
-            }, 5000);
+            }, 20000);
         },
 
         scrollToBottom: function() {
