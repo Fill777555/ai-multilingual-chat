@@ -53,6 +53,9 @@ class CSV_Export_Test {
         
         // Test 5: Filename format
         $this->test_filename_format();
+        
+        // Test 6: CSV export with BOM and Cyrillic characters
+        $this->test_csv_export_with_cyrillic();
     }
     
     private function test_csv_field_escaping() {
@@ -82,16 +85,30 @@ text"',
     private function test_utf8_bom_handling() {
         echo "\nTest 2: UTF-8 BOM Handling\n";
         
-        $BOM = '\uFEFF';
+        // UTF-8 BOM should be added as actual bytes \xEF\xBB\xBF
+        $BOM = "\xEF\xBB\xBF";
         $content = "test content";
         $with_bom = $BOM . $content;
         
-        // In JavaScript, the BOM would be added as a Unicode character
-        // Here we just validate the concept
-        if (strlen($BOM) > 0) {
-            $this->record_pass("BOM constant is defined");
+        // Validate BOM is 3 bytes
+        if (strlen($BOM) === 3) {
+            $this->record_pass("BOM is correct length (3 bytes)");
         } else {
-            $this->record_fail("BOM constant is missing");
+            $this->record_fail("BOM length is incorrect: " . strlen($BOM));
+        }
+        
+        // Validate BOM byte values
+        if (ord($BOM[0]) === 0xEF && ord($BOM[1]) === 0xBB && ord($BOM[2]) === 0xBF) {
+            $this->record_pass("BOM has correct byte values (0xEF 0xBB 0xBF)");
+        } else {
+            $this->record_fail("BOM byte values are incorrect");
+        }
+        
+        // Test that content with BOM starts with the BOM
+        if (substr($with_bom, 0, 3) === $BOM) {
+            $this->record_pass("BOM is correctly prepended to content");
+        } else {
+            $this->record_fail("BOM not prepended correctly");
         }
     }
     
@@ -157,6 +174,60 @@ text"',
             $this->record_pass("Filename has .csv extension");
         } else {
             $this->record_fail("Filename missing .csv extension");
+        }
+    }
+    
+    private function test_csv_export_with_cyrillic() {
+        echo "\nTest 6: CSV Export with BOM and Cyrillic Characters\n";
+        
+        // Simulate the server-side CSV generation with UTF-8 BOM
+        $BOM = "\xEF\xBB\xBF";
+        $csv_output = $BOM;
+        $csv_output .= "Дата,Время,Отправитель,Сообщение,Перевод\n";
+        
+        // Add test data with Cyrillic characters
+        $test_message = "Привет! Как дела?";
+        $test_translation = "Hello! How are you?";
+        $test_sender = "Администратор";
+        
+        $csv_output .= "\"2024-01-01\",\"12:00:00\",\"{$test_sender}\",\"{$test_message}\",\"{$test_translation}\"\n";
+        
+        // Verify BOM is at the start
+        if (substr($csv_output, 0, 3) === $BOM) {
+            $this->record_pass("CSV starts with UTF-8 BOM");
+        } else {
+            $this->record_fail("CSV missing UTF-8 BOM at start");
+        }
+        
+        // Verify Cyrillic characters are present and properly encoded
+        if (mb_check_encoding($csv_output, 'UTF-8')) {
+            $this->record_pass("CSV is valid UTF-8");
+        } else {
+            $this->record_fail("CSV is not valid UTF-8");
+        }
+        
+        // Verify Cyrillic message is in output
+        if (strpos($csv_output, $test_message) !== false) {
+            $this->record_pass("Cyrillic message preserved in CSV");
+        } else {
+            $this->record_fail("Cyrillic message not found in CSV");
+        }
+        
+        // Test base64 encoding and decoding with BOM
+        $encoded = base64_encode($csv_output);
+        $decoded = base64_decode($encoded);
+        
+        if ($decoded === $csv_output) {
+            $this->record_pass("Base64 encode/decode preserves BOM and Cyrillic");
+        } else {
+            $this->record_fail("Base64 encode/decode corrupted data");
+        }
+        
+        // Verify decoded content still has BOM
+        if (substr($decoded, 0, 3) === $BOM) {
+            $this->record_pass("BOM preserved after base64 round-trip");
+        } else {
+            $this->record_fail("BOM lost after base64 round-trip");
         }
     }
     
