@@ -68,12 +68,12 @@ body.aic-dark-theme #aic-chat-widget .aic-chat-messages {
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-message.admin {
-    /*background: #3a3a3a00;*/
+    /* background: #3a3a3a00; */
     color: #e0e0e0;
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-message.user {
-    /*background: #4a91e200;*/
+    /* background: #4a91e200; */
     color: white;
 }
 
