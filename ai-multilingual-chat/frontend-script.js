@@ -126,13 +126,22 @@ jQuery(document).ready(function($) {
                         self.conversationId = response.data.conversation_id;
                         self.isInitialized = true;
                         self.startChat();
+                    } else if (!response.success && response.data && response.data.code === 'nonce_failed') {
+                        // Nonce verification failed
+                        alert('Security token expired. Please refresh the page and try again.');
                     } else {
                         alert('Ошибка создания разговора: ' + (response.data && response.data.message ? response.data.message : 'Unknown error'));
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('Ошибка создания разговора:', error);
-                    alert('Ошибка соединения с сервером');
+                    console.error('Ошибка создания разговора:', error, 'Status:', xhr.status);
+                    
+                    // Handle 403 Forbidden specifically
+                    if (xhr.status === 403) {
+                        alert('Security token expired. Please refresh the page and try again.');
+                    } else {
+                        alert('Ошибка соединения с сервером');
+                    }
                 }
             });
         },
@@ -183,6 +192,14 @@ jQuery(document).ready(function($) {
                             self.lastMessageId = Math.max(self.lastMessageId, parseInt(response.data.message_id));
                             console.log('Updated lastMessageId to:', self.lastMessageId);
                         }
+                    } else if (!response.success && response.data && response.data.code === 'nonce_failed') {
+                        // Nonce verification failed
+                        console.error('Nonce verification failed');
+                        self.addSystemMessage('Security token expired. Please refresh the page to continue.');
+                        if (self.pollInterval) {
+                            clearInterval(self.pollInterval);
+                            self.pollInterval = null;
+                        }
                     } else {
                         console.error('Ошибка:', response.data);
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
@@ -190,8 +207,19 @@ jQuery(document).ready(function($) {
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('AJAX ошибка:', error);
-                    self.addSystemMessage('Ошибка отправки сообщения. Попробуйте еще раз.');
+                    console.error('AJAX ошибка:', error, 'Status:', xhr.status);
+                    
+                    // Handle 403 Forbidden specifically
+                    if (xhr.status === 403) {
+                        console.error('403 Forbidden - security check failed');
+                        self.addSystemMessage('Security token expired. Please refresh the page to continue.');
+                        if (self.pollInterval) {
+                            clearInterval(self.pollInterval);
+                            self.pollInterval = null;
+                        }
+                    } else {
+                        self.addSystemMessage('Ошибка отправки сообщения. Попробуйте еще раз.');
+                    }
                 }
             });
         },
@@ -247,10 +275,28 @@ jQuery(document).ready(function($) {
                         if (!self.pollInterval) {
                             self.startPolling();
                         }
+                    } else if (!response.success && response.data && response.data.code === 'nonce_failed') {
+                        // Nonce verification failed - stop polling and show error
+                        console.error('Nonce verification failed, please refresh the page');
+                        if (self.pollInterval) {
+                            clearInterval(self.pollInterval);
+                            self.pollInterval = null;
+                        }
+                        self.addSystemMessage('Security token expired. Please refresh the page to continue.');
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('Ошибка загрузки сообщений:', error);
+                    console.error('Ошибка загрузки сообщений:', error, 'Status:', xhr.status);
+                    
+                    // Handle 403 Forbidden specifically
+                    if (xhr.status === 403) {
+                        console.error('403 Forbidden - security check failed');
+                        if (self.pollInterval) {
+                            clearInterval(self.pollInterval);
+                            self.pollInterval = null;
+                        }
+                        self.addSystemMessage('Security token expired. Please refresh the page to continue.');
+                    }
                     // Не показываем пользователю ошибки при polling, чтобы не раздражать
                     // Но в будущем можно показать после нескольких неудачных попыток
                 }
