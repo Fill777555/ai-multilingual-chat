@@ -538,11 +538,18 @@ jQuery(document).ready(function($) {
                     try {
                         // Decode base64 CSV content
                         // UTF-8 BOM is now added on the server side for proper Cyrillic character encoding
-                        const csvContent = atob(response.data.csv);
-                        console.log('[AIC Export] CSV decoded, length:', csvContent.length);
+                        const binaryString = atob(response.data.csv);
+                        console.log('[AIC Export] CSV decoded, length:', binaryString.length);
+                        
+                        // Convert binary string to Uint8Array to preserve UTF-8 encoding
+                        // This is critical for proper Cyrillic character handling
+                        const bytes = new Uint8Array(binaryString.length);
+                        for (let i = 0; i < binaryString.length; i++) {
+                            bytes[i] = binaryString.charCodeAt(i);
+                        }
                         
                         // Create blob with UTF-8 charset (BOM already included in content from server)
-                        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                        const blob = new Blob([bytes], { type: 'text/csv;charset=utf-8;' });
                         
                         // Create download link
                         const link = document.createElement('a');
