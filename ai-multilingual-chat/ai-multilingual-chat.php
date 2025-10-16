@@ -1034,8 +1034,10 @@ class AI_Multilingual_Chat {
             return;
         }
         
-        // Generate CSV content with proper escaping
-        $csv_output = "Дата,Время,Отправитель,Сообщение,Перевод\n";
+        // Generate CSV content with proper UTF-8 encoding and escaping
+        // Add UTF-8 BOM (Byte Order Mark) to ensure proper encoding of Cyrillic characters
+        $csv_output = "\xEF\xBB\xBF"; // UTF-8 BOM
+        $csv_output .= "Дата,Время,Отправитель,Сообщение,Перевод\n";
         
         foreach ($messages as $msg) {
             $date = date('Y-m-d', strtotime($msg->created_at));

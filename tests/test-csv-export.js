@@ -31,10 +31,13 @@ assert(decoded === testData, 'Base64 encode/decode works correctly');
 
 // Test 2: Validate UTF-8 BOM
 console.log('\nTest 2: UTF-8 BOM Handling');
-const BOM = '\uFEFF';
-const csvContent = 'test,content';
-const withBOM = BOM + csvContent;
-assert(withBOM.charCodeAt(0) === 0xFEFF, 'BOM character is correctly prepended');
+// Note: UTF-8 BOM is now added on the server side (as \xEF\xBB\xBF bytes)
+// The server includes it before base64 encoding
+// Client-side no longer needs to add BOM - it's already in the decoded content
+const bomBytes = new Uint8Array([0xEF, 0xBB, 0xBF]);
+const bomString = new TextDecoder().decode(bomBytes);
+assert(bomBytes.length === 3, 'BOM is 3 bytes');
+assert(bomBytes[0] === 0xEF && bomBytes[1] === 0xBB && bomBytes[2] === 0xBF, 'BOM has correct byte values');
 
 // Test 3: Validate response structure checking
 console.log('\nTest 3: Response Validation');
@@ -79,9 +82,9 @@ errorMessages.forEach(msg => {
 // Test 5: Blob creation
 console.log('\nTest 5: Blob Creation');
 try {
-    const BOM = '\uFEFF';
+    // Server now includes BOM in the CSV content, so we don't add it client-side
     const csvContent = 'test,content';
-    const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     assert(blob.size > 0, 'Blob created successfully');
     assert(blob.type === 'text/csv;charset=utf-8;', 'Blob has correct MIME type');
 } catch (e) {

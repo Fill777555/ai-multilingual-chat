@@ -537,12 +537,12 @@ jQuery(document).ready(function($) {
                     
                     try {
                         // Decode base64 CSV content
+                        // UTF-8 BOM is now added on the server side for proper Cyrillic character encoding
                         const csvContent = atob(response.data.csv);
                         console.log('[AIC Export] CSV decoded, length:', csvContent.length);
                         
-                        // Add UTF-8 BOM for proper encoding of Cyrillic characters
-                        const BOM = '\uFEFF';
-                        const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+                        // Create blob with UTF-8 charset (BOM already included in content from server)
+                        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
                         
                         // Create download link
                         const link = document.createElement('a');
