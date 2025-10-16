@@ -95,11 +95,16 @@ jQuery(document).ready(function($) {
             $.ajax({
                 url: aicFrontend.ajax_url,
                 type: 'POST',
+                timeout: 5000,
                 data: {
                     action: 'aic_user_typing',
                     nonce: aicFrontend.nonce,
                     conversation_id: this.conversationId,
                     is_typing: isTyping ? 1 : 0
+                },
+                error: function(xhr, status, error) {
+                    // Silent fail for typing indicator - not critical
+                    console.log('Typing indicator failed (non-critical):', status);
                 }
             });
         },

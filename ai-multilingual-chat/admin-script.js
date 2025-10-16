@@ -70,11 +70,16 @@ jQuery(document).ready(function($) {
             $.ajax({
                 url: aicAdmin.ajax_url,
                 type: 'POST',
+                timeout: 5000,
                 data: {
                     action: 'aic_admin_typing',
                     nonce: aicAdmin.nonce,
                     conversation_id: this.currentConversationId,
                     is_typing: isTyping ? 1 : 0
+                },
+                error: function(xhr, status, error) {
+                    // Silent fail for typing indicator - not critical
+                    console.log('Typing indicator failed (non-critical):', status);
                 }
             });
         },
