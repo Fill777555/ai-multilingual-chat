@@ -58,8 +58,9 @@ jQuery(document).ready(function($) {
             
             // Export conversation
             $(document).on('click', '#aic_export_conversation', function() {
-                const conversationId = $(this).data('conversation-id');
-                self.exportConversation(conversationId);
+                // Use currentConversationId directly instead of data attribute to avoid stale values
+                console.log('[AIC Export] Export button clicked, currentConversationId:', self.currentConversationId);
+                self.exportConversation(self.currentConversationId);
             });
         },
 
@@ -371,7 +372,7 @@ jQuery(document).ready(function($) {
                         <button id="aic_admin_send_message" class="button button-primary">
                             <span class="dashicons dashicons-email" style="vertical-align: middle;"></span> Отправить
                         </button>
-                        <button id="aic_export_conversation" class="button" data-conversation-id="${self.currentConversationId}">
+                        <button id="aic_export_conversation" class="button">
                             <span class="dashicons dashicons-download" style="vertical-align: middle;"></span> Экспорт CSV
                         </button>
                     </div>
@@ -475,9 +476,20 @@ jQuery(document).ready(function($) {
         },
         
         exportConversation: function(conversationId) {
-            if (!conversationId) {
-                console.error('[AIC Export] No conversation ID provided');
-                alert('Выберите диалог для экспорта');
+            // Enhanced validation with detailed logging
+            console.log('[AIC Export] exportConversation called with ID:', conversationId, 'Type:', typeof conversationId);
+            
+            if (!conversationId || conversationId === null || conversationId === 'null' || conversationId === undefined) {
+                console.error('[AIC Export] Invalid conversation ID:', conversationId);
+                alert('Ошибка: Сначала выберите диалог для экспорта');
+                return;
+            }
+            
+            // Ensure it's a number
+            conversationId = parseInt(conversationId, 10);
+            if (isNaN(conversationId) || conversationId <= 0) {
+                console.error('[AIC Export] Conversation ID is not a valid positive number:', conversationId);
+                alert('Ошибка: Неверный ID диалога');
                 return;
             }
             
@@ -485,14 +497,18 @@ jQuery(document).ready(function($) {
             const $button = $('#aic_export_conversation');
             $button.prop('disabled', true).html('<span class="dashicons dashicons-update"></span> Экспорт...');
             
+            // Log the data being sent
+            const requestData = {
+                action: 'aic_export_conversation',
+                nonce: aicAdmin.nonce,
+                conversation_id: conversationId
+            };
+            console.log('[AIC Export] Sending AJAX request with data:', requestData);
+            
             $.ajax({
                 url: aicAdmin.ajax_url,
                 type: 'POST',
-                data: {
-                    action: 'aic_export_conversation',
-                    nonce: aicAdmin.nonce,
-                    conversation_id: conversationId
-                },
+                data: requestData,
                 success: function(response) {
                     console.log('[AIC Export] Server response:', response);
                     
