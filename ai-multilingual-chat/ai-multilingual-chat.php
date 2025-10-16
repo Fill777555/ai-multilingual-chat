@@ -436,7 +436,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_start_conversation() {
-        check_ajax_referer('aic_frontend_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_frontend_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -510,7 +514,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_send_message() {
-        check_ajax_referer('aic_frontend_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_frontend_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -630,7 +638,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_get_messages() {
-        check_ajax_referer('aic_frontend_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_frontend_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -678,7 +690,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_admin_get_conversations() {
-        check_ajax_referer('aic_admin_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -718,7 +734,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_admin_get_messages() {
-        check_ajax_referer('aic_admin_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -789,7 +809,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_admin_send_message() {
-        check_ajax_referer('aic_admin_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -850,7 +874,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_admin_close_conversation() {
-        check_ajax_referer('aic_admin_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -885,7 +913,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_admin_typing() {
-        check_ajax_referer('aic_admin_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -912,7 +944,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_user_typing() {
-        check_ajax_referer('aic_frontend_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_frontend_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -939,7 +975,11 @@ class AI_Multilingual_Chat {
     }
     
     public function ajax_export_conversation() {
-        check_ajax_referer('aic_admin_nonce', 'nonce');
+        // Verify nonce, but don't die on failure - return error instead
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
         
         global $wpdb;
         
@@ -1468,7 +1508,11 @@ add_action('admin_menu', function() {
 
 // AJAX для генерации нового API ключа
 add_action('wp_ajax_aic_generate_api_key', function() {
-    check_ajax_referer('aic_admin_nonce', 'nonce');
+    // Verify nonce, but don't die on failure - return error instead
+    if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+        wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+        return;
+    }
     
     if (!current_user_can('manage_options')) {
         wp_send_json_error(array('message' => 'Permission denied'));
