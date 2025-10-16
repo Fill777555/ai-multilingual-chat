@@ -26,6 +26,20 @@ jQuery(document).ready(function($) {
         bindEvents: function() {
             const self = this;
 
+            // Initialize i18n with default language
+            if (window.AIC_i18n) {
+                AIC_i18n.init('en');
+            }
+
+            // Handle language dropdown change
+            $('#aic-user-language').on('change', function() {
+                const selectedLang = $(this).val();
+                if (window.AIC_i18n) {
+                    AIC_i18n.setLanguage(selectedLang);
+                    self.updateWelcomeScreen();
+                }
+            });
+
             $('#aic-chat-button').on('click', function() {
                 $('#aic-chat-window').slideToggle(300);
             });
@@ -382,6 +396,15 @@ jQuery(document).ready(function($) {
             return text.replace(/[&<>"']/g, function(m) { 
                 return map[m]; 
             });
+        },
+
+        updateWelcomeScreen: function() {
+            if (window.AIC_i18n) {
+                $('#aic-welcome-heading').text(AIC_i18n.t('welcome'));
+                $('#aic-welcome-text').text(AIC_i18n.t('introduce_yourself'));
+                $('#aic-user-name').attr('placeholder', AIC_i18n.t('your_name'));
+                $('#aic-start-chat').text(AIC_i18n.t('start_chat'));
+            }
         }
     };
 
