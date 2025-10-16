@@ -9,7 +9,7 @@
     color: #666;
 }
 
-.aic-loading:after {
+.aic-loading::after {
     content: '...';
     animation: dots 1.5s steps(4, end) infinite;
 }
