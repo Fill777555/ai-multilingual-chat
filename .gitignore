@@ -19,6 +19,8 @@ node_modules/
 vendor/
 .idea/
 .vscode/
+package.json
+package-lock.json
 
 # Test generated files
 tests/translation-test-report.md
