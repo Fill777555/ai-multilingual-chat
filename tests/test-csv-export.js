@@ -79,13 +79,23 @@ errorMessages.forEach(msg => {
     assert(msg.includes('Ошибка'), `Error message is in Russian: ${msg.substring(0, 30)}...`);
 });
 
-// Test 5: Blob creation
-console.log('\nTest 5: Blob Creation');
+// Test 5: Blob creation with Uint8Array (proper UTF-8 handling)
+console.log('\nTest 5: Blob Creation with Uint8Array');
 try {
-    // Server now includes BOM in the CSV content, so we don't add it client-side
-    const csvContent = 'test,content';
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    assert(blob.size > 0, 'Blob created successfully');
+    // Server sends base64 encoded UTF-8 bytes
+    // Client must convert to Uint8Array to preserve encoding
+    const testCsv = '\xEF\xBB\xBFtest,content'; // UTF-8 BOM + content
+    const base64 = typeof btoa !== 'undefined' ? btoa(testCsv) : Buffer.from(testCsv, 'binary').toString('base64');
+    
+    // Decode using the fixed method
+    const binaryString = typeof atob !== 'undefined' ? atob(base64) : Buffer.from(base64, 'base64').toString('binary');
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    
+    const blob = new Blob([bytes], { type: 'text/csv;charset=utf-8;' });
+    assert(blob.size === bytes.length, 'Blob size matches byte array length');
     assert(blob.type === 'text/csv;charset=utf-8;', 'Blob has correct MIME type');
 } catch (e) {
     console.error('Blob creation failed:', e.message);
