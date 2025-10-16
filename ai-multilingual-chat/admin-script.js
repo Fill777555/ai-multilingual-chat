@@ -124,6 +124,14 @@ jQuery(document).ready(function($) {
                         self.lastUnreadCount = totalUnread;
                         
                         self.renderConversations(conversations);
+                    } else if (!response.success && response.data && response.data.code === 'nonce_failed') {
+                        // Nonce verification failed - show error and stop polling
+                        console.error('Nonce verification failed');
+                        if (self.pollInterval) {
+                            clearInterval(self.pollInterval);
+                            self.pollInterval = null;
+                        }
+                        $('#aic-conversations').html('<div style="padding: 15px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;"><strong>⚠️ Security Token Expired</strong><p style="margin: 10px 0 0 0;">Your security token has expired. Please refresh the page to continue.</p><button onclick="location.reload()" class="button button-primary">🔄 Refresh Page</button></div>');
                     } else {
                         console.error('Response not successful or missing data:', response);
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
@@ -135,7 +143,18 @@ jQuery(document).ready(function($) {
                     console.error('XHR:', xhr);
                     console.error('Status:', status);
                     
-                    // Retry up to 2 times
+                    // Handle 403 Forbidden specifically
+                    if (xhr.status === 403) {
+                        console.error('403 Forbidden - security check failed');
+                        if (self.pollInterval) {
+                            clearInterval(self.pollInterval);
+                            self.pollInterval = null;
+                        }
+                        $('#aic-conversations').html('<div style="padding: 15px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;"><strong>⚠️ Security Token Expired</strong><p style="margin: 10px 0 0 0;">Your security token has expired. Please refresh the page to continue.</p><button onclick="location.reload()" class="button button-primary">🔄 Refresh Page</button></div>');
+                        return;
+                    }
+                    
+                    // Retry up to 2 times for other errors
                     if (retryCount < 2) {
                         console.log('Retrying in 2 seconds...');
                         setTimeout(function() {
@@ -543,7 +562,7 @@ jQuery(document).ready(function($) {
                     
                     let errorMsg = 'Ошибка соединения с сервером';
                     if (xhr.status === 403) {
-                        errorMsg = 'Ошибка авторизации (403)';
+                        errorMsg = 'Security token expired. Please refresh the page and try again.';
                     } else if (xhr.status === 404) {
                         errorMsg = 'Действие не найдено (404)';
                     } else if (xhr.status === 500) {
