@@ -25,8 +25,8 @@ $color = get_option('aic_chat_widget_color', '#667eea');
         
         <div id="aic-welcome-screen" class="aic-welcome-screen">
             <div class="aic-welcome-content">
-                <h3>Welcome!</h3>
-                <p>Please introduce yourself to start the chat</p>
+                <h3 id="aic-welcome-heading">Welcome!</h3>
+                <p id="aic-welcome-text">Please introduce yourself to start the chat</p>
                 <input type="text" 
                        id="aic-user-name" 
                        class="aic-input" 
