@@ -977,22 +977,32 @@ class AI_Multilingual_Chat {
     public function ajax_export_conversation() {
         // Verify nonce, but don't die on failure - return error instead
         if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            $this->log('Export failed: Nonce verification failed', 'error');
             wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
             return;
         }
         
         global $wpdb;
         
-        // Log export attempt
-        $this->log('Export conversation request received', 'info');
+        // Enhanced logging for debugging
+        $this->log('Export conversation request received. POST data: ' . json_encode($_POST), 'info');
         
         $conversation_id = isset($_POST['conversation_id']) ? intval($_POST['conversation_id']) : 0;
         
+        // Detailed validation logging
+        if (!isset($_POST['conversation_id'])) {
+            $this->log('Export failed: conversation_id parameter is missing from POST data', 'error');
+            wp_send_json_error(array('message' => 'Отсутствует параметр conversation_id'));
+            return;
+        }
+        
         if ($conversation_id <= 0) {
-            $this->log('Export failed: Invalid conversation ID', 'error');
+            $this->log("Export failed: Invalid conversation ID received: '{$_POST['conversation_id']}' (parsed as {$conversation_id})", 'error');
             wp_send_json_error(array('message' => 'Неверный ID диалога'));
             return;
         }
+        
+        $this->log("Export: Processing conversation ID {$conversation_id}", 'info');
         
         $conversation = $wpdb->get_row($wpdb->prepare(
             "SELECT * FROM {$this->table_conversations} WHERE id = %d", 
