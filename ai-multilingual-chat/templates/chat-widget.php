@@ -15,6 +15,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     
     <div id="aic-chat-window" class="aic-chat-window" style="display: none;">
         <div class="aic-chat-header">
+            <img width="50" height="50" src="https://web-proekt.com/wp-content/uploads/2020/09/MARKER-WEB-PROekt-blue.svg" class="attachment-large size-large" alt="" loading="lazy" decoding="async">
             <div>
                 <h3>Support chat</h3>
                 <p class="aic-chat-status">We are online</p>
