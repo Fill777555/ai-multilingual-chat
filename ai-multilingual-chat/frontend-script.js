@@ -464,6 +464,8 @@ jQuery(document).ready(function($) {
 
         updateWelcomeScreen: function() {
             if (window.AIC_i18n) {
+                $('#aic-chat_support-header').text(AIC_i18n.t('chat_support'));
+                $('#aic-online-header').text(AIC_i18n.t('online'));
                 $('#aic-welcome-heading').text(AIC_i18n.t('welcome'));
                 $('#aic-welcome-text').text(AIC_i18n.t('introduce_yourself'));
                 $('#aic-user-name').attr('placeholder', AIC_i18n.t('your_name'));
