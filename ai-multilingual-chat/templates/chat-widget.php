@@ -17,9 +17,10 @@ $color = get_option('aic_chat_widget_color', '#667eea');
         <div class="aic-chat-header">
             <img width="50" height="50" src="https://web-proekt.com/wp-content/uploads/2020/09/MARKER-WEB-PROekt-blue.svg" class="attachment-large size-large" alt="" loading="lazy" decoding="async">
             <div>
-                <h3>Support chat</h3>
-                <p class="aic-chat-status">We are online</p>
+                <h3 id="aic-chat_support-header">Support chat</h3>
+                <p class="aic-chat-status" id="aic-online-header">We are online</p>
             </div>
+
             <div style="display: flex; gap: 5px; align-items: center;">
                 <button id="aic-sound-toggle" class="aic-icon-button" title="Toggle sound notifications">
                     <span class="aic-sound-icon">
