@@ -332,8 +332,7 @@ class AI_Multilingual_Chat {
             'user_language' => $this->get_user_language(),
             'welcome_message' => get_option('aic_welcome_message', 'Здравствуйте!'),
             'enable_emoji' => get_option('aic_enable_emoji_picker', '1'),
-            'enable_dark_theme' => get_option('aic_enable_dark_theme', '0'),
-            'enable_sound' => get_option('aic_enable_sound_notifications', '1')
+            'enable_dark_theme' => get_option('aic_enable_dark_theme', '0')
         ));
     }
     
