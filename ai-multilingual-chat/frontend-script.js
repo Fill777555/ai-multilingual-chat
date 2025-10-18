@@ -7,11 +7,33 @@ jQuery(document).ready(function($) {
         pollInterval: null,
         lastMessageId: 0,
         isInitialized: false,
+        notificationSound: null,
+        soundEnabled: true,
 
         init: function() {
             this.sessionId = this.getOrCreateSessionId();
+            this.initNotificationSound();
             this.bindEvents();
             this.checkExistingConversation();
+        },
+
+        initNotificationSound: function() {
+            // Load user's sound preference from localStorage
+            const savedSoundEnabled = localStorage.getItem('aic_sound_enabled');
+            if (savedSoundEnabled !== null) {
+                this.soundEnabled = savedSoundEnabled === 'true';
+            }
+            
+            // Create notification sound using Web Audio API (same as admin)
+            this.notificationSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYHGGa77Od/Sh0MTKXi8LJjHAU2jtXyz3kpBSp4x/DckD4KEly06OqnVBIKRp7f8L5sIAUrgs/y2Yk3Bxdlu+znfkkdC0yl4vCyYxwFN47V8c55KgQpecfv3JA+ChJcten');
+        },
+
+        playNotificationSound: function() {
+            if (this.notificationSound && this.soundEnabled && aicFrontend.enable_sound === '1') {
+                this.notificationSound.play().catch(function(e) {
+                    console.log('Could not play notification sound:', e);
+                });
+            }
         },
 
         getOrCreateSessionId: function() {
@@ -31,6 +53,18 @@ jQuery(document).ready(function($) {
                 AIC_i18n.init('en');
             }
 
+            // Sound toggle button
+            $(document).on('click', '#aic-sound-toggle', function() {
+                self.soundEnabled = !self.soundEnabled;
+                localStorage.setItem('aic_sound_enabled', self.soundEnabled);
+                self.updateSoundButton();
+                
+                // Play a test sound if enabled
+                if (self.soundEnabled) {
+                    self.playNotificationSound();
+                }
+            });
+
             // Handle language dropdown change
             $('#aic-user-language').on('change', function() {
                 const selectedLang = $(this).val();
@@ -42,6 +76,7 @@ jQuery(document).ready(function($) {
 
             $('#aic-chat-button').on('click', function() {
                 $('#aic-chat-window').slideToggle(300);
+                self.updateSoundButton();
             });
 
             $('#aic-chat-close').on('click', function() {
@@ -272,6 +307,7 @@ jQuery(document).ready(function($) {
                             }
                         }
 
+                        let hasNewAdminMessage = false;
                         response.data.messages.forEach(function(msg) {
                             if (msg && 
                                 msg.id && 
@@ -285,9 +321,19 @@ jQuery(document).ready(function($) {
                                     const displayText = (msg.sender_type === 'admin' && msg.translated_text) ? msg.translated_text : msg.message_text;
                                     self.addMessage(displayText, msg.sender_type, false);
                                     self.lastMessageId = parseInt(msg.id);
+                                    
+                                    // Track if there's a new admin message (but not on initial load)
+                                    if (msg.sender_type === 'admin' && self.isInitialized) {
+                                        hasNewAdminMessage = true;
+                                    }
                                 }
                             }
                         });
+                        
+                        // Play notification sound if there's a new admin message
+                        if (hasNewAdminMessage) {
+                            self.playNotificationSound();
+                        }
 
                         self.scrollToBottom();
                         
@@ -401,6 +447,19 @@ jQuery(document).ready(function($) {
             return text.replace(/[&<>"']/g, function(m) { 
                 return map[m]; 
             });
+        },
+
+        updateSoundButton: function() {
+            const $button = $('#aic-sound-toggle');
+            if ($button.length) {
+                if (this.soundEnabled) {
+                    $button.removeClass('sound-disabled');
+                    $button.attr('title', 'Sound enabled - click to disable');
+                } else {
+                    $button.addClass('sound-disabled');
+                    $button.attr('title', 'Sound disabled - click to enable');
+                }
+            }
         },
 
         updateWelcomeScreen: function() {

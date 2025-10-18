@@ -182,8 +182,12 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                                id="aic_enable_sound_notifications" 
                                value="1" 
                                <?php checked($enable_sound, '1'); ?>>
-                        Включить звуковые уведомления в админке
+                        Включить звуковые уведомления в админке и для клиентов
                     </label>
+                    <p class="description">
+                        Администраторы слышат звук при новых сообщениях от клиентов, клиенты — при ответах администратора. 
+                        Клиенты могут отключить звук для себя через кнопку в чате.
+                    </p>
                 </td>
             </tr>
         </table>
