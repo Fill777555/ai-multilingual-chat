@@ -20,18 +20,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
                 <h3>Support chat</h3>
                 <p class="aic-chat-status">We are online</p>
             </div>
-            <div style="display: flex; gap: 5px; align-items: center;">
-                <button id="aic-sound-toggle" class="aic-icon-button" title="Toggle sound notifications">
-                    <span class="aic-sound-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <path class="sound-waves" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                        </svg>
-                        <span class="sound-mute-line"></span>
-                    </span>
-                </button>
-                <button id="aic-chat-close" class="aic-chat-close">&times;</button>
-            </div>
+            <button id="aic-chat-close" class="aic-chat-close">&times;</button>
         </div>
         
         <div id="aic-welcome-screen" class="aic-welcome-screen">
@@ -177,54 +166,6 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
-}
-
-.aic-icon-button {
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-    position: relative;
-}
-
-.aic-icon-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.aic-sound-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sound-mute-line {
-    display: none;
-    position: absolute;
-    width: 28px;
-    height: 2px;
-    background: white;
-    transform: rotate(-45deg);
-    border-radius: 1px;
-}
-
-.aic-icon-button.sound-disabled .sound-waves {
-    display: none;
-}
-
-.aic-icon-button.sound-disabled .sound-mute-line {
-    display: block;
-}
-
-.aic-icon-button.sound-disabled {
-    opacity: 0.7;
 }
 
 .aic-chat-header h3 {
