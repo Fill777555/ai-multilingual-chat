@@ -190,6 +190,47 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                     </p>
                 </td>
             </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_admin_notification_sound">Мелодия оповещения</label>
+                </th>
+                <td>
+                    <select id="aic_admin_notification_sound" name="aic_admin_notification_sound">
+                        <?php
+                        $current_sound = get_option('aic_admin_notification_sound', 'default');
+                        $sounds = array(
+                            'default' => 'По умолчанию',
+                            'bell' => 'Колокольчик',
+                            'ding' => 'Динь',
+                            'chime' => 'Перезвон',
+                            'soft' => 'Мягкий звук'
+                        );
+                        foreach ($sounds as $key => $label) {
+                            $selected = ($current_sound === $key) ? 'selected' : '';
+                            echo "<option value=\"{$key}\" {$selected}>{$label}</option>";
+                        }
+                        ?>
+                    </select>
+                    <button type="button" class="button" id="aic_preview_admin_sound" style="margin-left: 10px;">
+                        <span class="dashicons dashicons-controls-volumeon"></span> Прослушать
+                    </button>
+                    <p class="description">Выберите мелодию для звуковых уведомлений в админ-панели</p>
+                    
+                    <script>
+                    jQuery(document).ready(function($) {
+                        $('#aic_preview_admin_sound').on('click', function() {
+                            var soundKey = $('#aic_admin_notification_sound').val();
+                            var soundUrl = '<?php echo plugins_url('sounds/', __FILE__); ?>' + 'notification-' + soundKey + '.mp3';
+                            var audio = new Audio(soundUrl);
+                            audio.play().catch(function(e) {
+                                console.log('Could not play sound:', e);
+                            });
+                        });
+                    });
+                    </script>
+                </td>
+            </tr>
         </table>
         
         <hr>

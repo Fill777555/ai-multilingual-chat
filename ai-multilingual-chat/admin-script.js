@@ -16,8 +16,18 @@ jQuery(document).ready(function($) {
         },
 
         initNotificationSound: function() {
-            // Create notification sound using Web Audio API
-            this.notificationSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYHGGa77Od/Sh0MTKXi8LJjHAU2jtXyz3kpBSp4x/DckD4KEly06OqnVBIKRp7f8L5sIAUrgs/y2Yk3Bxdlu+znfkkdC0yl4vCyYxwFN47V8c55KgQpecfv3JA+ChJcten')
+            // Get selected sound from WordPress settings
+            const soundChoice = aicAdmin.sound_choice || 'default';
+            const soundUrl = aicAdmin.sound_base_url + 'notification-' + soundChoice + '.mp3';
+            
+            this.notificationSound = new Audio(soundUrl);
+            
+            // Handle loading errors
+            this.notificationSound.addEventListener('error', function() {
+                console.warn('Could not load selected sound, falling back to default');
+                const fallbackUrl = aicAdmin.sound_base_url + 'notification-default.mp3';
+                this.notificationSound = new Audio(fallbackUrl);
+            }.bind(this));
         },
 
         bindEvents: function() {
