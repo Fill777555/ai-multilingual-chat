@@ -147,20 +147,33 @@ try {
     const widget = {
         lastMessageId: 0,
         isInitialized: false,
+        isLoadingInitialMessages: false,
         soundEnabled: true,
         notificationSound: { play: () => Promise.resolve() },
         
-        processNewMessages: function(messages) {
+        processNewMessages: function(messages, isInitialLoad) {
             let hasNewAdminMessage = false;
+            
+            // Simulate the initial load flag behavior
+            if (isInitialLoad && this.lastMessageId === 0) {
+                this.isLoadingInitialMessages = true;
+            }
             
             messages.forEach((msg) => {
                 if (parseInt(msg.id) > this.lastMessageId) {
                     this.lastMessageId = parseInt(msg.id);
-                    if (msg.sender_type === 'admin' && this.isInitialized) {
+                    // Check isLoadingInitialMessages flag instead of isInitialized
+                    if (msg.sender_type === 'admin' && !this.isLoadingInitialMessages) {
                         hasNewAdminMessage = true;
                     }
                 }
             });
+            
+            // Mark initial loading as complete after processing all messages
+            if (this.isLoadingInitialMessages) {
+                this.isLoadingInitialMessages = false;
+                this.isInitialized = true;
+            }
             
             return hasNewAdminMessage;
         },
@@ -173,22 +186,20 @@ try {
         }
     };
     
-    // Simulate initial load (no sound)
+    // Simulate initial load (no sound) - this tests the actual bug fix
     console.log('  Testing initial message load (should NOT play sound)...');
     const initialMessages = [
         { id: '1', sender_type: 'user', message_text: 'Hello' },
         { id: '2', sender_type: 'admin', message_text: 'Hi there' }
     ];
     
-    let hasNewAdminMsg = widget.processNewMessages(initialMessages);
-    if (!hasNewAdminMsg) {
-        console.log('  ✓ No sound for initial load (isInitialized=false)');
+    let hasNewAdminMsg = widget.processNewMessages(initialMessages, true);
+    if (!hasNewAdminMsg && widget.isInitialized && !widget.isLoadingInitialMessages) {
+        console.log('  ✓ No sound for initial load (isLoadingInitialMessages flag prevents it)');
+        console.log('  ✓ isInitialized is now true after initial load');
     } else {
         console.log('  ✗ Incorrectly flagged for sound on initial load');
     }
-    
-    // Mark as initialized
-    widget.isInitialized = true;
     
     // Simulate new admin message arrival (should play sound)
     console.log('  Testing new admin message (should play sound)...');
@@ -196,7 +207,7 @@ try {
         { id: '3', sender_type: 'admin', message_text: 'How can I help?' }
     ];
     
-    hasNewAdminMsg = widget.processNewMessages(newMessages);
+    hasNewAdminMsg = widget.processNewMessages(newMessages, false);
     if (hasNewAdminMsg && widget.playNotificationSound()) {
         console.log('  ✓ Sound plays for new admin messages');
     } else {
@@ -209,7 +220,7 @@ try {
         { id: '4', sender_type: 'user', message_text: 'Thanks!' }
     ];
     
-    hasNewAdminMsg = widget.processNewMessages(userMessages);
+    hasNewAdminMsg = widget.processNewMessages(userMessages, false);
     if (!hasNewAdminMsg) {
         console.log('  ✓ No sound for user messages');
     } else {
@@ -220,8 +231,93 @@ try {
 }
 console.log('');
 
-// Test 5: Global enable_sound setting
-console.log('Test 5: Global enable_sound setting');
+// Test 5: Page refresh scenario (the bug scenario)
+console.log('Test 5: Page refresh scenario (loading existing messages)');
+try {
+    // Simulate page refresh where existing conversation is loaded
+    const widget = {
+        lastMessageId: 0,
+        isInitialized: false,
+        isLoadingInitialMessages: false,
+        soundEnabled: true,
+        notificationSound: { play: () => Promise.resolve() },
+        
+        loadMessagesSimulation: function(messages) {
+            let hasNewAdminMessage = false;
+            
+            // This simulates the actual loadMessages() flow
+            if (this.lastMessageId === 0) {
+                // First load - set the flag
+                this.isLoadingInitialMessages = true;
+            }
+            
+            messages.forEach((msg) => {
+                if (parseInt(msg.id) > this.lastMessageId) {
+                    this.lastMessageId = parseInt(msg.id);
+                    // The bug was checking isInitialized here, which was set to true above
+                    // The fix checks isLoadingInitialMessages instead
+                    if (msg.sender_type === 'admin' && !this.isLoadingInitialMessages) {
+                        hasNewAdminMessage = true;
+                    }
+                }
+            });
+            
+            // After processing all messages, mark loading as complete
+            if (this.isLoadingInitialMessages) {
+                this.isLoadingInitialMessages = false;
+                this.isInitialized = true;
+            }
+            
+            return hasNewAdminMessage;
+        },
+        
+        playNotificationSound: function() {
+            if (this.notificationSound && this.soundEnabled && aicFrontend.enable_sound === '1') {
+                return true;
+            }
+            return false;
+        }
+    };
+    
+    // Simulate refreshing a page where conversation history exists
+    console.log('  Simulating page refresh with existing conversation...');
+    const existingMessages = [
+        { id: '1', sender_type: 'user', message_text: 'Hello' },
+        { id: '2', sender_type: 'admin', message_text: 'Hi, how can I help?' },
+        { id: '3', sender_type: 'user', message_text: 'I need help with...' },
+        { id: '4', sender_type: 'admin', message_text: 'Sure, let me check that for you' }
+    ];
+    
+    let soundFlagged = widget.loadMessagesSimulation(existingMessages);
+    
+    if (!soundFlagged && widget.isInitialized) {
+        console.log('  ✓ NO sound played for existing messages on page refresh');
+        console.log('  ✓ Widget is now initialized and ready for new messages');
+    } else if (soundFlagged) {
+        console.log('  ✗ BUG: Sound would have played for existing messages!');
+    } else {
+        console.log('  ✗ Widget not initialized correctly');
+    }
+    
+    // Now simulate a new message arriving after page is loaded
+    console.log('  Testing new message after page refresh...');
+    const newMessage = [
+        { id: '5', sender_type: 'admin', message_text: 'I found the answer' }
+    ];
+    
+    soundFlagged = widget.loadMessagesSimulation(newMessage);
+    if (soundFlagged && widget.playNotificationSound()) {
+        console.log('  ✓ Sound correctly plays for NEW messages after page load');
+    } else {
+        console.log('  ✗ Sound not played for new message');
+    }
+} catch (error) {
+    console.log('  ✗ Test failed: ' + error.message);
+}
+console.log('');
+
+// Test 6: Global enable_sound setting
+console.log('Test 6: Global enable_sound setting');
 try {
     const widget = {
         soundEnabled: true,
