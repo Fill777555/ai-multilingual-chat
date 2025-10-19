@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) exit;
     
     <p>Настройте автоматические ответы на часто задаваемые вопросы. Система будет автоматически отвечать пользователям, если их сообщение содержит указанные ключевые слова.</p>
     
-    <div style="background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <div style="background: var(--aic-tab); padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
         <h2>Добавить новый FAQ</h2>
         
         <form method="post" action="">
@@ -81,7 +81,7 @@ if (!defined('ABSPATH')) exit;
         </form>
     </div>
     
-    <div style="background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <div style="background: var(--aic-tab); padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
         <h2>Существующие FAQ</h2>
         
         <?php if (empty($faqs)): ?>
