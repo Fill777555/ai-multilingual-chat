@@ -64,7 +64,7 @@ if (!defined('ABSPATH')) exit;
     </div>
     
     <?php if (!empty($languages)): ?>
-    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0;">
+    <div style="background: var(--aic-tab); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0;">
         <h2><?php _e('Языки пользователей', 'ai-multilingual-chat'); ?></h2>
         <table class="wp-list-table widefat fixed striped">
             <thead>
@@ -86,7 +86,7 @@ if (!defined('ABSPATH')) exit;
     <?php endif; ?>
     
     <?php if (!empty($daily_stats)): ?>
-    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0;">
+    <div style="background: var(--aic-tab); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0;">
         <h2><?php _e('Активность за последние 7 дней', 'ai-multilingual-chat'); ?></h2>
         <table class="wp-list-table widefat fixed striped">
             <thead>
