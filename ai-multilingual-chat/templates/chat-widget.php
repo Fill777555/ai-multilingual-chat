@@ -268,7 +268,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 .aic-welcome-content h3 {
     margin: 0 0 10px 0;
     font-size: 62px;
-    color: #357abd;
+    color: var(--widget-color);
 }
 
 .aic-welcome-content p {
@@ -372,7 +372,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     gap: 10px;
 }
 
-.aic-message-input {
+.aic-message-input { 
     flex: 1;
     padding: 10px 15px;
     border: 1px solid #ddd;
