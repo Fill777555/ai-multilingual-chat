@@ -102,10 +102,10 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                            value="<?php echo esc_attr($mobile_api_key); ?>" 
                            class="regular-text"
                            readonly>
-                    <button type="button" id="aic_generate_api_key" class="button">
+                    <button type="button" id="aic_generate_api_key" class="aic-button">
                         <span class="dashicons dashicons-update"></span> Сгенерировать
                     </button>
-                    <button type="button" id="aic_copy_api_key" class="button">
+                    <button type="button" id="aic_copy_api_key" class="aic-button">
                         <span class="dashicons dashicons-admin-page"></span> Копировать
                     </button>
                     <p class="description">Используется для доступа через REST API</p>
@@ -229,7 +229,7 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                         }
                         ?>
                     </select>
-                    <button type="button" class="button" id="aic_preview_admin_sound" style="margin-left: 10px;">
+                    <button type="button" class="aic-button" id="aic_preview_admin_sound" style="margin-left: 10px;">
                         <span class="dashicons dashicons-controls-volumeon"></span> Прослушать
                     </button>
                     <p class="description">Выберите мелодию для звуковых уведомлений в админ-панели</p>
@@ -279,7 +279,7 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                         }
                         ?>
                     </select>
-                    <button type="button" class="button" id="aic_preview_client_sound" style="margin-left: 10px;">
+                    <button type="button" class="aic-button" id="aic_preview_client_sound" style="margin-left: 10px;">
                         <span class="dashicons dashicons-controls-volumeon"></span> Прослушать
                     </button>
                     <p class="description">Выберите мелодию для звуковых уведомлений клиентов в чате</p>
@@ -363,17 +363,106 @@ jQuery(document).ready(function($) {
     width: 250px;
 }
 
+.comment-ays, .feature-filter, .popular-tags, .stuffbox, .widgets-holder-wrap, .wp-editor-container, p.popular-tags, table.widefat {
+    background: var(--aic-bg);
+}
+
 .widefat code {
-    background: #f5f5f5;
+    background: var(--aic-accent);
+    color: var(--aic-text-primary);
+    font-size: 1.3em;
     padding: 3px 8px;
     border-radius: 3px;
     font-size: 12px;
 }
+/* light theme specific hover states */
+[data-theme="light"] .widefat code {
+  color: #fff;
+}
 
-.button .dashicons {
+.widefat tfoot tr td, .widefat tfoot tr th, .widefat thead tr td, .widefat thead tr th{
+    color: var(--aic-text-primary);
+}
+.widefat td, .widefat th {
+    color: color: var(--aic-text-primary);
+}
+
+input.readonly, input[readonly], textarea.readonly, textarea[readonly] {
+    background-color: var(--aic-accent);
+    color: var(--aic-text-primary);
+}
+
+.wp-core-ui select {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--aic-text-primary);
+    border-color: var(--aic-accent);
+    box-shadow: none;
+    border-radius: 3px;
+    padding: 0 24px 0 8px;
+    min-height: 30px;
+    max-width: 25rem;
+    -webkit-appearance: none;
+    background: var(--aic-bg) url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E) no-repeat right 5px top 55%;
+    background-size: 16px 16px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+input[type=text] {
+    color: var(--aic-text-primary);
+    background: var(--aic-bg);
+    border-color: var(--aic-accent);
+}
+.aic-button .dashicons {
     font-size: 16px;
     width: 16px;
     height: 16px;
     vertical-align: middle;
 }
+
+.aic-button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--aic-accent);
+  background: var(--aic-accent);
+  color: var(--aic-text-primary);
+  cursor: pointer;
+  transition: background var(--aic-transition), transform var(--aic-transition), border var(--aic-transition);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* light theme specific hover states */
+[data-theme="light"] .aic-button {
+  color: #fff;
+}
+
+.aic-button:hover {
+  background: rgba(124, 92, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.aic-button.primary {
+  background: var(--aic-accent);
+  color: #fff;
+  box-shadow: var(--aic-shadow-sm);
+}
+
+.aic-button.primary:hover {
+  background: var(--aic-accent);
+  opacity: 0.9;
+}
+
+.aic-button[aria-pressed="true"] {
+  background: var(--aic-accent);
+  color: #fff;
+  border-color: var(--aic-accent);
+}
+
+.aic-button:focus {
+  outline: 2px solid rgba(124, 92, 255, 0.2);
+  outline-offset: 2px;
+}
+
 </style>
