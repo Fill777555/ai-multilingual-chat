@@ -308,7 +308,7 @@ jQuery(document).ready(function($) {
             let html = '';
             
             try {
-                html = '<div style="padding: 20px; max-height: 500px; overflow-y: auto; background: #f8f9fa;" id="aic_messages_container">';
+                html = '<div style="padding: 20px; max-height: 500px; overflow-y: auto; background: var(--aic-tab);" id="aic_messages_container">';
             
                 if (!messages || messages.length === 0) {
                     html += `
@@ -375,7 +375,12 @@ jQuery(document).ready(function($) {
             
             // Always add input area at the bottom
             html += `
-                <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
+                <div style="padding: 15px; border-top: 1px solid #eee; var(--aic-tab);">
+                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button id="aic_export_conversation" class="button">
+                            <span class="dashicons dashicons-download" style="vertical-align: middle;"></span> Экспорт CSV
+                        </button>
+                  </div>
                     <div style="display: flex; gap: 5px; align-items: flex-end;">
                         <textarea id="aic_admin_message_input" 
                                   placeholder="Введите сообщение..." 
@@ -384,11 +389,8 @@ jQuery(document).ready(function($) {
                         ${aicAdmin.enable_emoji === '1' ? '<button type="button" id="aic_admin_emoji_button" class="aic-emoji-button" title="Выбрать эмодзи">😀</button>' : ''}
                     </div>
                     <div style="margin-top: 10px; display: flex; gap: 10px;">
-                        <button id="aic_admin_send_message" class="button button-primary">
+                        <button id="aic_admin_send_message" class="aic-button button-primary">
                             <span class="dashicons dashicons-email" style="vertical-align: middle;"></span> Отправить
-                        </button>
-                        <button id="aic_export_conversation" class="button">
-                            <span class="dashicons dashicons-download" style="vertical-align: middle;"></span> Экспорт CSV
                         </button>
                     </div>
                 </div>
