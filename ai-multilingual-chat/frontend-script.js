@@ -24,8 +24,8 @@ jQuery(document).ready(function($) {
                 this.soundEnabled = savedSoundEnabled === 'true';
             }
             
-            // Get sound choice from localStorage or use default
-            const soundChoice = localStorage.getItem('aic_client_notification_sound') || 'default';
+            // Get sound choice from WordPress settings (admin-configured)
+            const soundChoice = aicFrontend.sound_choice || 'default';
             const soundUrl = aicFrontend.sound_base_url + 'notification-' + soundChoice + '.mp3';
             
             this.notificationSound = new Audio(soundUrl);
@@ -131,31 +131,6 @@ jQuery(document).ready(function($) {
                 self.typingTimer = setTimeout(function() {
                     self.sendTypingStatus(false);
                 }, 1000);
-            });
-            
-            // Sound settings modal
-            $(document).on('click', '#aic-sound-settings', function() {
-                self.openSoundModal();
-            });
-
-            $(document).on('click', '.aic-modal-close, .aic-modal-overlay', function() {
-                $('#aic-sound-modal').fadeOut(300);
-            });
-
-            $(document).on('click', '.aic-sound-item', function() {
-                $('.aic-sound-item').removeClass('selected');
-                $(this).addClass('selected');
-                $(this).find('input[type="radio"]').prop('checked', true);
-                
-                const soundKey = $(this).find('input[type="radio"]').val();
-                localStorage.setItem('aic_client_notification_sound', soundKey);
-                self.initNotificationSound(); // Reload sound with new choice
-            });
-
-            $(document).on('click', '.aic-sound-preview', function(e) {
-                e.stopPropagation();
-                const soundKey = $(this).data('sound');
-                self.previewSound(soundKey);
             });
         },
 
@@ -506,37 +481,6 @@ jQuery(document).ready(function($) {
                 $('#aic-user-name').attr('placeholder', AIC_i18n.t('your_name'));
                 $('#aic-start-chat').text(AIC_i18n.t('start_chat'));
             }
-        },
-        
-        openSoundModal: function() {
-            const self = this;
-            const currentSound = localStorage.getItem('aic_client_notification_sound') || 'default';
-            
-            let html = '';
-            $.each(aicFrontend.available_sounds, function(key, label) {
-                const checked = (key === currentSound) ? 'checked' : '';
-                const selectedClass = (key === currentSound) ? 'selected' : '';
-                
-                html += `
-                    <div class="aic-sound-item ${selectedClass}">
-                        <input type="radio" name="sound_choice" value="${key}" id="sound_${key}" ${checked}>
-                        <label for="sound_${key}">${label}</label>
-                        <button class="aic-sound-preview" data-sound="${key}">🔊 Прослушать</button>
-                    </div>
-                `;
-            });
-            
-            $('.aic-sound-list').html(html);
-            $('#aic-sound-modal').fadeIn(300);
-        },
-
-        previewSound: function(soundKey) {
-            const soundUrl = aicFrontend.sound_base_url + 'notification-' + soundKey + '.mp3';
-            const previewAudio = new Audio(soundUrl);
-            previewAudio.play().catch(function(e) {
-                console.log('Could not play preview sound:', e);
-                alert('Ошибка воспроизведения звука');
-            });
         }
     };
 

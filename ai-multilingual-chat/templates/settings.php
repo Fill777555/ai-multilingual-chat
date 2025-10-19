@@ -227,8 +227,45 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                                 console.log('Could not play sound:', e);
                             });
                         });
+                        
+                        $('#aic_preview_client_sound').on('click', function() {
+                            var soundKey = $('#aic_client_notification_sound').val();
+                            var soundUrl = '<?php echo plugins_url('sounds/', dirname(__FILE__)); ?>' + 'notification-' + soundKey + '.mp3';
+                            var audio = new Audio(soundUrl);
+                            audio.play().catch(function(e) {
+                                console.log('Could not play sound:', e);
+                            });
+                        });
                     });
                     </script>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_client_notification_sound">Мелодия оповещения для клиентов</label>
+                </th>
+                <td>
+                    <select id="aic_client_notification_sound" name="aic_client_notification_sound">
+                        <?php
+                        $current_client_sound = get_option('aic_client_notification_sound', 'default');
+                        $sounds = array(
+                            'default' => 'По умолчанию',
+                            'bell' => 'Колокольчик',
+                            'ding' => 'Динь',
+                            'chime' => 'Перезвон',
+                            'soft' => 'Мягкий звук'
+                        );
+                        foreach ($sounds as $key => $label) {
+                            $selected = ($current_client_sound === $key) ? 'selected' : '';
+                            echo "<option value=\"{$key}\" {$selected}>{$label}</option>";
+                        }
+                        ?>
+                    </select>
+                    <button type="button" class="button" id="aic_preview_client_sound" style="margin-left: 10px;">
+                        <span class="dashicons dashicons-controls-volumeon"></span> Прослушать
+                    </button>
+                    <p class="description">Выберите мелодию для звуковых уведомлений клиентов в чате</p>
                 </td>
             </tr>
         </table>

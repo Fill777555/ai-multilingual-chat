@@ -252,6 +252,7 @@ class AI_Multilingual_Chat {
             'aic_enable_emoji_picker' => '1',
             'aic_enable_dark_theme' => '0',
             'aic_enable_sound_notifications' => '1',
+            'aic_client_notification_sound' => 'default',
         );
         
         foreach ($defaults as $key => $value) {
@@ -344,6 +345,7 @@ class AI_Multilingual_Chat {
             'enable_dark_theme' => get_option('aic_enable_dark_theme', '0'),
             'enable_sound' => get_option('aic_enable_sound_notifications', '1'),
             'sound_base_url' => plugins_url('sounds/', __FILE__),
+            'sound_choice' => get_option('aic_client_notification_sound', 'default'),
             'available_sounds' => array(
                 'default' => 'По умолчанию',
                 'bell' => 'Колокольчик',
@@ -379,7 +381,7 @@ class AI_Multilingual_Chat {
     }
     
     private function save_settings($post_data) {
-        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound');
+        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound');
         
         foreach ($settings as $setting) {
             if (isset($post_data[$setting])) {
