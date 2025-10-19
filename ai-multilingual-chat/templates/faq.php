@@ -93,9 +93,9 @@ if (!defined('ABSPATH')) exit;
                         <th style="width: 20%;">Вопрос</th>
                         <th style="width: 30%;">Ответ</th>
                         <th style="width: 25%;">Ключевые слова</th>
-                        <th style="width: 10%;">Язык</th>
+                        <th style="width: 5%;">Язык</th>
                         <th style="width: 10%;">Статус</th>
-                        <th style="width: 5%;">Действия</th>
+                        <th style="width: 10%;">Действия</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,8 +121,7 @@ if (!defined('ABSPATH')) exit;
                                 <form method="post" style="display: inline;">
                                     <?php wp_nonce_field('aic_faq_nonce'); ?>
                                     <input type="hidden" name="faq_id" value="<?php echo $faq->id; ?>">
-                                    <button type="submit" name="aic_delete_faq" class="button button-small" 
-                                            onclick="return confirm('Удалить этот FAQ?')">
+                                    <button type="submit" name="aic_delete_faq" class="aic-btn primary" onclick="return confirm('Удалить этот FAQ?')">
                                         Удалить
                                     </button>
                                 </form>
