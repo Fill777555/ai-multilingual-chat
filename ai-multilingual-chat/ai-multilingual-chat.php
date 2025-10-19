@@ -3,14 +3,14 @@
  * Plugin Name: AI Multilingual Chat
  * Plugin URI: https://web-proekt.com
  * Description: Многоязычный чат с автопереводом через AI
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Oleg Filin
  * Text Domain: ai-multilingual-chat
  */
 
 if (!defined('ABSPATH')) exit;
 
-define('AIC_VERSION', '2.0.3');
+define('AIC_VERSION', '2.0.4');
 define('AIC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIC_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIC_PLUGIN_FILE', __FILE__);
@@ -253,6 +253,7 @@ class AI_Multilingual_Chat {
             'aic_enable_dark_theme' => '0',
             'aic_enable_sound_notifications' => '1',
             'aic_client_notification_sound' => 'default',
+            'aic_theme_mode' => 'auto',
         );
         
         foreach ($defaults as $key => $value) {
@@ -282,13 +283,16 @@ class AI_Multilingual_Chat {
         wp_enqueue_style('aic-admin-style', AIC_PLUGIN_URL . 'admin-style.css', array(), AIC_VERSION);
         wp_enqueue_script('aic-admin-script', AIC_PLUGIN_URL . 'admin-script.js', array('jquery'), AIC_VERSION, true);
         
+        // Enqueue theme toggle script
+        wp_enqueue_script('aic-theme-toggle', AIC_PLUGIN_URL . 'assets/theme-toggle.js', array(), AIC_VERSION, false);
+        
         // Enqueue emoji picker if enabled
         if (get_option('aic_enable_emoji_picker', '1') === '1') {
             wp_enqueue_style('aic-emoji-picker', AIC_PLUGIN_URL . 'emoji-picker.css', array(), AIC_VERSION);
             wp_enqueue_script('aic-emoji-picker', AIC_PLUGIN_URL . 'emoji-picker.js', array('jquery'), AIC_VERSION, true);
         }
         
-        // Enqueue dark theme if enabled
+        // Enqueue dark theme if enabled (legacy support)
         if (get_option('aic_enable_dark_theme', '0') === '1') {
             wp_enqueue_style('aic-dark-theme', AIC_PLUGIN_URL . 'dark-theme.css', array('aic-admin-style'), AIC_VERSION);
             add_filter('admin_body_class', function($classes) {
@@ -302,6 +306,7 @@ class AI_Multilingual_Chat {
             'enable_emoji' => get_option('aic_enable_emoji_picker', '1'),
             'enable_sound' => get_option('aic_enable_sound_notifications', '1'),
             'enable_dark_theme' => get_option('aic_enable_dark_theme', '0'),
+            'theme_mode' => get_option('aic_theme_mode', 'auto'),
             'sound_base_url' => plugins_url('sounds/', __FILE__),
             'sound_choice' => get_option('aic_admin_notification_sound', 'default'),
             'available_sounds' => array(
@@ -381,7 +386,7 @@ class AI_Multilingual_Chat {
     }
     
     private function save_settings($post_data) {
-        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound');
+        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode');
         
         foreach ($settings as $setting) {
             if (isset($post_data[$setting])) {
