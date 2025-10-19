@@ -7,6 +7,7 @@ jQuery(document).ready(function($) {
         pollInterval: null,
         lastMessageId: 0,
         isInitialized: false,
+        isLoadingInitialMessages: false,
         notificationSound: null,
         soundEnabled: true,
 
@@ -310,7 +311,7 @@ jQuery(document).ready(function($) {
                             $('#aic-chat-messages').show();
                             $('#aic-chat-input-wrapper').show();
                             $('#aic-chat-messages').empty();
-                            self.isInitialized = true;
+                            self.isLoadingInitialMessages = true;
                             
                             if (response.data.conversation_id) {
                                 self.conversationId = response.data.conversation_id;
@@ -333,12 +334,18 @@ jQuery(document).ready(function($) {
                                     self.lastMessageId = parseInt(msg.id);
                                     
                                     // Track if there's a new admin message (but not on initial load)
-                                    if (msg.sender_type === 'admin' && self.isInitialized) {
+                                    if (msg.sender_type === 'admin' && !self.isLoadingInitialMessages) {
                                         hasNewAdminMessage = true;
                                     }
                                 }
                             }
                         });
+                        
+                        // Mark initial loading as complete after processing all messages
+                        if (self.isLoadingInitialMessages) {
+                            self.isLoadingInitialMessages = false;
+                            self.isInitialized = true;
+                        }
                         
                         // Play notification sound if there's a new admin message
                         if (hasNewAdminMessage) {
