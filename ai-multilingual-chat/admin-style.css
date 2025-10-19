@@ -1,123 +1,284 @@
+/* CSS Variables for Theme Support */
+:root {
+  --aic-bg: #ffffff;
+  --aic-surface: #f6f7fb;
+  --aic-text-primary: #0f1724;
+  --aic-text-secondary: #475569;
+  --aic-muted: #94a3b8;
+  --aic-accent: #6b46d9;
+  --aic-danger: #ef4444;
+  --aic-card-radius: 8px;
+  --aic-transition: 180ms;
+  --aic-shadow-sm: 0 1px 4px rgba(2, 6, 23, 0.06);
+  --aic-shadow-md: 0 8px 24px rgba(2, 6, 23, 0.08);
+  --aic-border: #e2e8f0;
+}
+
+[data-theme="dark"] {
+  --aic-bg: #0b1020;
+  --aic-surface: #0f1724;
+  --aic-text-primary: #e6eef8;
+  --aic-text-secondary: #9fb0c8;
+  --aic-muted: #7b8ea3;
+  --aic-accent: #7450ff;
+  --aic-danger: #ff6b6b;
+  --aic-shadow-sm: 0 6px 18px rgba(2, 6, 23, 0.6);
+  --aic-shadow-md: 0 10px 30px rgba(2, 6, 23, 0.7);
+  --aic-border: #1e293b;
+}
+
+html,
+body {
+  background: var(--aic-bg);
+  color: var(--aic-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: background var(--aic-transition) ease, color var(--aic-transition) ease;
+}
+
 #aic-admin-chat-container {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  min-height: 600px;
+  align-items: flex-start;
 }
 
 .aic-conversations-list {
-    width: 300px;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
-    border-radius: 8px;
+  width: 320px;
+  background: var(--aic-surface);
+  padding: 16px;
+  border-radius: var(--aic-card-radius);
+  box-shadow: var(--aic-shadow-sm);
+  transition: background var(--aic-transition), box-shadow var(--aic-transition);
+  max-height: 76vh;
+  overflow: auto;
 }
 
 .aic-chat-area {
-    flex: 1;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
-    border-radius: 8px;
-    min-height: 600px;
+  flex: 1;
+  background: var(--aic-surface);
+  padding: 20px;
+  border-radius: var(--aic-card-radius);
+  box-shadow: var(--aic-shadow-sm);
+  min-height: 500px;
+  transition: background var(--aic-transition), box-shadow var(--aic-transition);
 }
 
 #aic-conversations {
-    max-height: 600px;
-    overflow-y: auto;
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .aic-conversation-item {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    transition: background 0.2s;
-    border-radius: 4px;
-    margin-bottom: 5px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  background: transparent;
+  transition: background var(--aic-transition), transform var(--aic-transition);
+  border: none;
+  border-bottom: 1px solid var(--aic-border);
 }
 
 .aic-conversation-item:hover {
-    background: #f5f5f5;
+  background: rgba(124, 92, 255, 0.06);
+  transform: translateY(-2px);
 }
 
 .aic-conversation-item.active {
-    background: #e3f2fd;
-    border-left: 3px solid #2196f3;
+  background: linear-gradient(90deg, rgba(124, 92, 255, 0.08), transparent);
+  box-shadow: var(--aic-shadow-sm);
+  border-left: 3px solid var(--aic-accent);
+  border-bottom: 1px solid var(--aic-border);
 }
 
 .aic-conversation-name {
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #333;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--aic-text-primary);
 }
 
 .aic-conversation-preview {
-    font-size: 12px;
-    color: #666;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 12px;
+  color: var(--aic-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .aic-unread-badge {
-    background: #f44336;
-    color: white;
-    border-radius: 10px;
-    padding: 2px 8px;
-    font-size: 11px;
-    font-weight: 600;
-    display: inline-block;
+  background: var(--aic-danger);
+  color: white;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.aic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--aic-border);
+}
+
+.aic-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--aic-text-primary);
+}
+
+.aic-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.aic-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--aic-text-primary);
+  cursor: pointer;
+  transition: background var(--aic-transition), transform var(--aic-transition), border var(--aic-transition);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.aic-btn:hover {
+  background: rgba(124, 92, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.aic-btn.primary {
+  background: var(--aic-accent);
+  color: #fff;
+  box-shadow: var(--aic-shadow-sm);
+}
+
+.aic-btn.primary:hover {
+  background: var(--aic-accent);
+  opacity: 0.9;
+}
+
+.aic-btn[aria-pressed="true"] {
+  background: var(--aic-accent);
+  color: #fff;
+  border-color: var(--aic-accent);
+}
+
+.aic-btn:focus {
+  outline: 2px solid rgba(124, 92, 255, 0.2);
+  outline-offset: 2px;
 }
 
 #aic_messages_container {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    max-height: 500px;
-    overflow-y: auto;
-    margin-bottom: 15px;
+  background: var(--aic-bg);
+  border-radius: 8px;
+  padding: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  border: 1px solid var(--aic-border);
 }
 
 #aic_messages_container::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 #aic_messages_container::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 #aic_messages_container::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 3px;
+  background: var(--aic-muted);
+  border-radius: 3px;
 }
 
 #aic_messages_container::-webkit-scrollbar-thumb:hover {
-    background: #999;
+  background: var(--aic-text-secondary);
+}
+
+.aic-conversations-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.aic-conversations-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.aic-conversations-list::-webkit-scrollbar-thumb {
+  background: var(--aic-muted);
+  border-radius: 3px;
+}
+
+.aic-conversations-list::-webkit-scrollbar-thumb:hover {
+  background: var(--aic-text-secondary);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
 }
 
 /* Typing indicator animation */
 @keyframes typing-dot {
-    0%, 60%, 100% {
-        opacity: 0.3;
-        transform: translateY(0);
-    }
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
 
-    30% {
-        opacity: 1;
-        transform: translateY(-10px);
-    }
+  30% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
 }
 
 .typing-indicator span {
-    animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
 }
 
 /* Loading spinner animation */
 @keyframes rotation {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    to {
-        transform: rotate(359deg);
-    }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+/* Dark theme specific hover states */
+[data-theme="dark"] .aic-conversation-item:hover {
+  background: rgba(139, 100, 255, 0.08);
+}
+
+[data-theme="dark"] .aic-btn:hover {
+  background: rgba(139, 100, 255, 0.08);
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  #aic-admin-chat-container {
+    flex-direction: column;
+  }
+  
+  .aic-conversations-list {
+    width: 100%;
+    max-height: 400px;
+  }
 }

@@ -173,6 +173,23 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
             
             <tr>
                 <th scope="row">
+                    <label for="aic_theme_mode">Тема оформления админки</label>
+                </th>
+                <td>
+                    <?php
+                    $theme_mode = get_option('aic_theme_mode', 'auto');
+                    ?>
+                    <select name="aic_theme_mode" id="aic_theme_mode" style="min-width:140px;">
+                        <option value="light" <?php selected($theme_mode, 'light'); ?>>Светлая</option>
+                        <option value="dark"  <?php selected($theme_mode, 'dark'); ?>>Тёмная</option>
+                        <option value="auto"  <?php selected($theme_mode, 'auto'); ?>>Авто (по системе)</option>
+                    </select>
+                    <p class="description">Выберите тему для админ-панели плагина. "Авто" использует системную тему вашего устройства.</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
                     <label for="aic_enable_sound_notifications">Звуковые уведомления</label>
                 </th>
                 <td>
