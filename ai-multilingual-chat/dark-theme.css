@@ -1,4 +1,7 @@
 /* Dark Theme for AI Multilingual Chat */
+/* DEPRECATED: This file is kept for legacy compatibility only. */
+/* New theme system uses CSS variables in admin-style.css with [data-theme="dark"] attribute */
+/* Please use the new theme toggle in admin panel or settings instead */
 
 /* Admin Panel Dark Theme */
 body.aic-dark-theme #aic-admin-chat-container {
