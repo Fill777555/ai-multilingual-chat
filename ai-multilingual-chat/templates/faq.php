@@ -354,14 +354,13 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <!-- Toggle form -->
-                                <form method="post" style="display:inline;">
-                                    <?php wp_nonce_field('aic_faq_nonce'); ?>
-                                    <input type="hidden" name="faq_id" value="<?php echo esc_attr($faq->id); ?>">
-                                    <button type="submit" name="aic_toggle_faq" class="aic-btn primary">
-                                        <?php echo !empty($faq->is_active) ? esc_html__('Отключить', 'ai-multilingual-chat') : esc_html__('Включить', 'ai-multilingual-chat'); ?>
-                                    </button>
-                                </form>
+                                <!-- Toggle button (AJAX) -->
+                                <button type="button" 
+                                        class="aic-btn primary aic-faq-toggle" 
+                                        data-faq-id="<?php echo esc_attr($faq->id); ?>"
+                                        data-is-active="<?php echo esc_attr($faq->is_active); ?>">
+                                    <?php echo !empty($faq->is_active) ? esc_html__('Отключить', 'ai-multilingual-chat') : esc_html__('Включить', 'ai-multilingual-chat'); ?>
+                                </button>
 
                                 <!-- Delete form -->
                                 <form method="post" style="display:inline; margin-left:8px;">
@@ -379,3 +378,82 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
         <?php endif; ?>
     </div>
 </div>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    // Handle FAQ toggle with AJAX
+    $(document).on('click', '.aic-faq-toggle', function() {
+        var $button = $(this);
+        var faqId = $button.data('faq-id');
+        var isActive = $button.data('is-active');
+        var $row = $button.closest('tr');
+        var $statusCell = $row.find('td:nth-child(5)'); // Status column
+        
+        // Disable button during request
+        $button.prop('disabled', true).text('Обновление...');
+        
+        $.ajax({
+            url: aicAdmin.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'aic_toggle_faq',
+                nonce: aicAdmin.nonce,
+                faq_id: faqId
+            },
+            success: function(response) {
+                if (response.success) {
+                    var newState = response.data.is_active;
+                    
+                    // Update button state
+                    $button.data('is-active', newState);
+                    $button.text(newState ? 'Отключить' : 'Включить');
+                    
+                    // Update status display
+                    if (newState) {
+                        $statusCell.html('<span style="color: green;">✓ Активен</span>');
+                    } else {
+                        $statusCell.html('<span style="color: red;">✗ Неактивен</span>');
+                    }
+                    
+                    // Show success message
+                    var $notice = $('<div class="notice notice-success is-dismissible"><p>Статус FAQ успешно обновлён!</p></div>');
+                    $('.wrap h1').after($notice);
+                    
+                    // Auto-dismiss notice after 3 seconds
+                    setTimeout(function() {
+                        $notice.fadeOut(function() {
+                            $(this).remove();
+                        });
+                    }, 3000);
+                } else {
+                    var errorMsg = response.data && response.data.message ? response.data.message : 'Неизвестная ошибка';
+                    alert('Ошибка: ' + errorMsg);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('FAQ toggle error:', error);
+                var errorMsg = 'Ошибка соединения с сервером';
+                
+                if (xhr.status === 403) {
+                    errorMsg = 'Проверка безопасности не пройдена. Обновите страницу.';
+                } else if (status === 'timeout') {
+                    errorMsg = 'Превышено время ожидания';
+                }
+                
+                alert('Ошибка: ' + errorMsg);
+            },
+            complete: function() {
+                // Re-enable button
+                $button.prop('disabled', false);
+            }
+        });
+    });
+    
+    // Handle dismissible notices
+    $(document).on('click', '.notice.is-dismissible .notice-dismiss', function() {
+        $(this).closest('.notice').fadeOut(function() {
+            $(this).remove();
+        });
+    });
+});
+</script>

@@ -59,6 +59,7 @@ class AI_Multilingual_Chat {
         add_action('wp_ajax_nopriv_aic_user_typing', array($this, 'ajax_user_typing'));
         
         add_action('wp_ajax_aic_export_conversation', array($this, 'ajax_export_conversation'));
+        add_action('wp_ajax_aic_toggle_faq', array($this, 'ajax_toggle_faq'));
         
         add_action('rest_api_init', array($this, 'register_rest_routes'));
     }
@@ -1092,6 +1093,62 @@ class AI_Multilingual_Chat {
             'csv' => $encoded_csv,
             'filename' => $filename,
             'message_count' => count($messages)
+        ));
+    }
+    
+    public function ajax_toggle_faq() {
+        // Verify nonce
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => 'Security check failed. Please refresh the page.', 'code' => 'nonce_failed'));
+            return;
+        }
+        
+        // Check user permissions
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => 'Permission denied'));
+            return;
+        }
+        
+        global $wpdb;
+        $faq_table = $wpdb->prefix . 'ai_chat_faq';
+        
+        $faq_id = isset($_POST['faq_id']) ? intval($_POST['faq_id']) : 0;
+        
+        if ($faq_id <= 0) {
+            wp_send_json_error(array('message' => 'Invalid FAQ ID'));
+            return;
+        }
+        
+        // Get current FAQ state
+        $faq = $wpdb->get_row($wpdb->prepare("SELECT id, is_active FROM {$faq_table} WHERE id = %d", $faq_id));
+        
+        if (!$faq) {
+            wp_send_json_error(array('message' => 'FAQ not found'));
+            return;
+        }
+        
+        // Toggle the is_active state
+        $new_state = $faq->is_active ? 0 : 1;
+        
+        $result = $wpdb->update(
+            $faq_table,
+            array(
+                'is_active' => $new_state,
+                'updated_at' => current_time('mysql')
+            ),
+            array('id' => $faq_id),
+            array('%d', '%s'),
+            array('%d')
+        );
+        
+        if ($result === false) {
+            wp_send_json_error(array('message' => 'Database error: ' . $wpdb->last_error));
+            return;
+        }
+        
+        wp_send_json_success(array(
+            'message' => 'FAQ status updated',
+            'is_active' => $new_state
         ));
     }
     
