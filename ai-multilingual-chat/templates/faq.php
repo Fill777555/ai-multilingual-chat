@@ -312,7 +312,7 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
             </table>
 
             <p class="submit">
-                <input type="submit" name="aic_add_faq" class="button button-primary" value="<?php esc_attr_e('Добавить FAQ', 'ai-multilingual-chat'); ?>">
+                <input type="submit" name="aic_add_faq" class="aic-btn primary" value="<?php esc_attr_e('Добавить FAQ', 'ai-multilingual-chat'); ?>">
             </p>
         </form>
     </div>
@@ -331,7 +331,7 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
                         <th style="width: 25%;"><?php esc_html_e('Ключевые слова', 'ai-multilingual-chat'); ?></th>
                         <th style="width: 5%;"><?php esc_html_e('Язык', 'ai-multilingual-chat'); ?></th>
                         <th style="width: 10%;"><?php esc_html_e('Статус', 'ai-multilingual-chat'); ?></th>
-                        <th style="width: 10%;"><?php esc_html_e('Действия', 'ai-multilingual-chat'); ?></th>
+                        <th style="width: 15%;"><?php esc_html_e('Действия', 'ai-multilingual-chat'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
