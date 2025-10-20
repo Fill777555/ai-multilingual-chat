@@ -344,8 +344,8 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 }
 
 .aic-admin-avatar {
-    width: 32px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     flex-shrink: 0;
     margin-top: 4px;
