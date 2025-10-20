@@ -151,7 +151,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     right: 0;
     width: 380px;
     height: 600px;
-    background: white;
+    background: #1c2126;
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     display: flex;
@@ -184,7 +184,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 .aic-icon-button {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--aic-text-primary);
     cursor: pointer;
     padding: 5px;
     display: flex;
@@ -313,7 +313,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     flex: 1;
     overflow-y: auto;
     padding: 20px;
-    background: #f8f9fa;
+    background: #1c2126;
 }
 
 .aic-message {
