@@ -285,6 +285,35 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                     <p class="description">Выберите мелодию для звуковых уведомлений клиентов в чате</p>
                 </td>
             </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_admin_avatar">Аватар администратора</label>
+                </th>
+                <td>
+                    <?php
+                    $admin_avatar = get_option('aic_admin_avatar', '');
+                    ?>
+                    <div style="margin-bottom: 10px;">
+                        <?php if (!empty($admin_avatar)): ?>
+                            <img id="aic_admin_avatar_preview" src="<?php echo esc_url($admin_avatar); ?>" style="max-width: 100px; max-height: 100px; border-radius: 50%; display: block; margin-bottom: 10px;">
+                        <?php else: ?>
+                            <img id="aic_admin_avatar_preview" src="" style="max-width: 100px; max-height: 100px; border-radius: 50%; display: none; margin-bottom: 10px;">
+                        <?php endif; ?>
+                    </div>
+                    <input type="hidden" 
+                           name="aic_admin_avatar" 
+                           id="aic_admin_avatar" 
+                           value="<?php echo esc_attr($admin_avatar); ?>">
+                    <button type="button" id="aic_upload_avatar" class="aic-button">
+                        <span class="dashicons dashicons-upload"></span> Загрузить изображение
+                    </button>
+                    <button type="button" id="aic_remove_avatar" class="aic-button" <?php echo empty($admin_avatar) ? 'style="display:none;"' : ''; ?>>
+                        <span class="dashicons dashicons-no"></span> Удалить
+                    </button>
+                    <p class="description">Аватар будет отображаться рядом с сообщениями администратора в чате. Рекомендуемый размер: 100x100 пикселей</p>
+                </td>
+            </tr>
         </table>
         
         <hr>
@@ -354,6 +383,49 @@ jQuery(document).ready(function($) {
                 btn.html(originalText);
             }, 2000);
         });
+    });
+    
+    // Admin avatar upload using WordPress media library
+    var avatarUploader;
+    
+    $('#aic_upload_avatar').on('click', function(e) {
+        e.preventDefault();
+        
+        // If the uploader object has already been created, reopen the dialog
+        if (avatarUploader) {
+            avatarUploader.open();
+            return;
+        }
+        
+        // Create the media uploader
+        avatarUploader = wp.media({
+            title: 'Выберите аватар администратора',
+            button: {
+                text: 'Использовать это изображение'
+            },
+            library: {
+                type: 'image'
+            },
+            multiple: false
+        });
+        
+        // When an image is selected, run a callback
+        avatarUploader.on('select', function() {
+            var attachment = avatarUploader.state().get('selection').first().toJSON();
+            $('#aic_admin_avatar').val(attachment.url);
+            $('#aic_admin_avatar_preview').attr('src', attachment.url).show();
+            $('#aic_remove_avatar').show();
+        });
+        
+        avatarUploader.open();
+    });
+    
+    // Remove avatar
+    $('#aic_remove_avatar').on('click', function(e) {
+        e.preventDefault();
+        $('#aic_admin_avatar').val('');
+        $('#aic_admin_avatar_preview').attr('src', '').hide();
+        $(this).hide();
     });
 });
 </script>

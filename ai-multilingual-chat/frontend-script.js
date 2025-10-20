@@ -406,8 +406,15 @@ jQuery(document).ready(function($) {
             const messageClass = type === 'user' ? 'user' : 'admin';
             const time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
             
+            // Add avatar for admin messages if configured
+            let avatarHtml = '';
+            if (type === 'admin' && aicFrontend.admin_avatar) {
+                avatarHtml = `<img src="${this.escapeHtml(aicFrontend.admin_avatar)}" class="aic-admin-avatar" alt="Admin">`;
+            }
+            
             const messageHtml = `
                 <div class="aic-message ${messageClass}" style="${animate ? 'display:none;' : ''}">
+                    ${avatarHtml}
                     <div class="aic-message-content">
                         ${this.escapeHtml(text)}
                         <div class="aic-message-time">${time}</div>

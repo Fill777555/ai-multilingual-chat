@@ -3,14 +3,14 @@
  * Plugin Name: AI Multilingual Chat
  * Plugin URI: https://web-proekt.com
  * Description: Многоязычный чат с автопереводом через AI
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Oleg Filin
  * Text Domain: ai-multilingual-chat
  */
 
 if (!defined('ABSPATH')) exit;
 
-define('AIC_VERSION', '2.0.4');
+define('AIC_VERSION', '2.0.5');
 define('AIC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIC_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIC_PLUGIN_FILE', __FILE__);
@@ -255,6 +255,7 @@ class AI_Multilingual_Chat {
             'aic_enable_sound_notifications' => '1',
             'aic_client_notification_sound' => 'default',
             'aic_theme_mode' => 'auto',
+            'aic_admin_avatar' => '',
         );
         
         foreach ($defaults as $key => $value) {
@@ -279,6 +280,11 @@ class AI_Multilingual_Chat {
     public function enqueue_admin_scripts($hook) {
         if (strpos($hook, 'ai-multilingual-chat') === false && strpos($hook, 'ai-chat-settings') === false && strpos($hook, 'ai-chat-stats') === false && strpos($hook, 'ai-chat-faq') === false) {
             return;
+        }
+        
+        // Enqueue WordPress media uploader for settings page
+        if (strpos($hook, 'ai-chat-settings') !== false) {
+            wp_enqueue_media();
         }
         
         wp_enqueue_style('aic-admin-style', AIC_PLUGIN_URL . 'admin-style.css', array(), AIC_VERSION);
@@ -310,6 +316,7 @@ class AI_Multilingual_Chat {
             'theme_mode' => get_option('aic_theme_mode', 'auto'),
             'sound_base_url' => plugins_url('sounds/', __FILE__),
             'sound_choice' => get_option('aic_admin_notification_sound', 'default'),
+            'admin_avatar' => get_option('aic_admin_avatar', ''),
             'available_sounds' => array(
                 'default' => 'По умолчанию',
                 'bell' => 'Колокольчик',
@@ -352,6 +359,7 @@ class AI_Multilingual_Chat {
             'enable_sound' => get_option('aic_enable_sound_notifications', '1'),
             'sound_base_url' => plugins_url('sounds/', __FILE__),
             'sound_choice' => get_option('aic_client_notification_sound', 'default'),
+            'admin_avatar' => get_option('aic_admin_avatar', ''),
             'available_sounds' => array(
                 'default' => 'По умолчанию',
                 'bell' => 'Колокольчик',
@@ -387,7 +395,7 @@ class AI_Multilingual_Chat {
     }
     
     private function save_settings($post_data) {
-        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode');
+        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode', 'aic_admin_avatar');
         
         foreach ($settings as $setting) {
             if (isset($post_data[$setting])) {
