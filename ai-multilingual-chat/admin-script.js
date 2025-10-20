@@ -332,14 +332,22 @@ jQuery(document).ready(function($) {
                         // Show translated text to admin if available, otherwise show original
                         const displayText = (!isAdmin && msg.translated_text) ? msg.translated_text : msg.message_text;
                         const hasTranslation = (!isAdmin && msg.translated_text);
+                        
+                        // Add avatar for admin messages if configured
+                        let avatarHtml = '';
+                        if (isAdmin && aicAdmin.admin_avatar) {
+                            avatarHtml = '<img src="' + adminChat.escapeHtml(aicAdmin.admin_avatar) + '" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 8px;" alt="Admin">';
+                        }
 
                         html += `
                             <div style="display: flex; justify-content: ${alignClass}; margin-bottom: 15px;">
+                                ${isAdmin && avatarHtml ? '<div style="display: flex; align-items: flex-start; gap: 8px;">' + avatarHtml : ''}
                                 <div style="max-width: 70%; padding: 12px 16px; border-radius: 12px; background: ${bgColor}; color: ${textColor}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                                     ${adminChat.escapeHtml(displayText)}
                                     ${hasTranslation ? '<div style="font-size: 10px; margin-top: 5px; opacity: 0.6; font-style: italic;">📝 Оригинал: ' + adminChat.escapeHtml(msg.message_text) + '</div>' : ''}
                                     <div style="font-size: 11px; margin-top: 5px; opacity: 0.7;">${time}</div>
                                 </div>
+                                ${isAdmin && avatarHtml ? '</div>' : ''}
                             </div>
                         `;
                     });

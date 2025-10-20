@@ -337,6 +337,20 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     justify-content: flex-end;
 }
 
+.aic-message.admin {
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.aic-admin-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
 .aic-message-content {
     max-width: 70%;
     padding: 12px 16px;
