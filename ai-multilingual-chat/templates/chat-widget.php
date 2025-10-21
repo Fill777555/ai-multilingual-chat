@@ -7,9 +7,20 @@ $border_radius = get_option('aic_widget_border_radius', '12');
 $font_size = get_option('aic_widget_font_size', '14');
 $padding = get_option('aic_widget_padding', '20');
 $custom_css = get_option('aic_widget_custom_css', '');
+
+// New color settings
+$widget_bg_color = get_option('aic_widget_bg_color', '#1c2126');
+$chat_button_color = get_option('aic_chat_button_color', '#667eea');
+$header_bg_color = get_option('aic_header_bg_color', '#667eea');
+$user_msg_bg_color = get_option('aic_user_msg_bg_color', '#667eea');
+$admin_msg_bg_color = get_option('aic_admin_msg_bg_color', '#ffffff');
+$user_msg_text_color = get_option('aic_user_msg_text_color', '#ffffff');
+$admin_msg_text_color = get_option('aic_admin_msg_text_color', '#333333');
+$send_button_color = get_option('aic_send_button_color', '#667eea');
+$input_border_color = get_option('aic_input_border_color', '#dddddd');
 ?>
 
-<div id="aic-chat-widget" class="aic-widget-<?php echo esc_attr($position); ?>" style="--widget-color: <?php echo esc_attr($color); ?>; --widget-border-radius: <?php echo esc_attr($border_radius); ?>px; --widget-font-size: <?php echo esc_attr($font_size); ?>px; --widget-padding: <?php echo esc_attr($padding); ?>px;">
+<div id="aic-chat-widget" class="aic-widget-<?php echo esc_attr($position); ?>" style="--widget-color: <?php echo esc_attr($color); ?>; --widget-border-radius: <?php echo esc_attr($border_radius); ?>px; --widget-font-size: <?php echo esc_attr($font_size); ?>px; --widget-padding: <?php echo esc_attr($padding); ?>px; --widget-bg-color: <?php echo esc_attr($widget_bg_color); ?>; --chat-button-color: <?php echo esc_attr($chat_button_color); ?>; --header-bg-color: <?php echo esc_attr($header_bg_color); ?>; --user-msg-bg-color: <?php echo esc_attr($user_msg_bg_color); ?>; --admin-msg-bg-color: <?php echo esc_attr($admin_msg_bg_color); ?>; --user-msg-text-color: <?php echo esc_attr($user_msg_text_color); ?>; --admin-msg-text-color: <?php echo esc_attr($admin_msg_text_color); ?>; --send-button-color: <?php echo esc_attr($send_button_color); ?>; --input-border-color: <?php echo esc_attr($input_border_color); ?>;">
     <button id="aic-chat-button" class="aic-chat-button">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -89,6 +100,15 @@ $custom_css = get_option('aic_widget_custom_css', '');
     --widget-border-radius: <?php echo esc_attr($border_radius); ?>px;
     --widget-font-size: <?php echo esc_attr($font_size); ?>px;
     --widget-padding: <?php echo esc_attr($padding); ?>px;
+    --widget-bg-color: <?php echo esc_attr($widget_bg_color); ?>;
+    --chat-button-color: <?php echo esc_attr($chat_button_color); ?>;
+    --header-bg-color: <?php echo esc_attr($header_bg_color); ?>;
+    --user-msg-bg-color: <?php echo esc_attr($user_msg_bg_color); ?>;
+    --admin-msg-bg-color: <?php echo esc_attr($admin_msg_bg_color); ?>;
+    --user-msg-text-color: <?php echo esc_attr($user_msg_text_color); ?>;
+    --admin-msg-text-color: <?php echo esc_attr($admin_msg_text_color); ?>;
+    --send-button-color: <?php echo esc_attr($send_button_color); ?>;
+    --input-border-color: <?php echo esc_attr($input_border_color); ?>;
 }
 
 #aic-chat-widget {
@@ -122,7 +142,7 @@ $custom_css = get_option('aic_widget_custom_css', '');
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: var(--widget-color);
+    background: var(--chat-button-color);
     border: none;
     color: white;
     cursor: pointer;
@@ -159,7 +179,7 @@ $custom_css = get_option('aic_widget_custom_css', '');
     right: 0;
     width: 380px;
     height: 600px;
-    background: #1c2126;
+    background: var(--widget-bg-color);
     border-radius: var(--widget-border-radius);
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     display: flex;
@@ -180,7 +200,7 @@ $custom_css = get_option('aic_widget_custom_css', '');
 }
 
 .aic-chat-header {
-    background: var(--widget-color);
+    background: var(--header-bg-color);
     color: white;
     padding: var(--widget-padding);
     display: flex;
@@ -276,7 +296,7 @@ $custom_css = get_option('aic_widget_custom_css', '');
 .aic-welcome-content h3 {
     margin: 0 0 10px 0;
     font-size: 62px;
-    color: var(--widget-color);
+    color: var(--header-bg-color);
 }
 
 .aic-welcome-content p {
@@ -288,7 +308,7 @@ $custom_css = get_option('aic_widget_custom_css', '');
 .aic-input {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border-color);
     border-radius: 8px;
     margin-bottom: 12px;
     font-size: 14px;
@@ -297,13 +317,13 @@ $custom_css = get_option('aic_widget_custom_css', '');
 
 .aic-input:focus {
     outline: none;
-    border-color: var(--widget-color);
+    border-color: var(--header-bg-color);
 }
 
 .aic-button {
     width: 100%;
     padding: 12px;
-    background: var(--widget-color);
+    background: var(--header-bg-color);
     color: white;
     border: none;
     border-radius: 8px;
@@ -321,7 +341,7 @@ $custom_css = get_option('aic_widget_custom_css', '');
     flex: 1;
     overflow-y: auto;
     padding: 20px;
-    background: #1c2126;
+    background: var(--widget-bg-color);
 }
 
 .aic-message {
@@ -368,14 +388,14 @@ $custom_css = get_option('aic_widget_custom_css', '');
 }
 
 .aic-message.user .aic-message-content {
-    background: var(--widget-color);
-    color: white;
+    background: var(--user-msg-bg-color);
+    color: var(--user-msg-text-color);
     border-bottom-right-radius: 4px;
 }
 
 .aic-message.admin .aic-message-content {
-    background: white;
-    color: #333;
+    background: var(--admin-msg-bg-color);
+    color: var(--admin-msg-text-color);
     border-bottom-left-radius: 4px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
@@ -397,7 +417,7 @@ $custom_css = get_option('aic_widget_custom_css', '');
 .aic-message-input { 
     flex: 1;
     padding: 10px 15px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border-color);
     border-radius: 20px;
     resize: none;
     font-size: 14px;
@@ -407,14 +427,14 @@ $custom_css = get_option('aic_widget_custom_css', '');
 
 .aic-message-input:focus {
     outline: none;
-    border-color: var(--widget-color);
+    border-color: var(--send-button-color);
 }
 
 .aic-send-button {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--widget-color);
+    background: var(--send-button-color);
     border: none;
     color: white;
     cursor: pointer;
