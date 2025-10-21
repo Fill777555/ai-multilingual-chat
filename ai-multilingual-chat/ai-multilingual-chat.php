@@ -92,7 +92,7 @@ class AI_Multilingual_Chat {
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         
         // Conversations table
-        $sql_conversations = "CREATE TABLE IF NOT EXISTS {$table_conversations} (
+        $sql_conversations = "CREATE TABLE {$table_conversations} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             user_id bigint(20) UNSIGNED DEFAULT NULL,
             session_id varchar(255) NOT NULL,
@@ -116,7 +116,7 @@ class AI_Multilingual_Chat {
         dbDelta($sql_conversations);
         
         // Messages table
-        $sql_messages = "CREATE TABLE IF NOT EXISTS {$table_messages} (
+        $sql_messages = "CREATE TABLE {$table_messages} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             conversation_id bigint(20) UNSIGNED NOT NULL,
             sender_type varchar(20) NOT NULL,
@@ -137,7 +137,7 @@ class AI_Multilingual_Chat {
         dbDelta($sql_messages);
         
         // Translation cache table
-        $sql_cache = "CREATE TABLE IF NOT EXISTS {$table_cache} (
+        $sql_cache = "CREATE TABLE {$table_cache} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             source_text text NOT NULL,
             source_language varchar(10) NOT NULL,
@@ -153,7 +153,7 @@ class AI_Multilingual_Chat {
         dbDelta($sql_cache);
         
         // FAQ table
-        $sql_faq = "CREATE TABLE IF NOT EXISTS {$table_faq} (
+        $sql_faq = "CREATE TABLE {$table_faq} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             question text NOT NULL,
             answer text NOT NULL,
@@ -250,7 +250,7 @@ class AI_Multilingual_Chat {
         
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         
-        $sql_conversations = "CREATE TABLE IF NOT EXISTS {$this->table_conversations} (
+        $sql_conversations = "CREATE TABLE {$this->table_conversations} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             user_id bigint(20) UNSIGNED DEFAULT NULL,
             session_id varchar(255) NOT NULL,
@@ -266,7 +266,7 @@ class AI_Multilingual_Chat {
             KEY status (status)
         ) $charset_collate;";
         
-        $sql_messages = "CREATE TABLE IF NOT EXISTS {$this->table_messages} (
+        $sql_messages = "CREATE TABLE {$this->table_messages} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             conversation_id bigint(20) UNSIGNED NOT NULL,
             sender_type varchar(20) NOT NULL,
