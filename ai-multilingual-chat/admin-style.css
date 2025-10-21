@@ -77,6 +77,14 @@ table.widefat, .widefat td,.widefat td, .widefat thead tr th {
     border-bottom: 1px solid #bebebe;
 }
 
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    border: 1px solid var(--aic-surface);
+    background-color: var(--aic-surface);
+    color: var(--aic-text-primary);
+}
+
 #aic-admin-chat-container {
   display: flex;
   gap: 20px;
@@ -131,9 +139,9 @@ table.widefat, .widefat td,.widefat td, .widefat thead tr th {
 }
 
 .aic-conversation-item.active {
-  background: linear-gradient(90deg, rgba(124, 92, 255, 0.08), transparent);
+  background: linear-gradient(90deg, rgba(125, 92, 255, 0.476), transparent);
   box-shadow: var(--aic-shadow-sm);
-  border-left: 3px solid var(--aic-accent);
+  border-left: 9px solid var(--aic-accent);
   border-bottom: 1px solid var(--aic-border);
 }
 
@@ -220,6 +228,34 @@ table.widefat, .widefat td,.widefat td, .widefat thead tr th {
 .aic-btn:focus {
   outline: 2px solid rgba(124, 92, 255, 0.2);
   outline-offset: 2px;
+}
+
+.wp-core-ui .button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--aic-accent);
+  background: var(--aic-accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background var(--aic-transition), transform var(--aic-transition), border var(--aic-transition);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.wp-core-ui .button:hover {
+  background: var(--aic-hover);
+  transform: translateY(-1px);
+}
+
+.wp-core-ui .button.primary {
+  background: var(--aic-accent);
+  color: #fff;
+  box-shadow: var(--aic-shadow-sm);
+}
+
+.wp-core-ui .button.primary:hover {
+  background: var(--aic-accent);
+  opacity: 0.9;
 }
 
 #aic_messages_container {
@@ -324,138 +360,3 @@ table.widefat, .widefat td,.widefat td, .widefat thead tr th {
   }
 }
 
-/* Darc tems import*/
-
-body.aic-dark-theme #aic-admin-chat-container {
-    background: #7f515100;
-}
-
-body.aic-dark-theme .aic-conversations-list,
-body.aic-dark-theme .aic-chat-area {
-    background: var(--aic-bg);
-    color: #e0e0e0;
-}
-
-body.aic-dark-theme .aic-conversation-item {
-    border-bottom-color: var(--aic-accent);
-    color: var(--aic-text-primary);
-}
-
-body.aic-dark-theme .aic-conversation-item:hover {
-    background: #3a3a3a;
-}
-
-body.aic-dark-theme .aic-conversation-item.active {
-    background: var(--aic-accent);
-    color: #e0e0e0;
-    border-left-color: var(--aic-accent);
-}
-
-body.aic-dark-theme .aic-conversation-preview {
-    color: #999;
-}
-
-body.aic-dark-theme #aic_messages_container {
-    background: var(--aic-bg);
-}
-
-body.aic-dark-theme #aic_admin_message_input {
-    background: var(--aic-bg);
-    color: var(--aic-text-primary);
-    border-color: #444;
-}
-
-body.aic-dark-theme #aic_admin_message_input::placeholder {
-    color: #777;
-}
-
-body.aic-dark-theme .button-primary {
-    background: var(--aic-accent) !important;
-    border-color: var(--aic-accent) !important;
-    border-radius: 8px !important;
-    padding: 5px 18px !important;
-}
-
-body.aic-dark-theme .button-primary:hover {
-    background: var(--aic-hover) !important;
-    border-color: var(--aic-hover) !important;
-}
-
-body.aic-dark-theme .button-smol {
-    background: var(--aic-accent) !important;
-    border-color: var(--aic-accent) !important;
-    color: var(--aic-text-primary);
-    border-radius: 8px !important;
-    padding: 6px 11px !important;
-}
-
-body.aic-dark-theme .button-smol:hover {
-    background: var(--aic-hover) !important;
-    border-color: var(--aic-hover) !important;
-}
-
-/* Frontend Chat Widget Dark Theme */
-body.aic-dark-theme #aic-chat-widget .aic-chat-window {
-    background: #2d2d2d;
-    color: #e0e0e0;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-chat-header {
-    background: var(--widget-color);
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-chat-messages {
-    background: #1a1a1a00;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-message.admin {
-    /* background: #3a3a3a00; */
-    color: #e0e0e0;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-message.user {
-    /* background: #4a91e200; */
-    color: white;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-message-input {
-    background: #2d2d2d;
-    color: #e0e0e0;
-    border-color: #444;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-message-input::placeholder {
-    color: #777;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-input {
-    background: #2d2d2d;
-    color: #e0e0e0;
-    border-color: #444;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-button {
-    background: var(--widget-color);
-    color: white;
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-button:hover {
-    background: var(--widget-color);
-}
-
-body.aic-dark-theme #aic-chat-widget .aic-welcome-screen {
-    background: #1a1a1a;
-}
-
-/* Scrollbar dark theme */
-body.aic-dark-theme ::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-
-body.aic-dark-theme ::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
-}
-
-body.aic-dark-theme ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
