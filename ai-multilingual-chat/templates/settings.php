@@ -460,10 +460,7 @@ jQuery(document).ready(function($) {
         $('.aic-settings-tab').hide().removeClass('aic-settings-tab-active');
         $('#tab-' + targetTab).show().addClass('aic-settings-tab-active');
     });
-});
-
-<script>
-jQuery(document).ready(function($) {
+    
     // Генерация API ключа
     $('#aic_generate_api_key').on('click', function() {
         const key = 'aic_' + Math.random().toString(36).substring(2, 15) + 
