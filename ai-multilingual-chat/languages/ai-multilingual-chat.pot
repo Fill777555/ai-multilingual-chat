@@ -1,0 +1,205 @@
+# AI Multilingual Chat - WordPress Plugin
+# Copyright (C) 2024 Oleg Filin
+# This file is distributed under the same license as the AI Multilingual Chat plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Multilingual Chat 2.0.7\n"
+"Report-Msgid-Bugs-To: https://web-proekt.com\n"
+"POT-Creation-Date: 2025-10-21 16:30+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Manual\n"
+
+#: ai-multilingual-chat.php:76
+msgid "Plugin activated"
+msgstr ""
+
+#: ai-multilingual-chat.php:81
+msgid "Plugin deactivated"
+msgstr ""
+
+#: ai-multilingual-chat.php:125
+msgid "Tables created/updated"
+msgstr ""
+
+#: ai-multilingual-chat.php:140
+msgid "Added target_language column"
+msgstr ""
+
+#: ai-multilingual-chat.php:156
+msgid "Added typing indicator columns"
+msgstr ""
+
+#: ai-multilingual-chat.php:180
+msgid "Created translation cache table"
+msgstr ""
+
+#: ai-multilingual-chat.php:205
+msgid "Created FAQ table"
+msgstr ""
+
+#: ai-multilingual-chat.php:209
+msgid "How can I contact you?"
+msgstr ""
+
+#: ai-multilingual-chat.php:210
+msgid "You can write to us here in the chat, and we will reply as soon as possible."
+msgstr ""
+
+#: ai-multilingual-chat.php:215
+msgid "What are your business hours?"
+msgstr ""
+
+#: ai-multilingual-chat.php:216
+msgid "We work daily from 9:00 AM to 6:00 PM."
+msgstr ""
+
+#: ai-multilingual-chat.php:286
+msgid "AI Chat"
+msgstr ""
+
+#: ai-multilingual-chat.php:287
+msgid "Conversation Management"
+msgstr ""
+
+#: ai-multilingual-chat.php:288
+msgid "Settings"
+msgstr ""
+
+#: ai-multilingual-chat.php:289
+msgid "Statistics"
+msgstr ""
+
+#: ai-multilingual-chat.php:290
+msgid "FAQ"
+msgstr ""
+
+#: ai-multilingual-chat.php:404
+msgid "Settings saved!"
+msgstr ""
+
+#: ai-multilingual-chat.php:464
+msgid "FAQ added!"
+msgstr ""
+
+#: ai-multilingual-chat.php:470
+msgid "FAQ deleted!"
+msgstr ""
+
+#: ai-multilingual-chat.php:484
+msgid "You have %d unread message."
+msgid_plural "You have %d unread messages."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ai-multilingual-chat.php:485
+msgid "AI Chat:"
+msgstr ""
+
+#: ai-multilingual-chat.php:485
+msgid "Open chat"
+msgstr ""
+
+#: ai-multilingual-chat.php:1523
+#, c-format
+msgid "[%s] New chat message"
+msgstr ""
+
+#: ai-multilingual-chat.php:1526
+#, c-format
+msgid "New message from %1$s:\n\n%2$s\n\nOpen: %3$s"
+msgstr ""
+
+#: ai-multilingual-chat.php:1527
+msgid "Guest"
+msgstr ""
+
+#: templates/settings.php:41
+msgid "AI Multilingual Chat Settings"
+msgstr ""
+
+#: templates/settings.php:45
+msgid "General Settings"
+msgstr ""
+
+#: templates/settings.php:46
+msgid "Widget Design"
+msgstr ""
+
+#: templates/settings.php:47
+msgid "REST API"
+msgstr ""
+
+#: templates/settings.php:59
+msgid "AI Provider"
+msgstr ""
+
+#: templates/settings.php:67
+msgid "Select the provider for message translation"
+msgstr ""
+
+#: templates/settings.php:73
+msgid "AI API Key"
+msgstr ""
+
+#: templates/settings.php:82
+msgid "Get your key:"
+msgstr ""
+
+#: templates/settings.php:92
+msgid "Administrator Language"
+msgstr ""
+
+#: templates/settings.php:107
+msgid "The language in which you communicate with clients"
+msgstr ""
+
+#: templates/settings.php:113
+msgid "Automatic Translation"
+msgstr ""
+
+#: templates/settings.php:122
+msgid "Enable automatic translation via AI"
+msgstr ""
+
+#: templates/settings.php:124
+msgid "If disabled, messages will not be translated"
+msgstr ""
+
+#: templates/settings.php:130
+msgid "API Key for Mobile App"
+msgstr ""
+
+#: templates/settings.php:140
+msgid "Generate"
+msgstr ""
+
+#: templates/settings.php:344
+msgid "Color Settings"
+msgstr ""
+
+#: templates/settings.php:345
+msgid "Configure colors for different chat widget elements"
+msgstr ""
+
+#: templates/settings.php:347
+msgid "Main Widget Colors"
+msgstr ""
+
+#: templates/settings.php:351
+msgid "Widget Background Color"
+msgstr ""
+
+#: templates/settings.php:363
+msgid "Background color of the chat window"
+msgstr ""
+
+#: templates/settings.php:712
+msgid "Save Settings"
+msgstr ""
