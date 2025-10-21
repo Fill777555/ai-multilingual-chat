@@ -466,8 +466,8 @@ $custom_css = get_option('aic_widget_custom_css', '');
     background: #999;
 }
 
-/* Custom CSS from settings */
+/* Custom CSS from settings - sanitized with wp_strip_all_tags() on save */
 <?php if (!empty($custom_css)): ?>
-<?php echo $custom_css; ?>
+<?php echo $custom_css; // Already sanitized with wp_strip_all_tags() ?>
 <?php endif; ?>
 </style>
