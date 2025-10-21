@@ -36,6 +36,7 @@ class AI_Multilingual_Chat {
     }
     
     private function init_hooks() {
+        add_action('plugins_loaded', array($this, 'load_textdomain'));
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         add_action('admin_notices', array($this, 'admin_notices'));
@@ -64,16 +65,20 @@ class AI_Multilingual_Chat {
         add_action('rest_api_init', array($this, 'register_rest_routes'));
     }
     
+    public function load_textdomain() {
+        load_plugin_textdomain('ai-multilingual-chat', false, dirname(plugin_basename(AIC_PLUGIN_FILE)) . '/languages');
+    }
+    
     public function activate() {
         $this->create_tables();
         $this->update_tables();
         $this->set_default_options();
-        $this->log('Плагин активирован');
+        $this->log(__('Plugin activated', 'ai-multilingual-chat'));
         flush_rewrite_rules();
     }
     
     public function deactivate() {
-        $this->log('Плагин деактивирован');
+        $this->log(__('Plugin deactivated', 'ai-multilingual-chat'));
     }
     
     private function create_tables() {
@@ -117,7 +122,7 @@ class AI_Multilingual_Chat {
         dbDelta($sql_conversations);
         dbDelta($sql_messages);
         
-        $this->log('Таблицы созданы/обновлены');
+        $this->log(__('Tables created/updated', 'ai-multilingual-chat'));
     }
     
     private function update_tables() {
@@ -132,7 +137,7 @@ class AI_Multilingual_Chat {
                 "ALTER TABLE {$this->table_messages} 
                 ADD COLUMN target_language varchar(10) DEFAULT NULL AFTER original_language"
             );
-            $this->log('Добавлена колонка target_language');
+            $this->log(__('Added target_language column', 'ai-multilingual-chat'));
         }
         
         // Add typing indicator columns to conversations table
@@ -148,7 +153,7 @@ class AI_Multilingual_Chat {
                 ADD COLUMN user_typing_at datetime DEFAULT NULL,
                 ADD COLUMN admin_typing_at datetime DEFAULT NULL"
             );
-            $this->log('Добавлены колонки для typing indicator');
+            $this->log(__('Added typing indicator columns', 'ai-multilingual-chat'));
         }
         
         // Create translation cache table
@@ -172,7 +177,7 @@ class AI_Multilingual_Chat {
             
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
-            $this->log('Создана таблица кэша переводов');
+            $this->log(__('Created translation cache table', 'ai-multilingual-chat'));
         }
         
         // Create FAQ table
@@ -197,26 +202,20 @@ class AI_Multilingual_Chat {
             
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
-            $this->log('Создана таблица FAQ');
+            $this->log(__('Created FAQ table', 'ai-multilingual-chat'));
             
             // Add default FAQs
             $default_faqs = array(
                 array(
-                    'question' => 'Как с вами связаться?',
-                    'answer' => 'Вы можете написать нам здесь в чате, и мы ответим в ближайшее время.',
-                    'keywords' => 'связаться,контакты,телефон,email',
-                    'language' => 'ru'
-                ),
-                array(
-                    'question' => 'Какой у вас график работы?',
-                    'answer' => 'Мы работаем ежедневно с 9:00 до 18:00.',
-                    'keywords' => 'график,время,работа,часы',
-                    'language' => 'ru'
-                ),
-                array(
-                    'question' => 'How can I contact you?',
-                    'answer' => 'You can write to us here in the chat, and we will reply as soon as possible.',
+                    'question' => __('How can I contact you?', 'ai-multilingual-chat'),
+                    'answer' => __('You can write to us here in the chat, and we will reply as soon as possible.', 'ai-multilingual-chat'),
                     'keywords' => 'contact,phone,email,reach',
+                    'language' => 'en'
+                ),
+                array(
+                    'question' => __('What are your business hours?', 'ai-multilingual-chat'),
+                    'answer' => __('We work daily from 9:00 AM to 6:00 PM.', 'ai-multilingual-chat'),
+                    'keywords' => 'schedule,time,work,hours',
                     'language' => 'en'
                 )
             );
@@ -283,11 +282,11 @@ class AI_Multilingual_Chat {
     }
     
     public function add_admin_menu() {
-        add_menu_page('AI Chat', 'AI Chat', 'manage_options', 'ai-multilingual-chat', array($this, 'render_admin_page'), 'dashicons-format-chat', 30);
-        add_submenu_page('ai-multilingual-chat', 'Управление диалогами', 'Управление диалогами', 'manage_options', 'ai-multilingual-chat', array($this, 'render_admin_page'));
-        add_submenu_page('ai-multilingual-chat', 'Настройки', 'Настройки', 'manage_options', 'ai-chat-settings', array($this, 'render_settings_page'));
-        add_submenu_page('ai-multilingual-chat', 'Статистика', 'Статистика', 'manage_options', 'ai-chat-stats', array($this, 'render_stats_page'));
-        add_submenu_page('ai-multilingual-chat', 'FAQ', 'FAQ', 'manage_options', 'ai-chat-faq', array($this, 'render_faq_page'));
+        add_menu_page(__('AI Chat', 'ai-multilingual-chat'), __('AI Chat', 'ai-multilingual-chat'), 'manage_options', 'ai-multilingual-chat', array($this, 'render_admin_page'), 'dashicons-format-chat', 30);
+        add_submenu_page('ai-multilingual-chat', __('Conversation Management', 'ai-multilingual-chat'), __('Conversation Management', 'ai-multilingual-chat'), 'manage_options', 'ai-multilingual-chat', array($this, 'render_admin_page'));
+        add_submenu_page('ai-multilingual-chat', __('Settings', 'ai-multilingual-chat'), __('Settings', 'ai-multilingual-chat'), 'manage_options', 'ai-chat-settings', array($this, 'render_settings_page'));
+        add_submenu_page('ai-multilingual-chat', __('Statistics', 'ai-multilingual-chat'), __('Statistics', 'ai-multilingual-chat'), 'manage_options', 'ai-chat-stats', array($this, 'render_stats_page'));
+        add_submenu_page('ai-multilingual-chat', __('FAQ', 'ai-multilingual-chat'), __('FAQ', 'ai-multilingual-chat'), 'manage_options', 'ai-chat-faq', array($this, 'render_faq_page'));
     }
     
     public function enqueue_admin_scripts($hook) {
@@ -402,7 +401,7 @@ class AI_Multilingual_Chat {
     public function render_settings_page() {
         if (isset($_POST['aic_save_settings']) && check_admin_referer('aic_settings_nonce')) {
             $this->save_settings($_POST);
-            echo '<div class="notice notice-success is-dismissible"><p><strong>Настройки сохранены!</strong></p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__('Settings saved!', 'ai-multilingual-chat') . '</strong></p></div>';
         }
         include AIC_PLUGIN_DIR . 'templates/settings.php';
     }
@@ -462,13 +461,13 @@ class AI_Multilingual_Chat {
                 'is_active' => 1
             ), array('%s', '%s', '%s', '%s', '%d'));
             
-            echo '<div class="notice notice-success is-dismissible"><p>FAQ добавлен!</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('FAQ added!', 'ai-multilingual-chat') . '</p></div>';
         }
         
         if (isset($_POST['aic_delete_faq']) && check_admin_referer('aic_faq_nonce')) {
             $faq_id = intval($_POST['faq_id']);
             $wpdb->delete($faq_table, array('id' => $faq_id), array('%d'));
-            echo '<div class="notice notice-success is-dismissible"><p>FAQ удален!</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('FAQ deleted!', 'ai-multilingual-chat') . '</p></div>';
         }
         
         $faqs = $wpdb->get_results("SELECT * FROM {$faq_table} ORDER BY created_at DESC");
@@ -483,7 +482,9 @@ class AI_Multilingual_Chat {
         $unread = $wpdb->get_var("SELECT COUNT(*) FROM {$this->table_messages} WHERE sender_type = 'user' AND is_read = 0");
         
         if ($unread > 0) {
-            echo '<div class="notice notice-info"><p><strong>AI Chat:</strong> У вас ' . $unread . ' непрочитанных сообщений. <a href="' . admin_url('admin.php?page=ai-multilingual-chat') . '">Открыть чат</a></p></div>';
+            /* translators: %1$d: number of unread messages */
+            $message = sprintf(_n('You have %d unread message.', 'You have %d unread messages.', $unread, 'ai-multilingual-chat'), $unread);
+            echo '<div class="notice notice-info"><p><strong>' . esc_html__('AI Chat:', 'ai-multilingual-chat') . '</strong> ' . esc_html($message) . ' <a href="' . esc_url(admin_url('admin.php?page=ai-multilingual-chat')) . '">' . esc_html__('Open chat', 'ai-multilingual-chat') . '</a></p></div>';
         }
     }
     
@@ -1518,9 +1519,12 @@ class AI_Multilingual_Chat {
         $site_name = get_bloginfo('name');
         
         if ($type === 'new_message') {
-            $subject = "[{$site_name}] Новое сообщение в чате";
-            $message = sprintf("Новое сообщение от %s:\n\n%s\n\nОткрыть: %s",
-                $conversation->user_name ?: 'Гость',
+            /* translators: %s: site name */
+            $subject = sprintf(__('[%s] New chat message', 'ai-multilingual-chat'), $site_name);
+            /* translators: 1: user name, 2: message excerpt, 3: admin URL */
+            $message = sprintf(
+                __("New message from %1\$s:\n\n%2\$s\n\nOpen: %3\$s", 'ai-multilingual-chat'),
+                $conversation->user_name ?: __('Guest', 'ai-multilingual-chat'),
                 mb_substr($message_text, 0, 100),
                 admin_url('admin.php?page=ai-multilingual-chat')
             );

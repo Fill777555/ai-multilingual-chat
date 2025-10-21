@@ -38,13 +38,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
 ?>
 
 <div class="wrap">
-    <h1>Настройки AI Multilingual Chat</h1>
+    <h1><?php echo esc_html__('AI Multilingual Chat Settings', 'ai-multilingual-chat'); ?></h1>
     
     <!-- Tab Navigation -->
     <h2 class="nav-tab-wrapper">
-        <a href="#general" class="nav-tab nav-tab-active" data-tab="general">Общие настройки</a>
-        <a href="#frontend-design" class="nav-tab" data-tab="frontend-design">Дизайн виджета</a>
-        <a href="#api" class="nav-tab" data-tab="api">REST API</a>
+        <a href="#general" class="nav-tab nav-tab-active" data-tab="general"><?php echo esc_html__('General Settings', 'ai-multilingual-chat'); ?></a>
+        <a href="#frontend-design" class="nav-tab" data-tab="frontend-design"><?php echo esc_html__('Widget Design', 'ai-multilingual-chat'); ?></a>
+        <a href="#api" class="nav-tab" data-tab="api"><?php echo esc_html__('REST API', 'ai-multilingual-chat'); ?></a>
     </h2>
     
     <form method="post" action="">
@@ -56,7 +56,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="aic_ai_provider">AI Провайдер</label>
+                    <label for="aic_ai_provider"><?php echo esc_html__('AI Provider', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <select name="aic_ai_provider" id="aic_ai_provider" class="regular-text">
@@ -64,13 +64,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                         <option value="anthropic" <?php selected($provider, 'anthropic'); ?>>Anthropic Claude</option>
                         <option value="google" <?php selected($provider, 'google'); ?>>Google AI (Gemini)</option>
                     </select>
-                    <p class="description">Выберите провайдера для перевода сообщений</p>
+                    <p class="description"><?php echo esc_html__('Select the provider for message translation', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_ai_api_key">API ключ AI</label>
+                    <label for="aic_ai_api_key"><?php echo esc_html__('AI API Key', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="text" 
@@ -79,7 +79,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            value="<?php echo esc_attr($api_key); ?>" 
                            class="regular-text">
                     <p class="description">
-                        Получить ключ: 
+                        <?php echo esc_html__('Get your key:', 'ai-multilingual-chat'); ?> 
                         <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI</a> | 
                         <a href="https://console.anthropic.com/" target="_blank">Anthropic</a> | 
                         <a href="https://makersuite.google.com/" target="_blank">Google</a>
@@ -89,7 +89,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
             
             <tr>
                 <th scope="row">
-                    <label for="aic_admin_language">Язык администратора</label>
+                    <label for="aic_admin_language"><?php echo esc_html__('Administrator Language', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <select name="aic_admin_language" id="aic_admin_language" class="regular-text">
@@ -104,13 +104,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                         <option value="zh" <?php selected($admin_lang, 'zh'); ?>>中文</option>
                         <option value="ja" <?php selected($admin_lang, 'ja'); ?>>日本語</option>
                     </select>
-                    <p class="description">Язык, на котором вы общаетесь с клиентами</p>
+                    <p class="description"><?php echo esc_html__('The language in which you communicate with clients', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_enable_translation">Автоматический перевод</label>
+                    <label for="aic_enable_translation"><?php echo esc_html__('Automatic Translation', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <label>
@@ -119,15 +119,15 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                                id="aic_enable_translation" 
                                value="1" 
                                <?php checked($enable_translation, '1'); ?>>
-                        Включить автоматический перевод через AI
+                        <?php echo esc_html__('Enable automatic translation via AI', 'ai-multilingual-chat'); ?>
                     </label>
-                    <p class="description">Если отключено, сообщения не будут переводиться</p>
+                    <p class="description"><?php echo esc_html__('If disabled, messages will not be translated', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_mobile_api_key">API ключ для мобильного приложения</label>
+                    <label for="aic_mobile_api_key"><?php echo esc_html__('API Key for Mobile App', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="text" 
@@ -137,7 +137,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="regular-text"
                            readonly>
                     <button type="button" id="aic_generate_api_key" class="aic-button">
-                        <span class="dashicons dashicons-update"></span> Сгенерировать
+                        <span class="dashicons dashicons-update"></span> <?php echo esc_html__('Generate', 'ai-multilingual-chat'); ?>
                     </button>
                     <button type="button" id="aic_copy_api_key" class="aic-button">
                         <span class="dashicons dashicons-admin-page"></span> Копировать
@@ -341,14 +341,14 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
         <!-- Frontend Design Tab -->
         <div id="tab-frontend-design" class="aic-settings-tab" style="display: none;">
         
-        <h3>Настройки цветов</h3>
-        <p class="description" style="margin-bottom: 15px;">Настройте цвета различных элементов виджета чата</p>
+        <h3><?php echo esc_html__('Color Settings', 'ai-multilingual-chat'); ?></h3>
+        <p class="description" style="margin-bottom: 15px;"><?php echo esc_html__('Configure colors for different chat widget elements', 'ai-multilingual-chat'); ?></p>
         
-        <h4>Основные цвета виджета</h4>
+        <h4><?php echo esc_html__('Main Widget Colors', 'ai-multilingual-chat'); ?></h4>
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="aic_widget_bg_color">Цвет фона виджета</label>
+                    <label for="aic_widget_bg_color"><?php echo esc_html__('Widget Background Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -360,7 +360,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($widget_bg_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет фона окна чата</p>
+                    <p class="description"><?php echo esc_html__('Background color of the chat window', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
@@ -709,7 +709,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
         </p>
         </div>
         
-        <?php submit_button('Сохранить настройки', 'primary', 'aic_save_settings'); ?>
+        <?php submit_button(__('Save Settings', 'ai-multilingual-chat'), 'primary', 'aic_save_settings'); ?>
     </form>
 </div>
 
