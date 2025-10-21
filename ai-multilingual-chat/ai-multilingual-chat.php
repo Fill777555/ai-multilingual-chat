@@ -30,40 +30,98 @@ class AI_Multilingual_Chat {
     }
     
     private function __construct() {
-        global $wpdb;
-        $this->table_conversations = $wpdb->prefix . 'ai_chat_conversations';
-        $this->table_messages = $wpdb->prefix . 'ai_chat_messages';
-        $this->init_hooks();
+        try {
+            global $wpdb;
+            
+            // Log initialization start
+            $this->log('Plugin constructor started', 'info');
+            
+            // Check if wpdb is available
+            if (!isset($wpdb) || !is_object($wpdb)) {
+                throw new Exception('WordPress database object ($wpdb) is not available');
+            }
+            
+            $this->log('Database object initialized', 'info');
+            
+            // Set up table names
+            $this->table_conversations = $wpdb->prefix . 'ai_chat_conversations';
+            $this->table_messages = $wpdb->prefix . 'ai_chat_messages';
+            
+            $this->log('Table names configured: ' . $this->table_conversations . ', ' . $this->table_messages, 'info');
+            
+            // Initialize hooks
+            $this->init_hooks();
+            
+            $this->log('Hooks initialized successfully', 'info');
+            $this->log('Plugin constructor completed successfully', 'info');
+            
+        } catch (Exception $e) {
+            // Log the error but don't let it cause a fatal error
+            $this->log('Constructor error: ' . $e->getMessage(), 'error');
+            $this->log('Stack trace: ' . $e->getTraceAsString(), 'error');
+            
+            // Add admin notice for the error
+            add_action('admin_notices', function() use ($e) {
+                echo '<div class="notice notice-error"><p>';
+                echo '<strong>AI Multilingual Chat Error:</strong> ';
+                echo esc_html($e->getMessage());
+                echo '</p></div>';
+            });
+        }
     }
     
     private function init_hooks() {
-        add_action('plugins_loaded', array($this, 'load_textdomain'));
-        add_action('admin_menu', array($this, 'add_admin_menu'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
-        add_action('admin_notices', array($this, 'admin_notices'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_scripts'));
-        add_action('wp_footer', array($this, 'render_chat_widget'));
-        
-        add_action('wp_ajax_aic_send_message', array($this, 'ajax_send_message'));
-        add_action('wp_ajax_nopriv_aic_send_message', array($this, 'ajax_send_message'));
-        add_action('wp_ajax_aic_get_messages', array($this, 'ajax_get_messages'));
-        add_action('wp_ajax_nopriv_aic_get_messages', array($this, 'ajax_get_messages'));
-        add_action('wp_ajax_aic_start_conversation', array($this, 'ajax_start_conversation'));
-        add_action('wp_ajax_nopriv_aic_start_conversation', array($this, 'ajax_start_conversation'));
-        
-        add_action('wp_ajax_aic_admin_get_conversations', array($this, 'ajax_admin_get_conversations'));
-        add_action('wp_ajax_aic_admin_get_messages', array($this, 'ajax_admin_get_messages'));
-        add_action('wp_ajax_aic_admin_send_message', array($this, 'ajax_admin_send_message'));
-        add_action('wp_ajax_aic_admin_close_conversation', array($this, 'ajax_admin_close_conversation'));
-        add_action('wp_ajax_aic_admin_typing', array($this, 'ajax_admin_typing'));
-        
-        add_action('wp_ajax_aic_user_typing', array($this, 'ajax_user_typing'));
-        add_action('wp_ajax_nopriv_aic_user_typing', array($this, 'ajax_user_typing'));
-        
-        add_action('wp_ajax_aic_export_conversation', array($this, 'ajax_export_conversation'));
-        add_action('wp_ajax_aic_toggle_faq', array($this, 'ajax_toggle_faq'));
-        
-        add_action('rest_api_init', array($this, 'register_rest_routes'));
+        try {
+            $this->log('Registering WordPress hooks', 'info');
+            
+            // Core hooks
+            add_action('plugins_loaded', array($this, 'load_textdomain'));
+            add_action('admin_menu', array($this, 'add_admin_menu'));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+            add_action('admin_notices', array($this, 'admin_notices'));
+            add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_scripts'));
+            add_action('wp_footer', array($this, 'render_chat_widget'));
+            
+            $this->log('Core hooks registered', 'info');
+            
+            // Frontend AJAX hooks
+            add_action('wp_ajax_aic_send_message', array($this, 'ajax_send_message'));
+            add_action('wp_ajax_nopriv_aic_send_message', array($this, 'ajax_send_message'));
+            add_action('wp_ajax_aic_get_messages', array($this, 'ajax_get_messages'));
+            add_action('wp_ajax_nopriv_aic_get_messages', array($this, 'ajax_get_messages'));
+            add_action('wp_ajax_aic_start_conversation', array($this, 'ajax_start_conversation'));
+            add_action('wp_ajax_nopriv_aic_start_conversation', array($this, 'ajax_start_conversation'));
+            
+            $this->log('Frontend AJAX hooks registered', 'info');
+            
+            // Admin AJAX hooks
+            add_action('wp_ajax_aic_admin_get_conversations', array($this, 'ajax_admin_get_conversations'));
+            add_action('wp_ajax_aic_admin_get_messages', array($this, 'ajax_admin_get_messages'));
+            add_action('wp_ajax_aic_admin_send_message', array($this, 'ajax_admin_send_message'));
+            add_action('wp_ajax_aic_admin_close_conversation', array($this, 'ajax_admin_close_conversation'));
+            add_action('wp_ajax_aic_admin_typing', array($this, 'ajax_admin_typing'));
+            
+            $this->log('Admin AJAX hooks registered', 'info');
+            
+            // Additional AJAX hooks
+            add_action('wp_ajax_aic_user_typing', array($this, 'ajax_user_typing'));
+            add_action('wp_ajax_nopriv_aic_user_typing', array($this, 'ajax_user_typing'));
+            add_action('wp_ajax_aic_export_conversation', array($this, 'ajax_export_conversation'));
+            add_action('wp_ajax_aic_toggle_faq', array($this, 'ajax_toggle_faq'));
+            
+            $this->log('Additional AJAX hooks registered', 'info');
+            
+            // REST API hooks
+            add_action('rest_api_init', array($this, 'register_rest_routes'));
+            
+            $this->log('REST API hooks registered', 'info');
+            $this->log('All hooks registered successfully', 'info');
+            
+        } catch (Exception $e) {
+            $this->log('Error registering hooks: ' . $e->getMessage(), 'error');
+            $this->log('Stack trace: ' . $e->getTraceAsString(), 'error');
+            throw $e; // Re-throw to be caught by constructor
+        }
     }
     
     public function load_textdomain() {
@@ -79,17 +137,46 @@ class AI_Multilingual_Chat {
     }
     
     public static function activate_plugin() {
-        global $wpdb;
-        
-        // Set up table names
-        $table_conversations = $wpdb->prefix . 'ai_chat_conversations';
-        $table_messages = $wpdb->prefix . 'ai_chat_messages';
-        $table_cache = $wpdb->prefix . 'ai_chat_translation_cache';
-        $table_faq = $wpdb->prefix . 'ai_chat_faq';
-        
-        // Create tables
-        $charset_collate = $wpdb->get_charset_collate();
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        try {
+            // Log activation start
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[AI Chat] [INFO] Plugin activation started');
+            }
+            
+            global $wpdb;
+            
+            // Verify database object is available
+            if (!isset($wpdb) || !is_object($wpdb)) {
+                throw new Exception('WordPress database object is not available during activation');
+            }
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[AI Chat] [INFO] Database object verified');
+            }
+            
+            // Set up table names
+            $table_conversations = $wpdb->prefix . 'ai_chat_conversations';
+            $table_messages = $wpdb->prefix . 'ai_chat_messages';
+            $table_cache = $wpdb->prefix . 'ai_chat_translation_cache';
+            $table_faq = $wpdb->prefix . 'ai_chat_faq';
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[AI Chat] [INFO] Table names configured: ' . $table_conversations . ', ' . $table_messages . ', ' . $table_cache . ', ' . $table_faq);
+            }
+            
+            // Verify upgrade.php file exists
+            $upgrade_file = ABSPATH . 'wp-admin/includes/upgrade.php';
+            if (!file_exists($upgrade_file)) {
+                throw new Exception('WordPress upgrade.php file not found at: ' . $upgrade_file);
+            }
+            
+            // Create tables
+            $charset_collate = $wpdb->get_charset_collate();
+            require_once($upgrade_file);
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[AI Chat] [INFO] WordPress upgrade.php loaded, charset_collate: ' . $charset_collate);
+            }
         
         // Conversations table
         $sql_conversations = "CREATE TABLE {$table_conversations} (
@@ -113,7 +200,21 @@ class AI_Multilingual_Chat {
             KEY idx_conv_status_updated (status, updated_at)
         ) $charset_collate;";
         
-        dbDelta($sql_conversations);
+        $result = dbDelta($sql_conversations);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Conversations table created/updated. dbDelta result: ' . print_r($result, true));
+        }
+        
+        // Verify table was created
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$table_conversations}'");
+        if ($table_exists !== $table_conversations) {
+            throw new Exception('Failed to create conversations table: ' . $table_conversations);
+        }
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Conversations table verified: ' . $table_conversations);
+        }
         
         // Messages table
         $sql_messages = "CREATE TABLE {$table_messages} (
@@ -134,7 +235,21 @@ class AI_Multilingual_Chat {
             KEY idx_msg_is_read (is_read, sender_type)
         ) $charset_collate;";
         
-        dbDelta($sql_messages);
+        $result = dbDelta($sql_messages);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Messages table created/updated. dbDelta result: ' . print_r($result, true));
+        }
+        
+        // Verify table was created
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$table_messages}'");
+        if ($table_exists !== $table_messages) {
+            throw new Exception('Failed to create messages table: ' . $table_messages);
+        }
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Messages table verified: ' . $table_messages);
+        }
         
         // Translation cache table
         $sql_cache = "CREATE TABLE {$table_cache} (
@@ -150,7 +265,21 @@ class AI_Multilingual_Chat {
             KEY languages (source_language, target_language)
         ) $charset_collate;";
         
-        dbDelta($sql_cache);
+        $result = dbDelta($sql_cache);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Translation cache table created/updated. dbDelta result: ' . print_r($result, true));
+        }
+        
+        // Verify table was created
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$table_cache}'");
+        if ($table_exists !== $table_cache) {
+            throw new Exception('Failed to create translation cache table: ' . $table_cache);
+        }
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Translation cache table verified: ' . $table_cache);
+        }
         
         // FAQ table
         $sql_faq = "CREATE TABLE {$table_faq} (
@@ -167,10 +296,28 @@ class AI_Multilingual_Chat {
             KEY language (language)
         ) $charset_collate;";
         
-        dbDelta($sql_faq);
+        $result = dbDelta($sql_faq);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] FAQ table created/updated. dbDelta result: ' . print_r($result, true));
+        }
+        
+        // Verify table was created
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$table_faq}'");
+        if ($table_exists !== $table_faq) {
+            throw new Exception('Failed to create FAQ table: ' . $table_faq);
+        }
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] FAQ table verified: ' . $table_faq);
+        }
         
         // Add default FAQs if table is empty
         $faq_count = $wpdb->get_var("SELECT COUNT(*) FROM {$table_faq}");
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] FAQ count: ' . $faq_count);
+        }
         if ($faq_count == 0) {
             $default_faqs = array(
                 array(
@@ -188,11 +335,23 @@ class AI_Multilingual_Chat {
             );
             
             foreach ($default_faqs as $faq) {
-                $wpdb->insert($table_faq, $faq, array('%s', '%s', '%s', '%s'));
+                $insert_result = $wpdb->insert($table_faq, $faq, array('%s', '%s', '%s', '%s'));
+                if ($insert_result === false) {
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('[AI Chat] [WARNING] Failed to insert FAQ: ' . $wpdb->last_error);
+                    }
+                }
+            }
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[AI Chat] [INFO] Default FAQs inserted');
             }
         }
         
         // Set default options
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Setting default options');
+        }
         $defaults = array(
             'aic_ai_provider' => 'openai',
             'aic_ai_api_key' => '',
@@ -225,18 +384,52 @@ class AI_Multilingual_Chat {
             'aic_input_border_color' => '#dddddd',
         );
         
+        $options_set = 0;
         foreach ($defaults as $key => $value) {
             if (get_option($key) === false) {
-                add_option($key, $value);
+                $result = add_option($key, $value);
+                if ($result) {
+                    $options_set++;
+                } else {
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('[AI Chat] [WARNING] Failed to set option: ' . $key);
+                    }
+                }
             }
+        }
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Default options set: ' . $options_set . ' out of ' . count($defaults));
         }
         
         // Flush rewrite rules
         flush_rewrite_rules();
         
-        // Log activation
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('[AI Chat] [INFO] Plugin activated');
+            error_log('[AI Chat] [INFO] Rewrite rules flushed');
+        }
+        
+        // Log activation success
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Plugin activated successfully');
+        }
+        
+        } catch (Exception $e) {
+            // Log the error
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[AI Chat] [ERROR] Plugin activation failed: ' . $e->getMessage());
+                error_log('[AI Chat] [ERROR] Stack trace: ' . $e->getTraceAsString());
+            }
+            
+            // Store error in options for later display
+            update_option('aic_activation_error', array(
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'time' => current_time('mysql')
+            ));
+            
+            // Throw the exception to prevent activation
+            throw $e;
         }
     }
     
@@ -642,7 +835,33 @@ class AI_Multilingual_Chat {
     public function admin_notices() {
         if (!current_user_can('manage_options')) return;
         
+        // Check for activation errors
+        $activation_error = get_option('aic_activation_error');
+        if ($activation_error && is_array($activation_error)) {
+            echo '<div class="notice notice-error is-dismissible">';
+            echo '<p><strong>' . esc_html__('AI Chat Activation Error:', 'ai-multilingual-chat') . '</strong></p>';
+            echo '<p>' . esc_html($activation_error['message']) . '</p>';
+            echo '<p><em>' . esc_html__('Error occurred at:', 'ai-multilingual-chat') . ' ' . esc_html($activation_error['time']) . '</em></p>';
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                echo '<details><summary>' . esc_html__('Stack Trace', 'ai-multilingual-chat') . '</summary>';
+                echo '<pre>' . esc_html($activation_error['trace']) . '</pre>';
+                echo '</details>';
+            }
+            echo '</div>';
+            
+            // Clear the error after displaying it once
+            delete_option('aic_activation_error');
+        }
+        
         global $wpdb;
+        
+        // Check if tables exist before querying
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$this->table_messages}'");
+        if ($table_exists !== $this->table_messages) {
+            echo '<div class="notice notice-warning"><p><strong>' . esc_html__('AI Chat:', 'ai-multilingual-chat') . '</strong> ' . esc_html__('Database tables are not set up. Please deactivate and reactivate the plugin.', 'ai-multilingual-chat') . '</p></div>';
+            return;
+        }
+        
         $unread = $wpdb->get_var("SELECT COUNT(*) FROM {$this->table_messages} WHERE sender_type = 'user' AND is_read = 0");
         
         if ($unread > 0) {
