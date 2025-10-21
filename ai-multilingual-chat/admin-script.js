@@ -397,7 +397,7 @@ jQuery(document).ready(function($) {
                         ${aicAdmin.enable_emoji === '1' ? '<button type="button" id="aic_admin_emoji_button" class="aic-emoji-button" title="Выбрать эмодзи">😀</button>' : ''}
                     </div>
                     <div style="margin-top: 10px; display: flex; gap: 10px;">
-                        <button id="aic_admin_send_message" class="aic-button button-primary">
+                        <button id="aic_admin_send_message" class="button button-primary">
                             <span class="dashicons dashicons-email" style="vertical-align: middle;"></span> Отправить
                         </button>
                     </div>
