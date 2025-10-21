@@ -204,3 +204,27 @@ msgstr "Цвет фона окна чата"
 #: templates/settings.php:712
 msgid "Save Settings"
 msgstr "Сохранить настройки"
+
+#: ai-multilingual-chat.php:333
+msgid "Default"
+msgstr "По умолчанию"
+
+#: ai-multilingual-chat.php:334
+msgid "Bell"
+msgstr "Колокольчик"
+
+#: ai-multilingual-chat.php:335
+msgid "Ding"
+msgstr "Динь"
+
+#: ai-multilingual-chat.php:336
+msgid "Chime"
+msgstr "Перезвон"
+
+#: ai-multilingual-chat.php:337
+msgid "Soft"
+msgstr "Мягкий звук"
+
+#: ai-multilingual-chat.php:368
+msgid "Hello!"
+msgstr "Здравствуйте!"

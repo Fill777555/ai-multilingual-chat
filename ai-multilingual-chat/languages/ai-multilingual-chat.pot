@@ -203,3 +203,27 @@ msgstr ""
 #: templates/settings.php:712
 msgid "Save Settings"
 msgstr ""
+
+#: ai-multilingual-chat.php:333
+msgid "Default"
+msgstr ""
+
+#: ai-multilingual-chat.php:334
+msgid "Bell"
+msgstr ""
+
+#: ai-multilingual-chat.php:335
+msgid "Ding"
+msgstr ""
+
+#: ai-multilingual-chat.php:336
+msgid "Chime"
+msgstr ""
+
+#: ai-multilingual-chat.php:337
+msgid "Soft"
+msgstr ""
+
+#: ai-multilingual-chat.php:368
+msgid "Hello!"
+msgstr ""

@@ -330,12 +330,13 @@ class AI_Multilingual_Chat {
             'sound_choice' => get_option('aic_admin_notification_sound', 'default'),
             'admin_avatar' => get_option('aic_admin_avatar', ''),
             'available_sounds' => array(
-                'default' => 'По умолчанию',
-                'bell' => 'Колокольчик',
-                'ding' => 'Динь',
-                'chime' => 'Перезвон',
-                'soft' => 'Мягкий звук'
-            )
+                'default' => __('Default', 'ai-multilingual-chat'),
+                'bell' => __('Bell', 'ai-multilingual-chat'),
+                'ding' => __('Ding', 'ai-multilingual-chat'),
+                'chime' => __('Chime', 'ai-multilingual-chat'),
+                'soft' => __('Soft', 'ai-multilingual-chat')
+            ),
+            'user_language' => $this->get_user_language()
         ));
     }
     
@@ -365,7 +366,7 @@ class AI_Multilingual_Chat {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('aic_frontend_nonce'),
             'user_language' => $this->get_user_language(),
-            'welcome_message' => get_option('aic_welcome_message', 'Здравствуйте!'),
+            'welcome_message' => get_option('aic_welcome_message', __('Hello!', 'ai-multilingual-chat')),
             'enable_emoji' => get_option('aic_enable_emoji_picker', '1'),
             'enable_dark_theme' => get_option('aic_enable_dark_theme', '0'),
             'enable_sound' => get_option('aic_enable_sound_notifications', '1'),
@@ -373,11 +374,11 @@ class AI_Multilingual_Chat {
             'sound_choice' => get_option('aic_client_notification_sound', 'default'),
             'admin_avatar' => get_option('aic_admin_avatar', ''),
             'available_sounds' => array(
-                'default' => 'По умолчанию',
-                'bell' => 'Колокольчик',
-                'ding' => 'Динь',
-                'chime' => 'Перезвон',
-                'soft' => 'Мягкий звук'
+                'default' => __('Default', 'ai-multilingual-chat'),
+                'bell' => __('Bell', 'ai-multilingual-chat'),
+                'ding' => __('Ding', 'ai-multilingual-chat'),
+                'chime' => __('Chime', 'ai-multilingual-chat'),
+                'soft' => __('Soft', 'ai-multilingual-chat')
             )
         ));
     }
