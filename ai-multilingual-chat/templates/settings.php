@@ -1,37 +1,40 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+// Global settings
 $api_key = get_option('aic_ai_api_key', '');
 $provider = get_option('aic_ai_provider', 'openai');
 $admin_lang = get_option('aic_admin_language', 'ru');
 $enable_translation = get_option('aic_enable_translation', '1');
 $mobile_api_key = get_option('aic_mobile_api_key', '');
 $widget_position = get_option('aic_chat_widget_position', 'bottom-right');
-$widget_color = get_option('aic_chat_widget_color', '#667eea');
+$widget_color = get_option('aic_chat_widget_color', '#18adfe');
 $enable_emoji = get_option('aic_enable_emoji_picker', '1');
 $enable_dark_theme = get_option('aic_enable_dark_theme', '0');
 $enable_sound = get_option('aic_enable_sound_notifications', '1');
-$widget_border_radius = get_option('aic_widget_border_radius', '12');
-$widget_font_size = get_option('aic_widget_font_size', '14');
-$widget_padding = get_option('aic_widget_padding', '20');
-$widget_custom_css = get_option('aic_widget_custom_css', '');
 
-// New color settings
+// Color settings
 $widget_bg_color = get_option('aic_widget_bg_color', '#1c2126');
-$chat_button_color = get_option('aic_chat_button_color', '#667eea');
-$header_bg_color = get_option('aic_header_bg_color', '#667eea');
-$user_msg_bg_color = get_option('aic_user_msg_bg_color', '#667eea');
+$chat_button_color = get_option('aic_chat_button_color', '#18adfe');
+$header_bg_color = get_option('aic_header_bg_color', '#18adfe');
+$user_msg_bg_color = get_option('aic_user_msg_bg_color', '#18adfe');
 $admin_msg_bg_color = get_option('aic_admin_msg_bg_color', '#ffffff');
 $user_msg_text_color = get_option('aic_user_msg_text_color', '#ffffff');
 $admin_msg_text_color = get_option('aic_admin_msg_text_color', '#333333');
-$send_button_color = get_option('aic_send_button_color', '#667eea');
+$send_button_color = get_option('aic_send_button_color', '#18adfe');
 $input_border_color = get_option('aic_input_border_color', '#dddddd');
 
-// New header color settings
+// Header color settings
 $header_text_color = get_option('aic_header_text_color', '#ffffff');
 $header_status_color = get_option('aic_header_status_color', '#ffffff');
 $header_icons_color = get_option('aic_header_icons_color', '#ffffff');
 $header_close_color = get_option('aic_header_close_color', '#ffffff');
+
+// Design settings
+$widget_border_radius = get_option('aic_widget_border_radius', '12');
+$widget_font_size = get_option('aic_widget_font_size', '14');
+$widget_padding = get_option('aic_widget_padding', '20');
+$widget_custom_css = get_option('aic_widget_custom_css', '');
 ?>
 
 <div class="wrap">
@@ -173,7 +176,7 @@ $header_close_color = get_option('aic_header_close_color', '#ffffff');
                 </td>
             </tr>
             
-            <tr>
+            <!--<tr>
                 <th scope="row">
                     <label for="aic_enable_dark_theme">Темная тема</label>
                 </th>
@@ -187,8 +190,8 @@ $header_close_color = get_option('aic_header_close_color', '#ffffff');
                         Включить темную тему для чата
                     </label>
                 </td>
-            </tr>
-            
+            </tr>-->
+             
             <tr>
                 <th scope="row">
                     <label for="aic_theme_mode">Тема оформления админки</label>
@@ -706,7 +709,7 @@ $header_close_color = get_option('aic_header_close_color', '#ffffff');
         </p>
         </div>
         
-        <?php submit_button('Сохранить настройки', 'primary large', 'aic_save_settings'); ?>
+        <?php submit_button('Сохранить настройки', 'primary', 'aic_save_settings'); ?>
     </form>
 </div>
 
@@ -836,18 +839,18 @@ jQuery(document).ready(function($) {
         
         var defaults = {
             'aic_widget_bg_color': '#1c2126',
-            'aic_chat_button_color': '#667eea',
-            'aic_header_bg_color': '#667eea',
+            'aic_chat_button_color': '#18adfe',
+            'aic_header_bg_color': '#18adfe',
             'aic_header_text_color': '#ffffff',
             'aic_header_status_color': '#ffffff',
             'aic_header_icons_color': '#ffffff',
             'aic_header_close_color': '#ffffff',
-            'aic_user_msg_bg_color': '#667eea',
+            'aic_user_msg_bg_color': '#18adfe',
             'aic_admin_msg_bg_color': '#ffffff',
             'aic_user_msg_text_color': '#ffffff',
             'aic_admin_msg_text_color': '#333333',
-            'aic_send_button_color': '#667eea',
-            'aic_input_border_color': '#dddddd'
+            'aic_send_button_color': '#18adfe',
+            'aic_input_border_color': '#18adfe'
         };
         
         $.each(defaults, function(id, color) {
@@ -871,6 +874,19 @@ jQuery(document).ready(function($) {
 
 .form-table th {
     width: 250px;
+}
+
+.nav-tab {
+    border-radius: 8px 8px 0 0;
+    border: none !important;
+    background: var(--aic-muted) !important;
+    color: #fff;
+}
+.nav-tab-active {
+    border-radius: 8px 8px 0 0;
+    border: none !important;
+    background: var(--aic-accent) !important;
+    color: #fff !important;
 }
 
 .comment-ays, .feature-filter, .popular-tags, .stuffbox, .widgets-holder-wrap, .wp-editor-container, p.popular-tags, table.widefat {
@@ -981,7 +997,7 @@ input[type=text] {
 }
 
 .aic-button:hover {
-  background: rgba(124, 92, 255, 0.06);
+  background: var(--aic-hover);
   transform: translateY(-1px);
 }
 
@@ -1003,7 +1019,7 @@ input[type=text] {
 }
 
 .aic-button:focus {
-  outline: 2px solid rgba(124, 92, 255, 0.2);
+  outline: 2px solid var(--aic-hover);
   outline-offset: 2px;
 }
 
