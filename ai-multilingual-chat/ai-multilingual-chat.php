@@ -78,6 +78,168 @@ class AI_Multilingual_Chat {
         flush_rewrite_rules();
     }
     
+    public static function activate_plugin() {
+        global $wpdb;
+        
+        // Set up table names
+        $table_conversations = $wpdb->prefix . 'ai_chat_conversations';
+        $table_messages = $wpdb->prefix . 'ai_chat_messages';
+        $table_cache = $wpdb->prefix . 'ai_chat_translation_cache';
+        $table_faq = $wpdb->prefix . 'ai_chat_faq';
+        
+        // Create tables
+        $charset_collate = $wpdb->get_charset_collate();
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        
+        // Conversations table
+        $sql_conversations = "CREATE TABLE IF NOT EXISTS {$table_conversations} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) UNSIGNED DEFAULT NULL,
+            session_id varchar(255) NOT NULL,
+            user_name varchar(255) DEFAULT NULL,
+            user_email varchar(255) DEFAULT NULL,
+            user_language varchar(10) DEFAULT 'en',
+            admin_language varchar(10) DEFAULT 'ru',
+            status varchar(20) DEFAULT 'active',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            user_typing tinyint(1) DEFAULT 0,
+            admin_typing tinyint(1) DEFAULT 0,
+            user_typing_at datetime DEFAULT NULL,
+            admin_typing_at datetime DEFAULT NULL,
+            PRIMARY KEY (id),
+            KEY session_id (session_id),
+            KEY status (status),
+            KEY idx_conv_status_updated (status, updated_at)
+        ) $charset_collate;";
+        
+        dbDelta($sql_conversations);
+        
+        // Messages table
+        $sql_messages = "CREATE TABLE IF NOT EXISTS {$table_messages} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            conversation_id bigint(20) UNSIGNED NOT NULL,
+            sender_type varchar(20) NOT NULL,
+            message_text text NOT NULL,
+            translated_text text DEFAULT NULL,
+            original_language varchar(10) DEFAULT NULL,
+            target_language varchar(10) DEFAULT NULL,
+            is_read tinyint(1) DEFAULT 0,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY conversation_id (conversation_id),
+            KEY sender_type (sender_type),
+            KEY is_read (is_read),
+            KEY idx_msg_conv_created (conversation_id, created_at),
+            KEY idx_msg_is_read (is_read, sender_type)
+        ) $charset_collate;";
+        
+        dbDelta($sql_messages);
+        
+        // Translation cache table
+        $sql_cache = "CREATE TABLE IF NOT EXISTS {$table_cache} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            source_text text NOT NULL,
+            source_language varchar(10) NOT NULL,
+            target_language varchar(10) NOT NULL,
+            translated_text text NOT NULL,
+            text_hash varchar(64) NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY text_hash (text_hash),
+            KEY languages (source_language, target_language)
+        ) $charset_collate;";
+        
+        dbDelta($sql_cache);
+        
+        // FAQ table
+        $sql_faq = "CREATE TABLE IF NOT EXISTS {$table_faq} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            question text NOT NULL,
+            answer text NOT NULL,
+            keywords text DEFAULT NULL,
+            language varchar(10) DEFAULT 'ru',
+            is_active tinyint(1) DEFAULT 1,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY is_active (is_active),
+            KEY language (language)
+        ) $charset_collate;";
+        
+        dbDelta($sql_faq);
+        
+        // Add default FAQs if table is empty
+        $faq_count = $wpdb->get_var("SELECT COUNT(*) FROM {$table_faq}");
+        if ($faq_count == 0) {
+            $default_faqs = array(
+                array(
+                    'question' => 'How can I contact you?',
+                    'answer' => 'You can write to us here in the chat, and we will reply as soon as possible.',
+                    'keywords' => 'contact,phone,email,reach',
+                    'language' => 'en'
+                ),
+                array(
+                    'question' => 'What are your business hours?',
+                    'answer' => 'We work daily from 9:00 AM to 6:00 PM.',
+                    'keywords' => 'schedule,time,work,hours',
+                    'language' => 'en'
+                )
+            );
+            
+            foreach ($default_faqs as $faq) {
+                $wpdb->insert($table_faq, $faq, array('%s', '%s', '%s', '%s'));
+            }
+        }
+        
+        // Set default options
+        $defaults = array(
+            'aic_ai_provider' => 'openai',
+            'aic_ai_api_key' => '',
+            'aic_admin_language' => 'ru',
+            'aic_enable_translation' => '1',
+            'aic_mobile_api_key' => 'aic_' . bin2hex(random_bytes(32)),
+            'aic_chat_widget_position' => 'bottom-right',
+            'aic_chat_widget_color' => '#667eea',
+            'aic_enable_email_notifications' => '0',
+            'aic_notification_email' => get_option('admin_email'),
+            'aic_welcome_message' => 'Здравствуйте! Чем могу помочь?',
+            'aic_enable_emoji_picker' => '1',
+            'aic_enable_dark_theme' => '0',
+            'aic_enable_sound_notifications' => '1',
+            'aic_client_notification_sound' => 'default',
+            'aic_theme_mode' => 'auto',
+            'aic_admin_avatar' => '',
+            'aic_widget_border_radius' => '12',
+            'aic_widget_font_size' => '14',
+            'aic_widget_padding' => '20',
+            'aic_widget_custom_css' => '',
+            'aic_widget_bg_color' => '#1c2126',
+            'aic_chat_button_color' => '#667eea',
+            'aic_header_bg_color' => '#667eea',
+            'aic_user_msg_bg_color' => '#667eea',
+            'aic_admin_msg_bg_color' => '#ffffff',
+            'aic_user_msg_text_color' => '#ffffff',
+            'aic_admin_msg_text_color' => '#333333',
+            'aic_send_button_color' => '#667eea',
+            'aic_input_border_color' => '#dddddd',
+        );
+        
+        foreach ($defaults as $key => $value) {
+            if (get_option($key) === false) {
+                add_option($key, $value);
+            }
+        }
+        
+        // Flush rewrite rules
+        flush_rewrite_rules();
+        
+        // Log activation
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Plugin activated');
+        }
+    }
+    
     public function deactivate() {
         $this->log(__('Plugin deactivated', 'ai-multilingual-chat'));
     }
@@ -1559,10 +1721,7 @@ function aic_get_instance() {
 
 add_action('plugins_loaded', 'aic_get_instance');
 
-register_activation_hook(__FILE__, function() {
-    $plugin = AI_Multilingual_Chat::get_instance();
-    $plugin->activate();
-});
+register_activation_hook(__FILE__, array('AI_Multilingual_Chat', 'activate_plugin'));
 
 register_deactivation_hook(__FILE__, function() {
     $plugin = AI_Multilingual_Chat::get_instance();
