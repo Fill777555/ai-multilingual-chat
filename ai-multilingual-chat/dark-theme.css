@@ -6,9 +6,9 @@
 /* Admin Panel Dark Theme */
 /* Darc tems import*/
 
-body.aic-dark-theme #aic-admin-chat-container {
-    background: #7f515100;
-}
+/*  body.aic-dark-theme #aic-admin-chat-container {
+   background: #7f515100;
+}*/
 
 body.aic-dark-theme .aic-conversations-list,
 body.aic-dark-theme .aic-chat-area {
@@ -75,60 +75,60 @@ body.aic-dark-theme .button-smol:hover {
 }
 
 /* Frontend Chat Widget Dark Theme */
-body.aic-dark-theme #aic-chat-widget .aic-chat-window {
+/*body.aic-dark-theme #aic-chat-widget .aic-chat-window {
     background: #2d2d2d;
     color: #e0e0e0;
-}
+}*/
 
-body.aic-dark-theme #aic-chat-widget .aic-chat-header {
+/*body.aic-dark-theme #aic-chat-widget .aic-chat-header {
     background: var(--widget-color);
-}
+}*/
 
-body.aic-dark-theme #aic-chat-widget .aic-chat-messages {
-    background: #1a1a1a00;
-}
+ /*body.aic-dark-theme #aic-chat-widget .aic-chat-messages {
+    background: var(--aic-bg);
+}*/
 
-body.aic-dark-theme #aic-chat-widget .aic-message.admin {
-    /* background: #3a3a3a00; */
+  /* body.aic-dark-theme #aic-chat-widget .aic-message.admin {
+  background: #3a3a3a00;
     color: #e0e0e0;
-}
+} */
 
-body.aic-dark-theme #aic-chat-widget .aic-message.user {
-    /* background: #4a91e200; */
+/* body.aic-dark-theme #aic-chat-widget .aic-message.user {
+     background: #4a91e200; 
     color: white;
-}
+}*/
 
-body.aic-dark-theme #aic-chat-widget .aic-message-input {
+/*body.aic-dark-theme #aic-chat-widget .aic-message-input {
     background: #2d2d2d;
     color: #e0e0e0;
     border-color: #444;
-}
+}*/
 
-body.aic-dark-theme #aic-chat-widget .aic-message-input::placeholder {
+/*body.aic-dark-theme #aic-chat-widget .aic-message-input::placeholder {
     color: #777;
-}
+}*/
 
-body.aic-dark-theme #aic-chat-widget .aic-input {
+/*body.aic-dark-theme #aic-chat-widget .aic-input {
     background: #2d2d2d;
     color: #e0e0e0;
     border-color: #444;
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-button {
-    background: var(--widget-color);
+    background: var(--chat-button-color);
     color: white;
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-button:hover {
-    background: var(--widget-color);
+    background: var(--chat-button-color);
 }
 
 body.aic-dark-theme #aic-chat-widget .aic-welcome-screen {
     background: #1a1a1a;
-}
+}*/
 
 /* Scrollbar dark theme */
-body.aic-dark-theme ::-webkit-scrollbar-track {
+/*body.aic-dark-theme ::-webkit-scrollbar-track {
     background: #1a1a1a;
 }
 
@@ -139,3 +139,4 @@ body.aic-dark-theme ::-webkit-scrollbar-thumb {
 body.aic-dark-theme ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+*/
