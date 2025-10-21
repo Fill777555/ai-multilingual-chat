@@ -3,9 +3,13 @@ if (!defined('ABSPATH')) exit;
 
 $position = get_option('aic_chat_widget_position', 'bottom-right');
 $color = get_option('aic_chat_widget_color', '#667eea');
+$border_radius = get_option('aic_widget_border_radius', '12');
+$font_size = get_option('aic_widget_font_size', '14');
+$padding = get_option('aic_widget_padding', '20');
+$custom_css = get_option('aic_widget_custom_css', '');
 ?>
 
-<div id="aic-chat-widget" class="aic-widget-<?php echo esc_attr($position); ?>" style="--widget-color: <?php echo esc_attr($color); ?>">
+<div id="aic-chat-widget" class="aic-widget-<?php echo esc_attr($position); ?>" style="--widget-color: <?php echo esc_attr($color); ?>; --widget-border-radius: <?php echo esc_attr($border_radius); ?>px; --widget-font-size: <?php echo esc_attr($font_size); ?>px; --widget-padding: <?php echo esc_attr($padding); ?>px;">
     <button id="aic-chat-button" class="aic-chat-button">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -82,12 +86,16 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 <style>
 :root {
     --widget-color: <?php echo esc_attr($color); ?>;
+    --widget-border-radius: <?php echo esc_attr($border_radius); ?>px;
+    --widget-font-size: <?php echo esc_attr($font_size); ?>px;
+    --widget-padding: <?php echo esc_attr($padding); ?>px;
 }
 
 #aic-chat-widget {
     position: fixed;
     z-index: 9999;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: var(--widget-font-size);
 }
 
 .aic-widget-bottom-right {
@@ -152,7 +160,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
     width: 380px;
     height: 600px;
     background: #1c2126;
-    border-radius: 12px;
+    border-radius: var(--widget-border-radius);
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
@@ -174,7 +182,7 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 .aic-chat-header {
     background: var(--widget-color);
     color: white;
-    padding: 20px;
+    padding: var(--widget-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -457,4 +465,9 @@ $color = get_option('aic_chat_widget_color', '#667eea');
 .aic-chat-messages::-webkit-scrollbar-thumb:hover {
     background: #999;
 }
+
+/* Custom CSS from settings */
+<?php if (!empty($custom_css)): ?>
+<?php echo $custom_css; ?>
+<?php endif; ?>
 </style>

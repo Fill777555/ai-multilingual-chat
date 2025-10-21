@@ -3,7 +3,7 @@ Contributors: olegfilin
 Tags: chat, multilingual, ai, translation, support
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 2.0.4
+Stable tag: 2.0.7
 Requires PHP: 7.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

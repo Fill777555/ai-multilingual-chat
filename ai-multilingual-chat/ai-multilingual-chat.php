@@ -3,14 +3,14 @@
  * Plugin Name: AI Multilingual Chat
  * Plugin URI: https://web-proekt.com
  * Description: Многоязычный чат с автопереводом через AI
- * Version: 2.0.5
+ * Version: 2.0.7
  * Author: Oleg Filin
  * Text Domain: ai-multilingual-chat
  */
 
 if (!defined('ABSPATH')) exit;
 
-define('AIC_VERSION', '2.0.5');
+define('AIC_VERSION', '2.0.7');
 define('AIC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIC_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIC_PLUGIN_FILE', __FILE__);
@@ -256,6 +256,10 @@ class AI_Multilingual_Chat {
             'aic_client_notification_sound' => 'default',
             'aic_theme_mode' => 'auto',
             'aic_admin_avatar' => '',
+            'aic_widget_border_radius' => '12',
+            'aic_widget_font_size' => '14',
+            'aic_widget_padding' => '20',
+            'aic_widget_custom_css' => '',
         );
         
         foreach ($defaults as $key => $value) {
@@ -395,12 +399,17 @@ class AI_Multilingual_Chat {
     }
     
     private function save_settings($post_data) {
-        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode', 'aic_admin_avatar');
+        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode', 'aic_admin_avatar', 'aic_widget_border_radius', 'aic_widget_font_size', 'aic_widget_padding');
         
         foreach ($settings as $setting) {
             if (isset($post_data[$setting])) {
                 update_option($setting, sanitize_text_field($post_data[$setting]));
             }
+        }
+        
+        // Handle custom CSS separately (needs sanitization for textarea)
+        if (isset($post_data['aic_widget_custom_css'])) {
+            update_option('aic_widget_custom_css', wp_strip_all_tags($post_data['aic_widget_custom_css']));
         }
         
         update_option('aic_enable_translation', isset($post_data['aic_enable_translation']) ? '1' : '0');

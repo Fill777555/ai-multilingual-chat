@@ -11,13 +11,27 @@ $widget_color = get_option('aic_chat_widget_color', '#667eea');
 $enable_emoji = get_option('aic_enable_emoji_picker', '1');
 $enable_dark_theme = get_option('aic_enable_dark_theme', '0');
 $enable_sound = get_option('aic_enable_sound_notifications', '1');
+$widget_border_radius = get_option('aic_widget_border_radius', '12');
+$widget_font_size = get_option('aic_widget_font_size', '14');
+$widget_padding = get_option('aic_widget_padding', '20');
+$widget_custom_css = get_option('aic_widget_custom_css', '');
 ?>
 
 <div class="wrap">
     <h1>Настройки AI Multilingual Chat</h1>
     
+    <!-- Tab Navigation -->
+    <h2 class="nav-tab-wrapper">
+        <a href="#general" class="nav-tab nav-tab-active" data-tab="general">Общие настройки</a>
+        <a href="#frontend-design" class="nav-tab" data-tab="frontend-design">Дизайн виджета</a>
+        <a href="#api" class="nav-tab" data-tab="api">REST API</a>
+    </h2>
+    
     <form method="post" action="">
         <?php wp_nonce_field('aic_settings_nonce'); ?>
+        
+        <!-- General Settings Tab -->
+        <div id="tab-general" class="aic-settings-tab aic-settings-tab-active">
         
         <table class="form-table">
             <tr>
@@ -315,9 +329,82 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
                 </td>
             </tr>
         </table>
+        </div>
         
-        <hr>
+        <!-- Frontend Design Tab -->
+        <div id="tab-frontend-design" class="aic-settings-tab" style="display: none;">
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="aic_widget_border_radius">Скругление углов (px)</label>
+                </th>
+                <td>
+                    <input type="number" 
+                           name="aic_widget_border_radius" 
+                           id="aic_widget_border_radius" 
+                           value="<?php echo esc_attr($widget_border_radius); ?>" 
+                           min="0" 
+                           max="50"
+                           class="small-text">
+                    <p class="description">Радиус скругления углов окна чата (0-50px). По умолчанию: 12px</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_widget_font_size">Размер шрифта (px)</label>
+                </th>
+                <td>
+                    <input type="number" 
+                           name="aic_widget_font_size" 
+                           id="aic_widget_font_size" 
+                           value="<?php echo esc_attr($widget_font_size); ?>" 
+                           min="10" 
+                           max="24"
+                           class="small-text">
+                    <p class="description">Размер шрифта в чате (10-24px). По умолчанию: 14px</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_widget_padding">Внутренние отступы (px)</label>
+                </th>
+                <td>
+                    <input type="number" 
+                           name="aic_widget_padding" 
+                           id="aic_widget_padding" 
+                           value="<?php echo esc_attr($widget_padding); ?>" 
+                           min="5" 
+                           max="40"
+                           class="small-text">
+                    <p class="description">Внутренние отступы заголовка чата (5-40px). По умолчанию: 20px</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_widget_custom_css">Произвольный CSS</label>
+                </th>
+                <td>
+                    <textarea 
+                        name="aic_widget_custom_css" 
+                        id="aic_widget_custom_css" 
+                        rows="10" 
+                        class="large-text code"
+                        placeholder="/* Введите ваш CSS код здесь */&#10;#aic-chat-widget .aic-chat-window {&#10;    /* your custom styles */&#10;}"><?php echo esc_textarea($widget_custom_css); ?></textarea>
+                    <p class="description">
+                        Добавьте собственный CSS код для полного контроля над дизайном виджета.<br>
+                        Примеры: изменение цветов, размеров, отступов, анимаций и т.д.<br>
+                        <strong>Внимание:</strong> Используйте осторожно, неправильный CSS может нарушить работу виджета.
+                    </p>
+                </td>
+            </tr>
+        </table>
+        </div>
         
+        <!-- REST API Tab -->
+        <div id="tab-api" class="aic-settings-tab" style="display: none;">
         <h2>REST API для мобильного приложения</h2>
         
         <p>Используйте эти endpoints для интеграции с мобильным приложением:</p>
@@ -352,10 +439,28 @@ $enable_sound = get_option('aic_enable_sound_notifications', '1');
         <p style="margin-top: 15px;">
             <strong>Важно:</strong> Все запросы должны содержать заголовок <code>X-API-Key</code> с API ключом.
         </p>
+        </div>
         
         <?php submit_button('Сохранить настройки', 'primary large', 'aic_save_settings'); ?>
     </form>
 </div>
+
+<script>
+jQuery(document).ready(function($) {
+    // Tab switching
+    $('.nav-tab').on('click', function(e) {
+        e.preventDefault();
+        var targetTab = $(this).data('tab');
+        
+        // Update tab navigation
+        $('.nav-tab').removeClass('nav-tab-active');
+        $(this).addClass('nav-tab-active');
+        
+        // Update tab content
+        $('.aic-settings-tab').hide().removeClass('aic-settings-tab-active');
+        $('#tab-' + targetTab).show().addClass('aic-settings-tab-active');
+    });
+});
 
 <script>
 jQuery(document).ready(function($) {
@@ -431,6 +536,14 @@ jQuery(document).ready(function($) {
 </script>
 
 <style>
+.nav-tab-wrapper {
+    margin-bottom: 20px;
+}
+
+.aic-settings-tab {
+    padding: 20px 0;
+}
+
 .form-table th {
     width: 250px;
 }
