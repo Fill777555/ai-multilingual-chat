@@ -18,9 +18,15 @@ $user_msg_text_color = get_option('aic_user_msg_text_color', '#ffffff');
 $admin_msg_text_color = get_option('aic_admin_msg_text_color', '#333333');
 $send_button_color = get_option('aic_send_button_color', '#667eea');
 $input_border_color = get_option('aic_input_border_color', '#dddddd');
+
+// New header color settings
+$header_text_color = get_option('aic_header_text_color', '#ffffff');
+$header_status_color = get_option('aic_header_status_color', '#ffffff');
+$header_icons_color = get_option('aic_header_icons_color', '#ffffff');
+$header_close_color = get_option('aic_header_close_color', '#ffffff');
 ?>
 
-<div id="aic-chat-widget" class="aic-widget-<?php echo esc_attr($position); ?>" style="--widget-color: <?php echo esc_attr($color); ?>; --widget-border-radius: <?php echo esc_attr($border_radius); ?>px; --widget-font-size: <?php echo esc_attr($font_size); ?>px; --widget-padding: <?php echo esc_attr($padding); ?>px; --widget-bg-color: <?php echo esc_attr($widget_bg_color); ?>; --chat-button-color: <?php echo esc_attr($chat_button_color); ?>; --header-bg-color: <?php echo esc_attr($header_bg_color); ?>; --user-msg-bg-color: <?php echo esc_attr($user_msg_bg_color); ?>; --admin-msg-bg-color: <?php echo esc_attr($admin_msg_bg_color); ?>; --user-msg-text-color: <?php echo esc_attr($user_msg_text_color); ?>; --admin-msg-text-color: <?php echo esc_attr($admin_msg_text_color); ?>; --send-button-color: <?php echo esc_attr($send_button_color); ?>; --input-border-color: <?php echo esc_attr($input_border_color); ?>;">
+<div id="aic-chat-widget" class="aic-widget-<?php echo esc_attr($position); ?>" style="--widget-color: <?php echo esc_attr($color); ?>; --widget-border-radius: <?php echo esc_attr($border_radius); ?>px; --widget-font-size: <?php echo esc_attr($font_size); ?>px; --widget-padding: <?php echo esc_attr($padding); ?>px; --widget-bg-color: <?php echo esc_attr($widget_bg_color); ?>; --chat-button-color: <?php echo esc_attr($chat_button_color); ?>; --header-bg-color: <?php echo esc_attr($header_bg_color); ?>; --header-text-color: <?php echo esc_attr($header_text_color); ?>; --header-status-color: <?php echo esc_attr($header_status_color); ?>; --header-icons-color: <?php echo esc_attr($header_icons_color); ?>; --header-close-color: <?php echo esc_attr($header_close_color); ?>; --user-msg-bg-color: <?php echo esc_attr($user_msg_bg_color); ?>; --admin-msg-bg-color: <?php echo esc_attr($admin_msg_bg_color); ?>; --user-msg-text-color: <?php echo esc_attr($user_msg_text_color); ?>; --admin-msg-text-color: <?php echo esc_attr($admin_msg_text_color); ?>; --send-button-color: <?php echo esc_attr($send_button_color); ?>; --input-border-color: <?php echo esc_attr($input_border_color); ?>;">
     <button id="aic-chat-button" class="aic-chat-button">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -103,6 +109,10 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
     --widget-bg-color: <?php echo esc_attr($widget_bg_color); ?>;
     --chat-button-color: <?php echo esc_attr($chat_button_color); ?>;
     --header-bg-color: <?php echo esc_attr($header_bg_color); ?>;
+    --header-text-color: <?php echo esc_attr($header_text_color); ?>;
+    --header-status-color: <?php echo esc_attr($header_status_color); ?>;
+    --header-icons-color: <?php echo esc_attr($header_icons_color); ?>;
+    --header-close-color: <?php echo esc_attr($header_close_color); ?>;
     --user-msg-bg-color: <?php echo esc_attr($user_msg_bg_color); ?>;
     --admin-msg-bg-color: <?php echo esc_attr($admin_msg_bg_color); ?>;
     --user-msg-text-color: <?php echo esc_attr($user_msg_text_color); ?>;
@@ -212,7 +222,7 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
 .aic-icon-button {
     background: transparent;
     border: none;
-    color: var(--aic-text-primary);
+    color: var(--header-icons-color);
     cursor: pointer;
     padding: 5px;
     display: flex;
@@ -260,18 +270,20 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
     margin: 0;
     font-size: 18px;
     font-weight: 600;
+    color: var(--header-text-color);
 }
 
 .aic-chat-status {
     margin: 5px 0 0 0;
     font-size: 12px;
     opacity: 0.9;
+    color: var(--header-status-color);
 }
 
 .aic-chat-close {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--header-close-color);
     font-size: 28px;
     cursor: pointer;
     line-height: 1;

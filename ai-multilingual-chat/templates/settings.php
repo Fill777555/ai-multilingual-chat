@@ -26,6 +26,12 @@ $user_msg_text_color = get_option('aic_user_msg_text_color', '#ffffff');
 $admin_msg_text_color = get_option('aic_admin_msg_text_color', '#333333');
 $send_button_color = get_option('aic_send_button_color', '#667eea');
 $input_border_color = get_option('aic_input_border_color', '#dddddd');
+
+// New header color settings
+$header_text_color = get_option('aic_header_text_color', '#ffffff');
+$header_status_color = get_option('aic_header_status_color', '#ffffff');
+$header_icons_color = get_option('aic_header_icons_color', '#ffffff');
+$header_close_color = get_option('aic_header_close_color', '#ffffff');
 ?>
 
 <div class="wrap">
@@ -335,6 +341,7 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
         <h3>Настройки цветов</h3>
         <p class="description" style="margin-bottom: 15px;">Настройте цвета различных элементов виджета чата</p>
         
+        <h4>Основные цвета виджета</h4>
         <table class="form-table">
             <tr>
                 <th scope="row">
@@ -346,7 +353,10 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_widget_bg_color" 
                            value="<?php echo esc_attr($widget_bg_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($widget_bg_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($widget_bg_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет фона окна чата</p>
                 </td>
             </tr>
@@ -361,14 +371,20 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_chat_button_color" 
                            value="<?php echo esc_attr($chat_button_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($chat_button_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($chat_button_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет круглой кнопки для открытия чата</p>
                 </td>
             </tr>
-            
+        </table>
+        
+        <h4>Цвета заголовка чата</h4>
+        <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="aic_header_bg_color">Цвет заголовка чата</label>
+                    <label for="aic_header_bg_color">Цвет фона заголовка</label>
                 </th>
                 <td>
                     <input type="color" 
@@ -376,11 +392,89 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_header_bg_color" 
                            value="<?php echo esc_attr($header_bg_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($header_bg_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($header_bg_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет фона заголовка чата</p>
                 </td>
             </tr>
             
+            <tr>
+                <th scope="row">
+                    <label for="aic_header_text_color">Цвет текста заголовка</label>
+                </th>
+                <td>
+                    <input type="color" 
+                           name="aic_header_text_color" 
+                           id="aic_header_text_color" 
+                           value="<?php echo esc_attr($header_text_color); ?>"
+                           class="aic-color-picker">
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($header_text_color); ?>"
+                           placeholder="#000000">
+                    <p class="description">Цвет текста заголовка чата</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_header_status_color">Цвет текста статуса</label>
+                </th>
+                <td>
+                    <input type="color" 
+                           name="aic_header_status_color" 
+                           id="aic_header_status_color" 
+                           value="<?php echo esc_attr($header_status_color); ?>"
+                           class="aic-color-picker">
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($header_status_color); ?>"
+                           placeholder="#000000">
+                    <p class="description">Цвет текста статуса ('Мы онлайн')</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_header_icons_color">Цвет иконок кнопок</label>
+                </th>
+                <td>
+                    <input type="color" 
+                           name="aic_header_icons_color" 
+                           id="aic_header_icons_color" 
+                           value="<?php echo esc_attr($header_icons_color); ?>"
+                           class="aic-color-picker">
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($header_icons_color); ?>"
+                           placeholder="#000000">
+                    <p class="description">Цвет иконок кнопок в заголовке</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <th scope="row">
+                    <label for="aic_header_close_color">Цвет кнопки закрытия</label>
+                </th>
+                <td>
+                    <input type="color" 
+                           name="aic_header_close_color" 
+                           id="aic_header_close_color" 
+                           value="<?php echo esc_attr($header_close_color); ?>"
+                           class="aic-color-picker">
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($header_close_color); ?>"
+                           placeholder="#000000">
+                    <p class="description">Цвет кнопки закрытия (×)</p>
+                </td>
+            </tr>
+        </table>
+        
+        <h4>Цвета сообщений</h4>
+        <table class="form-table">
             <tr>
                 <th scope="row">
                     <label for="aic_user_msg_bg_color">Цвет сообщений пользователя</label>
@@ -391,7 +485,10 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_user_msg_bg_color" 
                            value="<?php echo esc_attr($user_msg_bg_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($user_msg_bg_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($user_msg_bg_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет фона сообщений от пользователя</p>
                 </td>
             </tr>
@@ -406,7 +503,10 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_admin_msg_bg_color" 
                            value="<?php echo esc_attr($admin_msg_bg_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($admin_msg_bg_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($admin_msg_bg_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет фона сообщений от администратора/бота</p>
                 </td>
             </tr>
@@ -421,7 +521,10 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_user_msg_text_color" 
                            value="<?php echo esc_attr($user_msg_text_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($user_msg_text_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($user_msg_text_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет текста в сообщениях пользователя</p>
                 </td>
             </tr>
@@ -436,11 +539,17 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_admin_msg_text_color" 
                            value="<?php echo esc_attr($admin_msg_text_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($admin_msg_text_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($admin_msg_text_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет текста в сообщениях администратора</p>
                 </td>
             </tr>
-            
+        </table>
+        
+        <h4>Цвета элементов управления</h4>
+        <table class="form-table">
             <tr>
                 <th scope="row">
                     <label for="aic_send_button_color">Цвет кнопки отправки</label>
@@ -451,7 +560,10 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_send_button_color" 
                            value="<?php echo esc_attr($send_button_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($send_button_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($send_button_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет кнопки отправки сообщения</p>
                 </td>
             </tr>
@@ -466,7 +578,10 @@ $input_border_color = get_option('aic_input_border_color', '#dddddd');
                            id="aic_input_border_color" 
                            value="<?php echo esc_attr($input_border_color); ?>"
                            class="aic-color-picker">
-                    <span class="aic-color-value"><?php echo esc_html($input_border_color); ?></span>
+                    <input type="text" 
+                           class="aic-color-hex-input" 
+                           value="<?php echo esc_attr($input_border_color); ?>"
+                           placeholder="#000000">
                     <p class="description">Цвет границы поля ввода сообщения</p>
                 </td>
             </tr>
@@ -680,10 +795,37 @@ jQuery(document).ready(function($) {
         $(this).hide();
     });
     
-    // Color picker - update displayed color value
+    // Color picker - update HEX input field
     $('.aic-color-picker').on('change input', function() {
         var colorValue = $(this).val();
-        $(this).siblings('.aic-color-value').text(colorValue);
+        $(this).siblings('.aic-color-hex-input').val(colorValue);
+    });
+    
+    // HEX input - update color picker and validate
+    $('.aic-color-hex-input').on('input', function() {
+        var hexValue = $(this).val().trim();
+        // Validate HEX: #RRGGBB
+        if (/^#[0-9A-Fa-f]{6}$/.test(hexValue)) {
+            $(this).siblings('.aic-color-picker').val(hexValue);
+            $(this).css('border-color', '#4CAF50'); // Green border for valid
+        } else {
+            $(this).css('border-color', '#f44336'); // Red border for invalid
+        }
+    });
+    
+    // Normalize HEX on blur
+    $('.aic-color-hex-input').on('blur', function() {
+        var hexValue = $(this).val().trim().toUpperCase();
+        // Add # if missing
+        if (!/^#/.test(hexValue) && /^[0-9A-F]{6}$/.test(hexValue)) {
+            hexValue = '#' + hexValue;
+            $(this).val(hexValue);
+        }
+        // Update color picker if valid
+        if (/^#[0-9A-F]{6}$/.test(hexValue)) {
+            $(this).siblings('.aic-color-picker').val(hexValue);
+            $(this).css('border-color', '');
+        }
     });
     
     // Reset colors to defaults
@@ -696,6 +838,10 @@ jQuery(document).ready(function($) {
             'aic_widget_bg_color': '#1c2126',
             'aic_chat_button_color': '#667eea',
             'aic_header_bg_color': '#667eea',
+            'aic_header_text_color': '#ffffff',
+            'aic_header_status_color': '#ffffff',
+            'aic_header_icons_color': '#ffffff',
+            'aic_header_close_color': '#ffffff',
             'aic_user_msg_bg_color': '#667eea',
             'aic_admin_msg_bg_color': '#ffffff',
             'aic_user_msg_text_color': '#ffffff',
@@ -706,7 +852,7 @@ jQuery(document).ready(function($) {
         
         $.each(defaults, function(id, color) {
             $('#' + id).val(color);
-            $('#' + id).siblings('.aic-color-value').text(color);
+            $('#' + id).siblings('.aic-color-hex-input').val(color);
         });
         
         alert('Цвета сброшены к значениям по умолчанию. Не забудьте сохранить настройки.');
@@ -741,16 +887,26 @@ jQuery(document).ready(function($) {
     vertical-align: middle;
 }
 
-.aic-color-value {
+.aic-color-hex-input {
     display: inline-block;
+    width: 120px;
+    padding: 6px 10px;
     margin-left: 10px;
-    font-family: monospace;
+    font-family: 'Courier New', monospace;
     font-size: 14px;
-    padding: 4px 8px;
-    background: #f0f0f0;
-    border-radius: 3px;
-    color: #333;
+    text-transform: uppercase;
+    border: 1px solid var(--aic-accent);
+    border-radius: 4px;
+    background: var(--aic-bg);
+    color: var(--aic-text-primary);
     vertical-align: middle;
+    transition: border-color 0.3s;
+}
+
+.aic-color-hex-input:focus {
+    outline: none;
+    border-color: var(--aic-accent);
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
 }
 
 .widefat code {
