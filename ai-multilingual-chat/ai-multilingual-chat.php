@@ -408,7 +408,7 @@ class AI_Multilingual_Chat {
     }
     
     private function save_settings($post_data) {
-        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode', 'aic_admin_avatar', 'aic_widget_border_radius', 'aic_widget_font_size', 'aic_widget_padding', 'aic_widget_bg_color', 'aic_chat_button_color', 'aic_header_bg_color', 'aic_user_msg_bg_color', 'aic_admin_msg_bg_color', 'aic_user_msg_text_color', 'aic_admin_msg_text_color', 'aic_send_button_color', 'aic_input_border_color');
+        $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode', 'aic_admin_avatar', 'aic_widget_border_radius', 'aic_widget_font_size', 'aic_widget_padding', 'aic_widget_bg_color', 'aic_chat_button_color', 'aic_header_bg_color', 'aic_header_text_color', 'aic_header_status_color', 'aic_header_icons_color', 'aic_header_close_color', 'aic_user_msg_bg_color', 'aic_admin_msg_bg_color', 'aic_user_msg_text_color', 'aic_admin_msg_text_color', 'aic_send_button_color', 'aic_input_border_color');
         
         foreach ($settings as $setting) {
             if (isset($post_data[$setting])) {
