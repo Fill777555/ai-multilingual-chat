@@ -1615,8 +1615,6 @@ add_action('wp_dashboard_setup', function() {
     });
 });
 
-
-
 add_action('admin_menu', function() {
     global $menu, $wpdb;
     $table_messages = $wpdb->prefix . 'ai_chat_messages';
