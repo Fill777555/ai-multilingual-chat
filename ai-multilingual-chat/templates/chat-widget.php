@@ -420,13 +420,14 @@ $header_close_color = get_option('aic_header_close_color', '#ffffff');
 
 .aic-chat-input-wrapper {
     padding: 15px;
-    background: #1a1a1a;
+    background: var(--widget-bg-color);
     border-top: 1px solid #18adfe;
     display: flex;
     gap: 10px;
 }
 
 .aic-message-input { 
+    background: var(--widget-bg-color);
     flex: 1;
     padding: 10px 15px;
     border: 1px solid var(--input-border-color);
