@@ -714,6 +714,17 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
 
 <script>
 jQuery(document).ready(function($) {
+    // Ensure hex inputs sync with color pickers before form submission
+    $('form').on('submit', function() {
+        $('.aic-color-hex-input').each(function() {
+            var hexValue = $(this).val().trim();
+            // If valid hex, update the corresponding color picker
+            if (/^#[0-9A-Fa-f]{6}$/.test(hexValue)) {
+                $(this).siblings('.aic-color-picker').val(hexValue);
+            }
+        });
+    });
+    
     // Tab switching
     $('.nav-tab').on('click', function(e) {
         e.preventDefault();
@@ -808,7 +819,7 @@ jQuery(document).ready(function($) {
         var hexValue = $(this).val().trim();
         // Validate HEX: #RRGGBB
         if (/^#[0-9A-Fa-f]{6}$/.test(hexValue)) {
-            $(this).siblings('.aic-color-picker').val(hexValue);
+            $(this).siblings('.aic-color-picker').val(hexValue).trigger('change');
             $(this).css('border-color', '#4CAF50'); // Green border for valid
         } else {
             $(this).css('border-color', '#f44336'); // Red border for invalid
@@ -825,7 +836,7 @@ jQuery(document).ready(function($) {
         }
         // Update color picker if valid
         if (/^#[0-9A-F]{6}$/.test(hexValue)) {
-            $(this).siblings('.aic-color-picker').val(hexValue);
+            $(this).siblings('.aic-color-picker').val(hexValue).trigger('change');
             $(this).css('border-color', '');
         }
     });
