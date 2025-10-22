@@ -523,3 +523,27 @@ msgstr "У вас %d непрочитанное сообщение."
 msgid "[%s] New chat message"
 msgstr "[%s] Новое сообщение в чате"
 
+msgid "Error sending message"
+msgstr "Ошибка отправки сообщения"
+
+msgid "Error sending message: %s"
+msgstr "Ошибка отправки сообщения: %s"
+
+msgid "Error: Please select a conversation for export first"
+msgstr "Ошибка: Сначала выберите диалог для экспорта"
+
+msgid "Error: Invalid conversation ID"
+msgstr "Ошибка: Неверный ID диалога"
+
+msgid "Export error: empty response from server"
+msgstr "Ошибка экспорта: пустой ответ от сервера"
+
+msgid "Export error: %s"
+msgstr "Ошибка экспорта: %s"
+
+msgid "Export error: no CSV data"
+msgstr "Ошибка экспорта: отсутствуют данные CSV"
+
+msgid "Error processing CSV: %s"
+msgstr "Ошибка обработки CSV: %s"
+

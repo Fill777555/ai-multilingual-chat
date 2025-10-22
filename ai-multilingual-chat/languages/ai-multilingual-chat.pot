@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AI Multilingual Chat 2.0.8\n"
 "Report-Msgid-Bugs-To: https://web-proekt.com\n"
-"POT-Creation-Date: 2025-10-22 13:53+0000\n"
+"POT-Creation-Date: 2025-10-22 14:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,12 +31,12 @@ msgstr ""
 msgid "AI Chat - Conversation Management"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2025
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2035
 msgid "AI Chat - Statistics"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:856
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:856
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:866
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:866
 msgid "AI Chat Activation Error:"
 msgstr ""
 
@@ -44,9 +44,9 @@ msgstr ""
 msgid "AI Chat Statistics"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:884
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:885
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:885
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:894
 msgid "AI Chat:"
 msgstr ""
 
@@ -80,7 +80,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2034
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2044
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:24
 msgid "Active Conversations"
 msgstr ""
@@ -187,7 +187,7 @@ msgid "Background color of the chat window"
 msgstr ""
 
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:703
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:748
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:758
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:241
 msgid "Bell"
 msgstr ""
@@ -218,7 +218,7 @@ msgid "Chat Widget Position"
 msgstr ""
 
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:705
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:750
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:760
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:243
 msgid "Chime"
 msgstr ""
@@ -307,8 +307,8 @@ msgstr ""
 msgid "Database error when working with FAQ. Check wp-content/debug.log for details."
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:885
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:885
 msgid "Database tables are not set up. Please deactivate and reactivate the plugin."
 msgstr ""
 
@@ -317,7 +317,7 @@ msgid "Date"
 msgstr ""
 
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:702
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:747
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:757
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:240
 msgid "Default"
 msgstr ""
@@ -337,7 +337,7 @@ msgid "Description"
 msgstr ""
 
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:704
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:749
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:759
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:242
 msgid "Ding"
 msgstr ""
@@ -392,9 +392,29 @@ msgstr ""
 msgid "Enter your CSS code here"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:858
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:858
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:868
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:868
 msgid "Error occurred at:"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:717
+msgid "Error processing CSV: %s"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:710
+msgid "Error sending message"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:711
+msgid "Error sending message: %s"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:713
+msgid "Error: Invalid conversation ID"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:712
+msgid "Error: Please select a conversation for export first"
 msgstr ""
 
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:267
@@ -412,6 +432,18 @@ msgstr ""
 msgid "Existing FAQs"
 msgstr ""
 
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:715
+msgid "Export error: %s"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:714
+msgid "Export error: empty response from server"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:716
+msgid "Export error: no CSV data"
+msgstr ""
+
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:657
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:657
 msgid "FAQ"
@@ -422,8 +454,8 @@ msgstr ""
 msgid "FAQ - Auto Replies"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:835
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:835
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:845
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:845
 msgid "FAQ added!"
 msgstr ""
 
@@ -431,8 +463,8 @@ msgstr ""
 msgid "FAQ added."
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:841
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:841
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:851
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:851
 msgid "FAQ deleted!"
 msgstr ""
 
@@ -489,11 +521,11 @@ msgstr ""
 msgid "Get your key:"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1924
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1934
 msgid "Guest"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:738
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:748
 msgid "Hello!"
 msgstr ""
 
@@ -564,7 +596,7 @@ msgstr ""
 msgid "Main Widget Colors"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2052
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2062
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:60
 msgid "Messages Today"
 msgstr ""
@@ -582,7 +614,7 @@ msgstr ""
 msgid "New Today"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1923
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1933
 msgid "New message from %1\$s:
 
 %2\$s
@@ -604,12 +636,12 @@ msgstr ""
 msgid "Number of Conversations"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2057
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2067
 msgid "Open Chat"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:884
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:884
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:894
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:894
 msgid "Open chat"
 msgstr ""
 
@@ -710,21 +742,21 @@ msgstr ""
 
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:655
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:655
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2019
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2029
 msgid "Settings"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:775
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:775
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:785
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:785
 msgid "Settings saved!"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:800
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:810
 msgid "Settings updated"
 msgstr ""
 
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:706
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:751
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:761
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:244
 msgid "Soft"
 msgstr ""
@@ -739,8 +771,8 @@ msgstr ""
 msgid "Spanish"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:860
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:860
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:870
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:870
 msgid "Stack Trace"
 msgstr ""
 
@@ -778,7 +810,7 @@ msgstr ""
 msgid "Top Right"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2046
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2056
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:15
 msgid "Total Conversations"
 msgstr ""
@@ -792,7 +824,7 @@ msgstr ""
 msgid "Ukrainian"
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2040
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2050
 #: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:42
 msgid "Unread"
 msgstr ""
@@ -861,7 +893,7 @@ msgstr ""
 msgid "You can write to us here in the chat, and we will reply as soon as possible."
 msgstr ""
 
-#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1920
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1930
 msgid "[%s] New chat message"
 msgstr ""
 
