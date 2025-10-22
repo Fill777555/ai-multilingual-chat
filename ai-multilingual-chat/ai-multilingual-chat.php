@@ -781,34 +781,74 @@ class AI_Multilingual_Chat {
     }
     
     public function render_settings_page() {
+        // Handle form submission with Post/Redirect/Get pattern
         if (isset($_POST['aic_save_settings']) && check_admin_referer('aic_settings_nonce')) {
             $this->save_settings($_POST);
+            
+            // Redirect to prevent form resubmission
+            wp_redirect(add_query_arg('settings-updated', 'true', wp_get_referer()));
+            exit;
+        }
+        
+        // Show success message after redirect
+        if (isset($_GET['settings-updated'])) {
             echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__('Settings saved!', 'ai-multilingual-chat') . '</strong></p></div>';
         }
+        
         include AIC_PLUGIN_DIR . 'templates/settings.php';
     }
     
     private function save_settings($post_data) {
+        $this->log('=== SAVING SETTINGS START ===', 'info');
+        
         $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode', 'aic_admin_avatar', 'aic_widget_border_radius', 'aic_widget_font_size', 'aic_widget_padding', 'aic_widget_bg_color', 'aic_chat_button_color', 'aic_header_bg_color', 'aic_header_text_color', 'aic_header_status_color', 'aic_header_icons_color', 'aic_header_close_color', 'aic_user_msg_bg_color', 'aic_admin_msg_bg_color', 'aic_user_msg_text_color', 'aic_admin_msg_text_color', 'aic_send_button_color', 'aic_input_border_color');
         
         foreach ($settings as $setting) {
             if (isset($post_data[$setting])) {
-                update_option($setting, sanitize_text_field($post_data[$setting]));
+                $value = sanitize_text_field($post_data[$setting]);
+                
+                // Log before saving
+                $old_value = get_option($setting);
+                $this->log("Updating {$setting}: '{$old_value}' => '{$value}'", 'info');
+                
+                update_option($setting, $value);
+                
+                // Verify that it was saved correctly
+                $saved_value = get_option($setting);
+                if ($saved_value !== $value) {
+                    $this->log("WARNING: {$setting} not saved correctly! Expected: '{$value}', Got: '{$saved_value}'", 'error');
+                }
             }
         }
         
         // Handle custom CSS separately (needs sanitization for textarea)
         if (isset($post_data['aic_widget_custom_css'])) {
-            update_option('aic_widget_custom_css', wp_strip_all_tags($post_data['aic_widget_custom_css']));
+            $old_css = get_option('aic_widget_custom_css');
+            $new_css = wp_strip_all_tags($post_data['aic_widget_custom_css']);
+            $this->log("Updating aic_widget_custom_css", 'info');
+            update_option('aic_widget_custom_css', $new_css);
         }
         
+        // Handle checkboxes
         update_option('aic_enable_translation', isset($post_data['aic_enable_translation']) ? '1' : '0');
         update_option('aic_enable_email_notifications', isset($post_data['aic_enable_email_notifications']) ? '1' : '0');
         update_option('aic_enable_emoji_picker', isset($post_data['aic_enable_emoji_picker']) ? '1' : '0');
         update_option('aic_enable_dark_theme', isset($post_data['aic_enable_dark_theme']) ? '1' : '0');
         update_option('aic_enable_sound_notifications', isset($post_data['aic_enable_sound_notifications']) ? '1' : '0');
         
-        $this->log(__('Settings updated', 'ai-multilingual-chat'));
+        $this->log('=== SAVING SETTINGS END ===', 'info');
+        
+        // Force cache clearing to ensure settings are immediately visible
+        $this->log('Clearing WordPress object cache', 'info');
+        wp_cache_flush();
+        
+        // Clear opcache if available
+        if (function_exists('opcache_reset')) {
+            $this->log('Clearing PHP opcache', 'info');
+            opcache_reset();
+        }
+        
+        $this->log(__('Settings updated', 'ai-multilingual-chat') . ' ✅', 'info');
     }
     
     public function render_stats_page() {

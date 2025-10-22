@@ -1,6 +1,9 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+// Clear cache to ensure fresh values are loaded
+wp_cache_delete('alloptions', 'options');
+
 // Global settings
 $api_key = get_option('aic_ai_api_key', '');
 $provider = get_option('aic_ai_provider', 'openai');
@@ -35,6 +38,14 @@ $widget_border_radius = get_option('aic_widget_border_radius', '12');
 $widget_font_size = get_option('aic_widget_font_size', '14');
 $widget_padding = get_option('aic_widget_padding', '20');
 $widget_custom_css = get_option('aic_widget_custom_css', '');
+
+// Debug logging for loaded values (only in WP_DEBUG mode)
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log('[AIC Settings] Loaded values:');
+    error_log('  - widget_bg_color: ' . $widget_bg_color);
+    error_log('  - theme_mode: ' . get_option('aic_theme_mode', 'auto'));
+    error_log('  - provider: ' . $provider);
+}
 ?>
 
 <div class="wrap">
