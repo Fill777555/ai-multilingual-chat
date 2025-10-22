@@ -3,10 +3,10 @@
 # This file is distributed under the same license as the AI Multilingual Chat plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Multilingual Chat 2.0.7\n"
+"Project-Id-Version: AI Multilingual Chat 2.0.8\n"
 "Report-Msgid-Bugs-To: https://web-proekt.com\n"
-"POT-Creation-Date: 2025-10-21 16:30+0000\n"
-"PO-Revision-Date: 2025-10-21 16:30+0000\n"
+"POT-Creation-Date: 2025-10-22 13:54+0000\n"
+"PO-Revision-Date: 2025-10-22 13:54+0000\n"
 "Last-Translator: Oleg Filin\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -16,215 +16,510 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Manual\n"
 
-#: ai-multilingual-chat.php:76
-msgid "Plugin activated"
-msgstr "Плагин активирован"
-
-#: ai-multilingual-chat.php:81
-msgid "Plugin deactivated"
-msgstr "Плагин деактивирован"
-
-#: ai-multilingual-chat.php:125
-msgid "Tables created/updated"
-msgstr "Таблицы созданы/обновлены"
-
-#: ai-multilingual-chat.php:140
-msgid "Added target_language column"
-msgstr "Добавлена колонка target_language"
-
-#: ai-multilingual-chat.php:156
-msgid "Added typing indicator columns"
-msgstr "Добавлены колонки для typing indicator"
-
-#: ai-multilingual-chat.php:180
-msgid "Created translation cache table"
-msgstr "Создана таблица кэша переводов"
-
-#: ai-multilingual-chat.php:205
-msgid "Created FAQ table"
-msgstr "Создана таблица FAQ"
-
-#: ai-multilingual-chat.php:209
-msgid "How can I contact you?"
-msgstr "Как с вами связаться?"
-
-#: ai-multilingual-chat.php:210
-msgid "You can write to us here in the chat, and we will reply as soon as possible."
-msgstr "Вы можете написать нам здесь в чате, и мы ответим в ближайшее время."
-
-#: ai-multilingual-chat.php:215
-msgid "What are your business hours?"
-msgstr "Какой у вас график работы?"
-
-#: ai-multilingual-chat.php:216
-msgid "We work daily from 9:00 AM to 6:00 PM."
-msgstr "Мы работаем ежедневно с 9:00 до 18:00."
-
-#: ai-multilingual-chat.php:286
-msgid "AI Chat"
-msgstr "AI Чат"
-
-#: ai-multilingual-chat.php:287
-msgid "Conversation Management"
-msgstr "Управление диалогами"
-
-#: ai-multilingual-chat.php:288
-msgid "Settings"
-msgstr "Настройки"
-
-#: ai-multilingual-chat.php:289
-msgid "Statistics"
-msgstr "Статистика"
-
-#: ai-multilingual-chat.php:290
-msgid "FAQ"
-msgstr "FAQ"
-
-#: ai-multilingual-chat.php:404
-msgid "Settings saved!"
-msgstr "Настройки сохранены!"
-
-#: ai-multilingual-chat.php:464
-msgid "FAQ added!"
-msgstr "FAQ добавлен!"
-
-#: ai-multilingual-chat.php:470
-msgid "FAQ deleted!"
-msgstr "FAQ удален!"
-
-#: ai-multilingual-chat.php:484
-msgid "You have %d unread message."
-msgid_plural "You have %d unread messages."
-msgstr[0] "У вас %d непрочитанное сообщение."
-msgstr[1] "У вас %d непрочитанных сообщения."
-msgstr[2] "У вас %d непрочитанных сообщений."
-
-#: ai-multilingual-chat.php:485
-msgid "AI Chat:"
-msgstr "AI Чат:"
-
-#: ai-multilingual-chat.php:485
-msgid "Open chat"
-msgstr "Открыть чат"
-
-#: ai-multilingual-chat.php:1523
-#, c-format
-msgid "[%s] New chat message"
-msgstr "[%s] Новое сообщение в чате"
-
-#: ai-multilingual-chat.php:1526
-#, c-format
-msgid "New message from %1$s:\n\n%2$s\n\nOpen: %3$s"
-msgstr "Новое сообщение от %1$s:\n\n%2$s\n\nОткрыть: %3$s"
-
-#: ai-multilingual-chat.php:1527
-msgid "Guest"
-msgstr "Гость"
-
-#: templates/settings.php:41
-msgid "AI Multilingual Chat Settings"
-msgstr "Настройки AI Multilingual Chat"
-
-#: templates/settings.php:45
-msgid "General Settings"
-msgstr "Общие настройки"
-
-#: templates/settings.php:46
-msgid "Widget Design"
-msgstr "Дизайн виджета"
-
-#: templates/settings.php:47
-msgid "REST API"
-msgstr "REST API"
-
-#: templates/settings.php:59
-msgid "AI Provider"
-msgstr "AI Провайдер"
-
-#: templates/settings.php:67
-msgid "Select the provider for message translation"
-msgstr "Выберите провайдера для перевода сообщений"
-
-#: templates/settings.php:73
 msgid "AI API Key"
 msgstr "API ключ AI"
 
-#: templates/settings.php:82
-msgid "Get your key:"
-msgstr "Получить ключ:"
+msgid "AI Chat"
+msgstr "AI Чат"
 
-#: templates/settings.php:92
-msgid "Administrator Language"
-msgstr "Язык администратора"
+msgid "AI Chat - Conversation Management"
+msgstr "AI Chat - Управление диалогами"
 
-#: templates/settings.php:107
-msgid "The language in which you communicate with clients"
-msgstr "Язык, на котором вы общаетесь с клиентами"
+msgid "AI Chat - Statistics"
+msgstr "AI Chat - Статистика"
 
-#: templates/settings.php:113
-msgid "Automatic Translation"
-msgstr "Автоматический перевод"
+msgid "AI Chat Statistics"
+msgstr "Статистика AI Chat"
 
-#: templates/settings.php:122
-msgid "Enable automatic translation via AI"
-msgstr "Включить автоматический перевод через AI"
+msgid "AI Chat:"
+msgstr "AI Чат:"
 
-#: templates/settings.php:124
-msgid "If disabled, messages will not be translated"
-msgstr "Если отключено, сообщения не будут переводиться"
+msgid "AI Multilingual Chat Settings"
+msgstr "Настройки AI Multilingual Chat"
 
-#: templates/settings.php:130
+msgid "AI Provider"
+msgstr "AI Провайдер"
+
 msgid "API Key for Mobile App"
 msgstr "API ключ для мобильного приложения"
 
-#: templates/settings.php:140
-msgid "Generate"
-msgstr "Сгенерировать"
+msgid "Access denied."
+msgstr "Доступ запрещен."
 
-#: templates/settings.php:344
-msgid "Color Settings"
-msgstr "Настройки цветов"
+msgid "Actions"
+msgstr "Действия"
 
-#: templates/settings.php:345
-msgid "Configure colors for different chat widget elements"
-msgstr "Настройте цвета различных элементов виджета чата"
+msgid "Active"
+msgstr "Активен"
 
-#: templates/settings.php:347
-msgid "Main Widget Colors"
-msgstr "Основные цвета виджета"
+msgid "Active Conversations"
+msgstr "Активных диалогов"
 
-#: templates/settings.php:351
-msgid "Widget Background Color"
-msgstr "Цвет фона виджета"
+msgid "Activity for Last 7 Days"
+msgstr "Активность за последние 7 дней"
 
-#: templates/settings.php:363
+msgid "Add FAQ"
+msgstr "Добавить FAQ"
+
+msgid "Add New FAQ"
+msgstr "Добавить новый FAQ"
+
+msgid "Add your own CSS code for full control over widget design."
+msgstr "Добавьте собственный CSS код для полного контроля над дизайном виджета."
+
+msgid "Added target_language column"
+msgstr "Добавлена колонка target_language"
+
+msgid "Added typing indicator columns"
+msgstr "Добавлены колонки для typing indicator"
+
+msgid "Admin Panel Theme"
+msgstr "Тема оформления админки"
+
+msgid "Administrator Avatar"
+msgstr "Аватар администратора"
+
+msgid "Administrator Language"
+msgstr "Язык администратора"
+
+msgid "Administrators hear sound for new messages from clients, clients hear sound for admin replies. Clients can disable sound via button in chat."
+msgstr "Администраторы слышат звук при новых сообщениях от клиентов, клиенты — при ответах администратора. Клиенты могут отключить звук для себя через кнопку в чате."
+
+msgid "All requests must contain X-API-Key header with API key."
+msgstr "Все запросы должны содержать заголовок X-API-Key с API ключом."
+
+msgid "An error occurred while working with the database."
+msgstr "Произошла ошибка при работе с базой данных."
+
+msgid "Answer"
+msgstr "Ответ"
+
+msgid "Are you sure you want to reset all colors to default values?"
+msgstr "Вы уверены, что хотите сбросить все цвета к значениям по умолчанию?"
+
+msgid "Auto"
+msgstr "Авто"
+
+msgid "Auto (System)"
+msgstr "Авто (по системе)"
+
+msgid "Automatic Theme"
+msgstr "Автоматическая тема"
+
+msgid "Automatic Translation"
+msgstr "Автоматический перевод"
+
+msgid "Automatic reply that will be sent to user"
+msgstr "Автоматический ответ, который будет отправлен пользователю"
+
+msgid "Avatar will be displayed next to administrator messages in chat. Recommended size: 100x100 pixels"
+msgstr "Аватар будет отображаться рядом с сообщениями администратора в чате. Рекомендуемый размер: 100x100 пикселей"
+
 msgid "Background color of the chat window"
 msgstr "Цвет фона окна чата"
 
-#: templates/settings.php:712
-msgid "Save Settings"
-msgstr "Сохранить настройки"
-
-#: ai-multilingual-chat.php:333
-msgid "Default"
-msgstr "По умолчанию"
-
-#: ai-multilingual-chat.php:334
 msgid "Bell"
 msgstr "Колокольчик"
 
-#: ai-multilingual-chat.php:335
-msgid "Ding"
-msgstr "Динь"
+msgid "Border Radius (px)"
+msgstr "Скругление углов (px)"
 
-#: ai-multilingual-chat.php:336
+msgid "Border radius of chat window corners (0-50px). Default: 12px"
+msgstr "Радиус скругления углов окна чата (0-50px). По умолчанию: 12px"
+
+msgid "Bottom Left"
+msgstr "Слева снизу"
+
+msgid "Bottom Right"
+msgstr "Справа снизу"
+
+msgid "Chat Widget Position"
+msgstr "Позиция виджета чата"
+
 msgid "Chime"
 msgstr "Перезвон"
 
-#: ai-multilingual-chat.php:337
+msgid "Choose melody for client sound notifications in chat"
+msgstr "Выберите мелодию для звуковых уведомлений клиентов в чате"
+
+msgid "Choose melody for sound notifications in admin panel"
+msgstr "Выберите мелодию для звуковых уведомлений в админ-панели"
+
+msgid "Choose theme for plugin admin panel. \"Auto\" uses your device system theme."
+msgstr "Выберите тему для админ-панели плагина. \"Авто\" использует системную тему вашего устройства."
+
+msgid "Client Notification Sound"
+msgstr "Мелодия оповещения для клиентов"
+
+msgid "Color Settings"
+msgstr "Настройки цветов"
+
+msgid "Configure automatic replies for frequently asked questions. The system will automatically respond to users if their message contains specified keywords."
+msgstr "Настройте автоматические ответы на часто задаваемые вопросы. Система будет автоматически отвечать пользователям, если их сообщение содержит указанные ключевые слова."
+
+msgid "Configure colors for different chat widget elements"
+msgstr "Настройте цвета различных элементов виджета чата"
+
+msgid "Conversation Management"
+msgstr "Управление диалогами"
+
+msgid "Conversations"
+msgstr "Диалоги"
+
+msgid "Copied!"
+msgstr "Скопировано!"
+
+msgid "Copy"
+msgstr "Копировать"
+
+msgid "Created FAQ table"
+msgstr "Создана таблица FAQ"
+
+msgid "Created translation cache table"
+msgstr "Создана таблица кэша переводов"
+
+msgid "Custom CSS"
+msgstr "Произвольный CSS"
+
+msgid "Dark"
+msgstr "Темная"
+
+msgid "Dark Theme"
+msgstr "Темная тема"
+
+msgid "Database error when working with FAQ. Check wp-content/debug.log for details."
+msgstr "Ошибка базы данных при работе с FAQ. Проверьте wp-content/debug.log для деталей."
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Default"
+msgstr "По умолчанию"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete this FAQ?"
+msgstr "Удалить этот FAQ?"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Ding"
+msgstr "Динь"
+
+msgid "Disable"
+msgstr "Отключить"
+
+msgid "Emoji Picker"
+msgstr "Выбор эмодзи"
+
+msgid "Enable"
+msgstr "Включить"
+
+msgid "Enable automatic translation via AI"
+msgstr "Включить автоматический перевод через AI"
+
+msgid "Enable dark theme for chat"
+msgstr "Включить темную тему для чата"
+
+msgid "Enable emoji picker in chat"
+msgstr "Включить выбор эмодзи в чате"
+
+msgid "Enable sound notifications in admin panel and for clients"
+msgstr "Включить звуковые уведомления в админке и для клиентов"
+
+msgid "Enable this FAQ (will be used for auto-reply)"
+msgstr "Включить этот FAQ (будет использоваться для автоответа)"
+
+msgid "Endpoint"
+msgstr "Endpoint"
+
+msgid "Enter your CSS code here"
+msgstr "Введите ваш CSS код здесь"
+
+msgid "Example question for reference"
+msgstr "Пример вопроса для справки"
+
+msgid "Examples: change colors, sizes, padding, animations, etc."
+msgstr "Примеры: изменение цветов, размеров, отступов, анимаций и т.д."
+
+msgid "Existing FAQs"
+msgstr "Существующие FAQ"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "FAQ - Auto Replies"
+msgstr "FAQ - Автоответы"
+
+msgid "FAQ added."
+msgstr "FAQ добавлен."
+
+msgid "FAQ deleted."
+msgstr "FAQ удален."
+
+msgid "FAQ status updated."
+msgstr "Статус FAQ обновлен."
+
+msgid "Font Size (px)"
+msgstr "Размер шрифта (px)"
+
+msgid "Font size in chat (10-24px). Default: 14px"
+msgstr "Размер шрифта в чате (10-24px). По умолчанию: 14px"
+
+msgid "French"
+msgstr "Французский"
+
+msgid "General Settings"
+msgstr "Общие настройки"
+
+msgid "Generate"
+msgstr "Сгенерировать"
+
+msgid "German"
+msgstr "Немецкий"
+
+msgid "Get conversation messages"
+msgstr "Получить сообщения разговора"
+
+msgid "Get list of conversations"
+msgstr "Получить список разговоров"
+
+msgid "Get your key:"
+msgstr "Получить ключ:"
+
+msgid "Guest"
+msgstr "Гость"
+
+msgid "Hello!"
+msgstr "Здравствуйте!"
+
+msgid "How can I contact you?"
+msgstr "Как с вами связаться?"
+
+msgid "If disabled, messages will not be translated"
+msgstr "Если отключено, сообщения не будут переводиться"
+
+msgid "Important:"
+msgstr "Важно:"
+
+msgid "Inactive"
+msgstr "Неактивен"
+
+msgid "Initializing..."
+msgstr "Инициализация..."
+
+msgid "Inner padding of chat header (5-40px). Default: 20px"
+msgstr "Внутренние отступы заголовка чата (5-40px). По умолчанию: 20px"
+
+msgid "Italian"
+msgstr "Итальянский"
+
+msgid "Keywords"
+msgstr "Ключевые слова"
+
+msgid "Keywords separated by comma (example: contact,phone,reach)"
+msgstr "Ключевые слова через запятую (например: контакты,телефон,связаться)"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Light"
+msgstr "Светлая"
+
+msgid "Light Theme"
+msgstr "Светлая тема"
+
+msgid "Main Widget Colors"
+msgstr "Основные цвета виджета"
+
+msgid "Messages Today"
+msgstr "Сообщений сегодня"
+
+msgid "Method"
+msgstr "Метод"
+
+msgid "New Conversations"
+msgstr "Новых диалогов"
+
+msgid "New Today"
+msgstr "Новых сегодня"
+
+msgid "New message from %1$s:\n\n%2$s\n\nOpen: %3$s"
+msgstr "Новое сообщение от %1$s:\n\n%2$s\n\nОткрыть: %3$s"
+
+msgid "No FAQs created. Add the first one!"
+msgstr "Нет созданных FAQ. Добавьте первый!"
+
+msgid "Notification Sound"
+msgstr "Мелодия оповещения"
+
+msgid "Number of Conversations"
+msgstr "Количество диалогов"
+
+msgid "Open Chat"
+msgstr "Открыть чат"
+
+msgid "Open chat"
+msgstr "Открыть чат"
+
+msgid "Padding (px)"
+msgstr "Внутренние отступы (px)"
+
+msgid "Please fill in all required fields."
+msgstr "Пожалуйста, заполните все обязательные поля."
+
+msgid "Please generate API key first"
+msgstr "Сначала сгенерируйте API ключ"
+
+msgid "Plugin activated"
+msgstr "Плагин активирован"
+
+msgid "Plugin deactivated"
+msgstr "Плагин деактивирован"
+
+msgid "Portuguese"
+msgstr "Португальский"
+
+msgid "Preview"
+msgstr "Прослушать"
+
+msgid "Question"
+msgstr "Вопрос"
+
+msgid "REST API"
+msgstr "REST API"
+
+msgid "REST API for Mobile Application"
+msgstr "REST API для мобильного приложения"
+
+msgid "Refresh conversation list"
+msgstr "Обновить список диалогов"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgid "Save Settings"
+msgstr "Сохранить настройки"
+
+msgid "Security check failed."
+msgstr "Проверка безопасности не пройдена."
+
+msgid "Select Administrator Avatar"
+msgstr "Выберите аватар администратора"
+
+msgid "Select a Conversation"
+msgstr "Выберите диалог"
+
+msgid "Select a conversation from the list on the left to start chatting"
+msgstr "Выберите диалог из списка слева для начала общения"
+
+msgid "Select the provider for message translation"
+msgstr "Выберите провайдера для перевода сообщений"
+
+msgid "Send message"
+msgstr "Отправить сообщение"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Settings saved!"
+msgstr "Настройки сохранены!"
+
+msgid "Settings updated"
+msgstr "Настройки обновлены"
+
 msgid "Soft"
 msgstr "Мягкий звук"
 
-#: ai-multilingual-chat.php:368
-msgid "Hello!"
-msgstr "Здравствуйте!"
+msgid "Sound Notifications"
+msgstr "Звуковые уведомления"
+
+msgid "Spanish"
+msgstr "Испанский"
+
+msgid "Statistics"
+msgstr "Статистика"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Tables created/updated"
+msgstr "Таблицы созданы/обновлены"
+
+msgid "The language in which you communicate with clients"
+msgstr "Язык, на котором вы общаетесь с клиентами"
+
+msgid "Theme Controls"
+msgstr "Управление темой"
+
+msgid "Top Left"
+msgstr "Слева сверху"
+
+msgid "Top Right"
+msgstr "Справа сверху"
+
+msgid "Total Conversations"
+msgstr "Всего диалогов"
+
+msgid "Total Messages"
+msgstr "Всего сообщений"
+
+msgid "Ukrainian"
+msgstr "Украинская"
+
+msgid "Unread"
+msgstr "Непрочитанных"
+
+msgid "Updating..."
+msgstr "Обновление..."
+
+msgid "Upload Image"
+msgstr "Загрузить изображение"
+
+msgid "Use This Image"
+msgstr "Использовать это изображение"
+
+msgid "Use carefully, incorrect CSS may break widget functionality."
+msgstr "Используйте осторожно, неправильный CSS может нарушить работу виджета."
+
+msgid "Use these endpoints for mobile application integration:"
+msgstr "Используйте эти endpoints для интеграции с мобильным приложением:"
+
+msgid "Used for REST API access"
+msgstr "Используется для доступа через REST API"
+
+msgid "User Languages"
+msgstr "Языки пользователей"
+
+msgid "Warning:"
+msgstr "Внимание:"
+
+msgid "We work daily from 9:00 AM to 6:00 PM."
+msgstr "Мы работаем ежедневно с 9:00 до 18:00."
+
+msgid "What are your business hours?"
+msgstr "Какой у вас график работы?"
+
+msgid "Widget Background Color"
+msgstr "Цвет фона виджета"
+
+msgid "Widget Design"
+msgstr "Дизайн виджета"
+
+msgid "Widget Parameters"
+msgstr "Параметры виджета"
+
+msgid "You can write to us here in the chat, and we will reply as soon as possible."
+msgstr "Вы можете написать нам здесь в чате, и мы ответим в ближайшее время."
+
+msgid "You have %d unread message."
+msgstr "У вас %d непрочитанное сообщение."
+
+msgid "[%s] New chat message"
+msgstr "[%s] Новое сообщение в чате"
+

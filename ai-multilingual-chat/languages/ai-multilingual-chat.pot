@@ -3,9 +3,9 @@
 # This file is distributed under the same license as the AI Multilingual Chat plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Multilingual Chat 2.0.7\n"
+"Project-Id-Version: AI Multilingual Chat 2.0.8\n"
 "Report-Msgid-Bugs-To: https://web-proekt.com\n"
-"POT-Creation-Date: 2025-10-21 16:30+0000\n"
+"POT-Creation-Date: 2025-10-22 13:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,214 +16,852 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: Manual\n"
 
-#: ai-multilingual-chat.php:76
-msgid "Plugin activated"
-msgstr ""
-
-#: ai-multilingual-chat.php:81
-msgid "Plugin deactivated"
-msgstr ""
-
-#: ai-multilingual-chat.php:125
-msgid "Tables created/updated"
-msgstr ""
-
-#: ai-multilingual-chat.php:140
-msgid "Added target_language column"
-msgstr ""
-
-#: ai-multilingual-chat.php:156
-msgid "Added typing indicator columns"
-msgstr ""
-
-#: ai-multilingual-chat.php:180
-msgid "Created translation cache table"
-msgstr ""
-
-#: ai-multilingual-chat.php:205
-msgid "Created FAQ table"
-msgstr ""
-
-#: ai-multilingual-chat.php:209
-msgid "How can I contact you?"
-msgstr ""
-
-#: ai-multilingual-chat.php:210
-msgid "You can write to us here in the chat, and we will reply as soon as possible."
-msgstr ""
-
-#: ai-multilingual-chat.php:215
-msgid "What are your business hours?"
-msgstr ""
-
-#: ai-multilingual-chat.php:216
-msgid "We work daily from 9:00 AM to 6:00 PM."
-msgstr ""
-
-#: ai-multilingual-chat.php:286
-msgid "AI Chat"
-msgstr ""
-
-#: ai-multilingual-chat.php:287
-msgid "Conversation Management"
-msgstr ""
-
-#: ai-multilingual-chat.php:288
-msgid "Settings"
-msgstr ""
-
-#: ai-multilingual-chat.php:289
-msgid "Statistics"
-msgstr ""
-
-#: ai-multilingual-chat.php:290
-msgid "FAQ"
-msgstr ""
-
-#: ai-multilingual-chat.php:404
-msgid "Settings saved!"
-msgstr ""
-
-#: ai-multilingual-chat.php:464
-msgid "FAQ added!"
-msgstr ""
-
-#: ai-multilingual-chat.php:470
-msgid "FAQ deleted!"
-msgstr ""
-
-#: ai-multilingual-chat.php:484
-msgid "You have %d unread message."
-msgid_plural "You have %d unread messages."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ai-multilingual-chat.php:485
-msgid "AI Chat:"
-msgstr ""
-
-#: ai-multilingual-chat.php:485
-msgid "Open chat"
-msgstr ""
-
-#: ai-multilingual-chat.php:1523
-#, c-format
-msgid "[%s] New chat message"
-msgstr ""
-
-#: ai-multilingual-chat.php:1526
-#, c-format
-msgid "New message from %1$s:\n\n%2$s\n\nOpen: %3$s"
-msgstr ""
-
-#: ai-multilingual-chat.php:1527
-msgid "Guest"
-msgstr ""
-
-#: templates/settings.php:41
-msgid "AI Multilingual Chat Settings"
-msgstr ""
-
-#: templates/settings.php:45
-msgid "General Settings"
-msgstr ""
-
-#: templates/settings.php:46
-msgid "Widget Design"
-msgstr ""
-
-#: templates/settings.php:47
-msgid "REST API"
-msgstr ""
-
-#: templates/settings.php:59
-msgid "AI Provider"
-msgstr ""
-
-#: templates/settings.php:67
-msgid "Select the provider for message translation"
-msgstr ""
-
-#: templates/settings.php:73
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:73
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:73
 msgid "AI API Key"
 msgstr ""
 
-#: templates/settings.php:82
-msgid "Get your key:"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:653
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:653
+msgid "AI Chat"
 msgstr ""
 
-#: templates/settings.php:92
-msgid "Administrator Language"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:10
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:10
+msgid "AI Chat - Conversation Management"
 msgstr ""
 
-#: templates/settings.php:107
-msgid "The language in which you communicate with clients"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2025
+msgid "AI Chat - Statistics"
 msgstr ""
 
-#: templates/settings.php:113
-msgid "Automatic Translation"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:856
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:856
+msgid "AI Chat Activation Error:"
 msgstr ""
 
-#: templates/settings.php:122
-msgid "Enable automatic translation via AI"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:6
+msgid "AI Chat Statistics"
 msgstr ""
 
-#: templates/settings.php:124
-msgid "If disabled, messages will not be translated"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:884
+msgid "AI Chat:"
 msgstr ""
 
-#: templates/settings.php:130
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:41
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:41
+msgid "AI Multilingual Chat Settings"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:59
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:59
+msgid "AI Provider"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:130
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:130
 msgid "API Key for Mobile App"
 msgstr ""
 
-#: templates/settings.php:140
-msgid "Generate"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:164
+msgid "Access denied."
 msgstr ""
 
-#: templates/settings.php:344
-msgid "Color Settings"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:334
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:334
+msgid "Actions"
 msgstr ""
 
-#: templates/settings.php:345
-msgid "Configure colors for different chat widget elements"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:304
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:304
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:351
+msgid "Active"
 msgstr ""
 
-#: templates/settings.php:347
-msgid "Main Widget Colors"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2034
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:24
+msgid "Active Conversations"
 msgstr ""
 
-#: templates/settings.php:351
-msgid "Widget Background Color"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:90
+msgid "Activity for Last 7 Days"
 msgstr ""
 
-#: templates/settings.php:363
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:315
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:315
+msgid "Add FAQ"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:257
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:257
+msgid "Add New FAQ"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:664
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:664
+msgid "Add your own CSS code for full control over widget design."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:508
+msgid "Added target_language column"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:524
+msgid "Added typing indicator columns"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:197
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:197
+msgid "Admin Panel Theme"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:311
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:311
+msgid "Administrator Avatar"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:92
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:92
+msgid "Administrator Language"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:226
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:226
+msgid "Administrators hear sound for new messages from clients, clients hear sound for admin replies. Clients can disable sound via button in chat."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:707
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:707
+msgid "All requests must contain X-API-Key header with API key."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:246
+msgid "An error occurred while working with the database."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:272
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:272
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:330
+msgid "Answer"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:835
+msgid "Are you sure you want to reset all colors to default values?"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:19
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:19
+msgid "Auto"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:206
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:206
+msgid "Auto (System)"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:18
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:18
+msgid "Automatic Theme"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:113
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:113
+msgid "Automatic Translation"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:275
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:275
+msgid "Automatic reply that will be sent to user"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:334
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:334
+msgid "Avatar will be displayed next to administrator messages in chat. Recommended size: 100x100 pixels"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:362
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:362
 msgid "Background color of the chat window"
 msgstr ""
 
-#: templates/settings.php:712
-msgid "Save Settings"
-msgstr ""
-
-#: ai-multilingual-chat.php:333
-msgid "Default"
-msgstr ""
-
-#: ai-multilingual-chat.php:334
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:703
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:748
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:241
 msgid "Bell"
 msgstr ""
 
-#: ai-multilingual-chat.php:335
-msgid "Ding"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:606
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:606
+msgid "Border Radius (px)"
 msgstr ""
 
-#: ai-multilingual-chat.php:336
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:616
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:616
+msgid "Border radius of chat window corners (0-50px). Default: 12px"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:156
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:156
+msgid "Bottom Left"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:155
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:155
+msgid "Bottom Right"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:151
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:151
+msgid "Chat Widget Position"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:705
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:750
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:243
 msgid "Chime"
 msgstr ""
 
-#: ai-multilingual-chat.php:337
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:305
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:305
+msgid "Choose melody for client sound notifications in chat"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:255
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:255
+msgid "Choose melody for sound notifications in admin panel"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:208
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:208
+msgid "Choose theme for plugin admin panel. "Auto" uses your device system theme."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:283
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:283
+msgid "Client Notification Sound"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:343
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:343
+msgid "Color Settings"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:254
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:254
+msgid "Configure automatic replies for frequently asked questions. The system will automatically respond to users if their message contains specified keywords."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:344
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:344
+msgid "Configure colors for different chat widget elements"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:654
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:654
+msgid "Conversation Management"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:34
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:34
+msgid "Conversations"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:750
+msgid "Copied!"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:143
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:143
+msgid "Copy"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:573
+msgid "Created FAQ table"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:548
+msgid "Created translation cache table"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:654
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:654
+msgid "Custom CSS"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:205
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:205
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:16
+msgid "Dark"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:181
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:181
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:15
+msgid "Dark Theme"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:230
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:230
+msgid "Database error when working with FAQ. Check wp-content/debug.log for details."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:875
+msgid "Database tables are not set up. Please deactivate and reactivate the plugin."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:94
+msgid "Date"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:702
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:747
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:240
+msgid "Default"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:370
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:370
+msgid "Delete"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:369
+msgid "Delete this FAQ?"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:684
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:684
+msgid "Description"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:704
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:749
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:242
+msgid "Ding"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:362
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:362
+msgid "Disable"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:165
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:165
+msgid "Emoji Picker"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:362
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:362
+msgid "Enable"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:122
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:122
+msgid "Enable automatic translation via AI"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:190
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:190
+msgid "Enable dark theme for chat"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:174
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:174
+msgid "Enable emoji picker in chat"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:223
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:223
+msgid "Enable sound notifications in admin panel and for clients"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:308
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:308
+msgid "Enable this FAQ (will be used for auto-reply)"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:683
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:683
+msgid "Endpoint"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:662
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:662
+msgid "Enter your CSS code here"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:858
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:858
+msgid "Error occurred at:"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:267
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:267
+msgid "Example question for reference"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:665
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:665
+msgid "Examples: change colors, sizes, padding, animations, etc."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:321
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:321
+msgid "Existing FAQs"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:657
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:657
+msgid "FAQ"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:222
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:222
+msgid "FAQ - Auto Replies"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:835
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:835
+msgid "FAQ added!"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:242
+msgid "FAQ added."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:841
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:841
+msgid "FAQ deleted!"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:243
+msgid "FAQ deleted."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:244
+msgid "FAQ status updated."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:622
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:622
+msgid "Font Size (px)"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:632
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:632
+msgid "Font size in chat (10-24px). Default: 14px"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:295
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:295
+msgid "French"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:45
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:45
+msgid "General Settings"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:140
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:140
+msgid "Generate"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:294
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:294
+msgid "German"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:696
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:696
+msgid "Get conversation messages"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:691
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:691
+msgid "Get list of conversations"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:82
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:82
+msgid "Get your key:"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1924
+msgid "Guest"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:738
+msgid "Hello!"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:578
+msgid "How can I contact you?"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:124
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:124
+msgid "If disabled, messages will not be translated"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:707
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:707
+msgid "Important:"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:353
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:353
+msgid "Inactive"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:42
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:42
+msgid "Initializing..."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:648
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:648
+msgid "Inner padding of chat header (5-40px). Default: 20px"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:297
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:297
+msgid "Italian"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:280
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:280
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:331
+msgid "Keywords"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:283
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:283
+msgid "Keywords separated by comma (example: contact,phone,reach)"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:288
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:288
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:332
+msgid "Language"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:204
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:204
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:13
+msgid "Light"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:12
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:12
+msgid "Light Theme"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:346
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:346
+msgid "Main Widget Colors"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2052
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:60
+msgid "Messages Today"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:682
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:682
+msgid "Method"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:95
+msgid "New Conversations"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:51
+msgid "New Today"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1923
+msgid "New message from %1\$s:
+
+%2\$s
+
+Open: %3\$s"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:324
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:324
+msgid "No FAQs created. Add the first one!"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:233
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:233
+msgid "Notification Sound"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:73
+msgid "Number of Conversations"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2057
+msgid "Open Chat"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:884
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:884
+msgid "Open chat"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:638
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:638
+msgid "Padding (px)"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:245
+msgid "Please fill in all required fields."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:743
+msgid "Please generate API key first"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:147
+msgid "Plugin activated"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:449
+msgid "Plugin deactivated"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:298
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:298
+msgid "Portuguese"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:253
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:253
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:303
+msgid "Preview"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:264
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:264
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:329
+msgid "Question"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:47
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:47
+msgid "REST API"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:675
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:675
+msgid "REST API for Mobile Application"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:35
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:35
+msgid "Refresh conversation list"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:332
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:332
+msgid "Remove"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:291
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:291
+msgid "Russian"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:711
+msgid "Save Settings"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:168
+msgid "Security check failed."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:771
+msgid "Select Administrator Avatar"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:51
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:51
+msgid "Select a Conversation"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:52
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:52
+msgid "Select a conversation from the list on the left to start chatting"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:67
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:67
+msgid "Select the provider for message translation"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:701
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:701
+msgid "Send message"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:655
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:655
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2019
+msgid "Settings"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:775
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:775
+msgid "Settings saved!"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:800
+msgid "Settings updated"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:706
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:751
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:244
 msgid "Soft"
 msgstr ""
 
-#: ai-multilingual-chat.php:368
-msgid "Hello!"
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:214
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:214
+msgid "Sound Notifications"
 msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:296
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:296
+msgid "Spanish"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:860
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:860
+msgid "Stack Trace"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:656
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:656
+msgid "Statistics"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:333
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:333
+msgid "Status"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:493
+msgid "Tables created/updated"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:107
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:107
+msgid "The language in which you communicate with clients"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:11
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/admin-chat.php:11
+msgid "Theme Controls"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:158
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:158
+msgid "Top Left"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:157
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:157
+msgid "Top Right"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2046
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:15
+msgid "Total Conversations"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:33
+msgid "Total Messages"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:293
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:293
+msgid "Ukrainian"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:2040
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:42
+msgid "Unread"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/faq.php:393
+msgid "Updating..."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:329
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:329
+msgid "Upload Image"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:773
+msgid "Use This Image"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:666
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:666
+msgid "Use carefully, incorrect CSS may break widget functionality."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:677
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:677
+msgid "Use these endpoints for mobile application integration:"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:145
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:145
+msgid "Used for REST API access"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/stats.php:68
+msgid "User Languages"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:666
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:666
+msgid "Warning:"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:585
+msgid "We work daily from 9:00 AM to 6:00 PM."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:584
+msgid "What are your business hours?"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:350
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:350
+msgid "Widget Background Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:46
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:46
+msgid "Widget Design"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:602
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:602
+msgid "Widget Parameters"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:579
+msgid "You can write to us here in the chat, and we will reply as soon as possible."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:1920
+msgid "[%s] New chat message"
+msgstr ""
+
