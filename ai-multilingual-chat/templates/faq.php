@@ -219,15 +219,15 @@ $faqs = aic_get_faqs();
 $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_msg'])) : '';
 ?>
 <div class="wrap">
-    <h1><?php esc_html_e('FAQ - Автоответы', 'ai-multilingual-chat'); ?></h1>
+    <h1><?php esc_html_e('FAQ - Auto Replies', 'ai-multilingual-chat'); ?></h1>
 
     <?php
-    // Если была DB ошибка — покажем уведомление с коротким текстом и ссылкой на лог
+    // If there was a DB error - show notification with short text and link to log
     $db_err = get_transient('aic_last_db_error');
     if ($db_err) {
         ?>
         <div class="notice notice-error is-dismissible">
-            <p><?php esc_html_e('Ошибка базы данных при работе с FAQ. Проверьте wp-content/debug.log для деталей.', 'ai-multilingual-chat'); ?></p>
+            <p><?php esc_html_e('Database error when working with FAQ. Check wp-content/debug.log for details.', 'ai-multilingual-chat'); ?></p>
         </div>
         <?php
         delete_transient('aic_last_db_error');
@@ -239,11 +239,11 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
             <p>
                 <?php
                 switch ($aic_msg) {
-                    case 'added': _e('FAQ добавлен.', 'ai-multilingual-chat'); break;
-                    case 'deleted': _e('FAQ удалён.', 'ai-multilingual-chat'); break;
-                    case 'toggled': _e('Статус FAQ обновлён.', 'ai-multilingual-chat'); break;
-                    case 'empty': _e('Пожалуйста, заполните все обязательные поля.', 'ai-multilingual-chat'); break;
-                    case 'error': _e('Произошла ошибка при работе с базой данных.', 'ai-multilingual-chat'); break;
+                    case 'added': _e('FAQ added.', 'ai-multilingual-chat'); break;
+                    case 'deleted': _e('FAQ deleted.', 'ai-multilingual-chat'); break;
+                    case 'toggled': _e('FAQ status updated.', 'ai-multilingual-chat'); break;
+                    case 'empty': _e('Please fill in all required fields.', 'ai-multilingual-chat'); break;
+                    case 'error': _e('An error occurred while working with the database.', 'ai-multilingual-chat'); break;
                     default: echo esc_html($aic_msg);
                 }
                 ?>
@@ -251,87 +251,87 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
         </div>
     <?php endif; ?>
 
-    <p><?php esc_html_e('Настройте автоматические ответы на часто задаваемые вопросы. Система будет автоматически отвечать пользователям, если их сообщение содержит указанные ключевые слова.', 'ai-multilingual-chat'); ?></p>
+    <p><?php esc_html_e('Configure automatic replies for frequently asked questions. The system will automatically respond to users if their message contains specified keywords.', 'ai-multilingual-chat'); ?></p>
 
     <div style="background: var(--aic-tab); padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h2><?php esc_html_e('Добавить новый FAQ', 'ai-multilingual-chat'); ?></h2>
+        <h2><?php esc_html_e('Add New FAQ', 'ai-multilingual-chat'); ?></h2>
 
         <form method="post" action="">
             <?php wp_nonce_field('aic_faq_nonce'); ?>
 
             <table class="form-table">
                 <tr>
-                    <th scope="row"><label for="question"><?php esc_html_e('Вопрос', 'ai-multilingual-chat'); ?></label></th>
+                    <th scope="row"><label for="question"><?php esc_html_e('Question', 'ai-multilingual-chat'); ?></label></th>
                     <td>
                         <input type="text" name="question" id="question" class="regular-text" required>
-                        <p class="description"><?php esc_html_e('Пример вопроса для справки', 'ai-multilingual-chat'); ?></p>
+                        <p class="description"><?php esc_html_e('Example question for reference', 'ai-multilingual-chat'); ?></p>
                     </td>
                 </tr>
 
                 <tr>
-                    <th scope="row"><label for="answer"><?php esc_html_e('Ответ', 'ai-multilingual-chat'); ?></label></th>
+                    <th scope="row"><label for="answer"><?php esc_html_e('Answer', 'ai-multilingual-chat'); ?></label></th>
                     <td>
                         <textarea name="answer" id="answer" rows="5" class="large-text" required></textarea>
-                        <p class="description"><?php esc_html_e('Автоматический ответ, который будет отправлен пользователю', 'ai-multilingual-chat'); ?></p>
+                        <p class="description"><?php esc_html_e('Automatic reply that will be sent to user', 'ai-multilingual-chat'); ?></p>
                     </td>
                 </tr>
 
                 <tr>
-                    <th scope="row"><label for="keywords"><?php esc_html_e('Ключевые слова', 'ai-multilingual-chat'); ?></label></th>
+                    <th scope="row"><label for="keywords"><?php esc_html_e('Keywords', 'ai-multilingual-chat'); ?></label></th>
                     <td>
                         <input type="text" name="keywords" id="keywords" class="large-text" required>
-                        <p class="description"><?php esc_html_e('Ключевые слова через запятую (например: контакты,телефон,связаться)', 'ai-multilingual-chat'); ?></p>
+                        <p class="description"><?php esc_html_e('Keywords separated by comma (example: contact,phone,reach)', 'ai-multilingual-chat'); ?></p>
                     </td>
                 </tr>
 
                 <tr>
-                    <th scope="row"><label for="language"><?php esc_html_e('Язык', 'ai-multilingual-chat'); ?></label></th>
+                    <th scope="row"><label for="language"><?php esc_html_e('Language', 'ai-multilingual-chat'); ?></label></th>
                     <td>
                         <select name="language" id="language" class="regular-text">
-                            <option value="ru">Русский</option>
+                            <option value="ru"><?php echo esc_html__('Russian', 'ai-multilingual-chat'); ?></option>
                             <option value="en">English</option>
-                            <option value="uk">Українська</option>
-                            <option value="de">Deutsch</option>
-                            <option value="fr">Français</option>
-                            <option value="es">Español</option>
-                            <option value="it">Italiano</option>
-                            <option value="pt">Português</option>
+                            <option value="uk"><?php echo esc_html__('Ukrainian', 'ai-multilingual-chat'); ?></option>
+                            <option value="de"><?php echo esc_html__('German', 'ai-multilingual-chat'); ?></option>
+                            <option value="fr"><?php echo esc_html__('French', 'ai-multilingual-chat'); ?></option>
+                            <option value="es"><?php echo esc_html__('Spanish', 'ai-multilingual-chat'); ?></option>
+                            <option value="it"><?php echo esc_html__('Italian', 'ai-multilingual-chat'); ?></option>
+                            <option value="pt"><?php echo esc_html__('Portuguese', 'ai-multilingual-chat'); ?></option>
                         </select>
                     </td>
                 </tr>
 
                 <tr>
-                    <th scope="row"><?php esc_html_e('Активен', 'ai-multilingual-chat'); ?></th>
+                    <th scope="row"><?php esc_html_e('Active', 'ai-multilingual-chat'); ?></th>
                     <td>
                         <label>
                             <input type="checkbox" name="is_active" value="1" checked>
-                            <?php esc_html_e('Включить этот FAQ (будет использоваться для автоответа)', 'ai-multilingual-chat'); ?>
+                            <?php esc_html_e('Enable this FAQ (will be used for auto-reply)', 'ai-multilingual-chat'); ?>
                         </label>
                     </td>
                 </tr>
             </table>
 
             <p class="submit">
-                <input type="submit" name="aic_add_faq" class="aic-btn primary" value="<?php esc_attr_e('Добавить FAQ', 'ai-multilingual-chat'); ?>">
+                <input type="submit" name="aic_add_faq" class="aic-btn primary" value="<?php esc_attr_e('Add FAQ', 'ai-multilingual-chat'); ?>">
             </p>
         </form>
     </div>
 
     <div style="background: var(--aic-tab); padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h2><?php esc_html_e('Существующие FAQ', 'ai-multilingual-chat'); ?></h2>
+        <h2><?php esc_html_e('Existing FAQs', 'ai-multilingual-chat'); ?></h2>
 
         <?php if (empty($faqs)): ?>
-            <p><?php esc_html_e('Нет созданных FAQ. Добавьте первый!', 'ai-multilingual-chat'); ?></p>
+            <p><?php esc_html_e('No FAQs created. Add the first one!', 'ai-multilingual-chat'); ?></p>
         <?php else: ?>
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th style="width: 20%;"><?php esc_html_e('Вопрос', 'ai-multilingual-chat'); ?></th>
-                        <th style="width: 30%;"><?php esc_html_e('Ответ', 'ai-multilingual-chat'); ?></th>
-                        <th style="width: 25%;"><?php esc_html_e('Ключевые слова', 'ai-multilingual-chat'); ?></th>
-                        <th style="width: 5%;"><?php esc_html_e('Язык', 'ai-multilingual-chat'); ?></th>
-                        <th style="width: 10%;"><?php esc_html_e('Статус', 'ai-multilingual-chat'); ?></th>
-                        <th style="width: 15%;"><?php esc_html_e('Действия', 'ai-multilingual-chat'); ?></th>
+                        <th style="width: 20%;"><?php esc_html_e('Question', 'ai-multilingual-chat'); ?></th>
+                        <th style="width: 30%;"><?php esc_html_e('Answer', 'ai-multilingual-chat'); ?></th>
+                        <th style="width: 25%;"><?php esc_html_e('Keywords', 'ai-multilingual-chat'); ?></th>
+                        <th style="width: 5%;"><?php esc_html_e('Language', 'ai-multilingual-chat'); ?></th>
+                        <th style="width: 10%;"><?php esc_html_e('Status', 'ai-multilingual-chat'); ?></th>
+                        <th style="width: 15%;"><?php esc_html_e('Actions', 'ai-multilingual-chat'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -348,9 +348,9 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
                             <td><?php echo esc_html($faq->language); ?></td>
                             <td>
                                 <?php if (!empty($faq->is_active)): ?>
-                                    <span style="color: green;">✓ <?php esc_html_e('Активен', 'ai-multilingual-chat'); ?></span>
+                                    <span style="color: green;">✓ <?php esc_html_e('Active', 'ai-multilingual-chat'); ?></span>
                                 <?php else: ?>
-                                    <span style="color: red;">✗ <?php esc_html_e('Неактивен', 'ai-multilingual-chat'); ?></span>
+                                    <span style="color: red;">✗ <?php esc_html_e('Inactive', 'ai-multilingual-chat'); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td>
@@ -359,15 +359,15 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
                                         class="aic-btn primary aic-faq-toggle" 
                                         data-faq-id="<?php echo esc_attr($faq->id); ?>"
                                         data-is-active="<?php echo esc_attr($faq->is_active); ?>">
-                                    <?php echo !empty($faq->is_active) ? esc_html__('Отключить', 'ai-multilingual-chat') : esc_html__('Включить', 'ai-multilingual-chat'); ?>
+                                    <?php echo !empty($faq->is_active) ? esc_html__('Disable', 'ai-multilingual-chat') : esc_html__('Enable', 'ai-multilingual-chat'); ?>
                                 </button>
 
                                 <!-- Delete form -->
                                 <form method="post" style="display:inline; margin-left:8px;">
                                     <?php wp_nonce_field('aic_faq_nonce'); ?>
                                     <input type="hidden" name="faq_id" value="<?php echo esc_attr($faq->id); ?>">
-                                    <button type="submit" name="aic_delete_faq" class="aic-btn primary" onclick="return confirm('<?php echo esc_js(__('Удалить этот FAQ?', 'ai-multilingual-chat')); ?>')">
-                                        <?php esc_html_e('Удалить', 'ai-multilingual-chat'); ?>
+                                    <button type="submit" name="aic_delete_faq" class="aic-btn primary" onclick="return confirm('<?php echo esc_js(__('Delete this FAQ?', 'ai-multilingual-chat')); ?>')">
+                                        <?php esc_html_e('Delete', 'ai-multilingual-chat'); ?>
                                     </button>
                                 </form>
                             </td>
@@ -390,7 +390,7 @@ jQuery(document).ready(function($) {
         var $statusCell = $row.find('td:nth-child(5)'); // Status column
         
         // Disable button during request
-        $button.prop('disabled', true).text('Обновление...');
+        $button.prop('disabled', true).text('<?php echo esc_js(__('Updating...', 'ai-multilingual-chat')); ?>');
         
         $.ajax({
             url: aicAdmin.ajax_url,

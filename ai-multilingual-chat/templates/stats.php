@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) exit;
 ?>
 
 <div class="wrap">
-    <h1><?php _e('Статистика AI Chat', 'ai-multilingual-chat'); ?></h1>
+    <h1><?php _e('AI Chat Statistics', 'ai-multilingual-chat'); ?></h1>
     
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
         
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) exit;
                 <?php echo $stats['total_conversations']; ?>
             </div>
             <div style="font-size: 16px; opacity: 0.9;">
-                <?php _e('Всего диалогов', 'ai-multilingual-chat'); ?>
+                <?php _e('Total Conversations', 'ai-multilingual-chat'); ?>
             </div>
         </div>
         
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) exit;
                 <?php echo $stats['active_conversations']; ?>
             </div>
             <div style="font-size: 16px; opacity: 0.9;">
-                <?php _e('Активных диалогов', 'ai-multilingual-chat'); ?>
+                <?php _e('Active Conversations', 'ai-multilingual-chat'); ?>
             </div>
         </div>
         
@@ -30,7 +30,7 @@ if (!defined('ABSPATH')) exit;
                 <?php echo $stats['total_messages']; ?>
             </div>
             <div style="font-size: 16px; opacity: 0.9;">
-                <?php _e('Всего сообщений', 'ai-multilingual-chat'); ?>
+                <?php _e('Total Messages', 'ai-multilingual-chat'); ?>
             </div>
         </div>
         
@@ -39,7 +39,7 @@ if (!defined('ABSPATH')) exit;
                 <?php echo $stats['unread_messages']; ?>
             </div>
             <div style="font-size: 16px; opacity: 0.9;">
-                <?php _e('Непрочитанных', 'ai-multilingual-chat'); ?>
+                <?php _e('Unread', 'ai-multilingual-chat'); ?>
             </div>
         </div>
         
@@ -48,7 +48,7 @@ if (!defined('ABSPATH')) exit;
                 <?php echo $stats['today_conversations']; ?>
             </div>
             <div style="font-size: 16px; opacity: 0.8;">
-                <?php _e('Новых сегодня', 'ai-multilingual-chat'); ?>
+                <?php _e('New Today', 'ai-multilingual-chat'); ?>
             </div>
         </div>
         
@@ -57,7 +57,7 @@ if (!defined('ABSPATH')) exit;
                 <?php echo $stats['today_messages']; ?>
             </div>
             <div style="font-size: 16px; opacity: 0.8;">
-                <?php _e('Сообщений сегодня', 'ai-multilingual-chat'); ?>
+                <?php _e('Messages Today', 'ai-multilingual-chat'); ?>
             </div>
         </div>
         
@@ -65,12 +65,12 @@ if (!defined('ABSPATH')) exit;
     
     <?php if (!empty($languages)): ?>
     <div style="background: var(--aic-tab); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0;">
-        <h2><?php _e('Языки пользователей', 'ai-multilingual-chat'); ?></h2>
+        <h2><?php _e('User Languages', 'ai-multilingual-chat'); ?></h2>
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th><?php _e('Язык', 'ai-multilingual-chat'); ?></th>
-                    <th><?php _e('Количество диалогов', 'ai-multilingual-chat'); ?></th>
+                    <th><?php _e('Language', 'ai-multilingual-chat'); ?></th>
+                    <th><?php _e('Number of Conversations', 'ai-multilingual-chat'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -87,12 +87,12 @@ if (!defined('ABSPATH')) exit;
     
     <?php if (!empty($daily_stats)): ?>
     <div style="background: var(--aic-tab); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0;">
-        <h2><?php _e('Активность за последние 7 дней', 'ai-multilingual-chat'); ?></h2>
+        <h2><?php _e('Activity for Last 7 Days', 'ai-multilingual-chat'); ?></h2>
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th><?php _e('Дата', 'ai-multilingual-chat'); ?></th>
-                    <th><?php _e('Новых диалогов', 'ai-multilingual-chat'); ?></th>
+                    <th><?php _e('Date', 'ai-multilingual-chat'); ?></th>
+                    <th><?php _e('New Conversations', 'ai-multilingual-chat'); ?></th>
                 </tr>
             </thead>
             <tbody>
