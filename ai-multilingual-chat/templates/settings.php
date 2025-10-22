@@ -1,6 +1,11 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+// Log settings loading
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log('[AI Chat] [INFO] === LOADING SETTINGS START ===');
+}
+
 // Global settings
 $api_key = get_option('aic_ai_api_key', '');
 $provider = get_option('aic_ai_provider', 'openai');
@@ -13,6 +18,19 @@ $enable_emoji = get_option('aic_enable_emoji_picker', '1');
 $enable_dark_theme = get_option('aic_enable_dark_theme', '0');
 $enable_sound = get_option('aic_enable_sound_notifications', '1');
 
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log("[AI Chat] [INFO] Loaded aic_ai_api_key = " . (empty($api_key) ? '(empty)' : '***HIDDEN***'));
+    error_log("[AI Chat] [INFO] Loaded aic_ai_provider = {$provider}");
+    error_log("[AI Chat] [INFO] Loaded aic_admin_language = {$admin_lang}");
+    error_log("[AI Chat] [INFO] Loaded aic_enable_translation = {$enable_translation}");
+    error_log("[AI Chat] [INFO] Loaded aic_mobile_api_key = " . (empty($mobile_api_key) ? '(empty)' : '***HIDDEN***'));
+    error_log("[AI Chat] [INFO] Loaded aic_chat_widget_position = {$widget_position}");
+    error_log("[AI Chat] [INFO] Loaded aic_chat_widget_color = {$widget_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_enable_emoji_picker = {$enable_emoji}");
+    error_log("[AI Chat] [INFO] Loaded aic_enable_dark_theme = {$enable_dark_theme}");
+    error_log("[AI Chat] [INFO] Loaded aic_enable_sound_notifications = {$enable_sound}");
+}
+
 // Color settings
 $widget_bg_color = get_option('aic_widget_bg_color', '#1c2126');
 $chat_button_color = get_option('aic_chat_button_color', '#18adfe');
@@ -24,17 +42,44 @@ $admin_msg_text_color = get_option('aic_admin_msg_text_color', '#333333');
 $send_button_color = get_option('aic_send_button_color', '#18adfe');
 $input_border_color = get_option('aic_input_border_color', '#dddddd');
 
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log("[AI Chat] [INFO] Loaded aic_widget_bg_color = {$widget_bg_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_chat_button_color = {$chat_button_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_header_bg_color = {$header_bg_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_user_msg_bg_color = {$user_msg_bg_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_admin_msg_bg_color = {$admin_msg_bg_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_user_msg_text_color = {$user_msg_text_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_admin_msg_text_color = {$admin_msg_text_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_send_button_color = {$send_button_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_input_border_color = {$input_border_color}");
+}
+
 // Header color settings
 $header_text_color = get_option('aic_header_text_color', '#ffffff');
 $header_status_color = get_option('aic_header_status_color', '#ffffff');
 $header_icons_color = get_option('aic_header_icons_color', '#ffffff');
 $header_close_color = get_option('aic_header_close_color', '#ffffff');
 
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log("[AI Chat] [INFO] Loaded aic_header_text_color = {$header_text_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_header_status_color = {$header_status_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_header_icons_color = {$header_icons_color}");
+    error_log("[AI Chat] [INFO] Loaded aic_header_close_color = {$header_close_color}");
+}
+
 // Design settings
 $widget_border_radius = get_option('aic_widget_border_radius', '12');
 $widget_font_size = get_option('aic_widget_font_size', '14');
 $widget_padding = get_option('aic_widget_padding', '20');
 $widget_custom_css = get_option('aic_widget_custom_css', '');
+
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log("[AI Chat] [INFO] Loaded aic_widget_border_radius = {$widget_border_radius}");
+    error_log("[AI Chat] [INFO] Loaded aic_widget_font_size = {$widget_font_size}");
+    error_log("[AI Chat] [INFO] Loaded aic_widget_padding = {$widget_padding}");
+    error_log("[AI Chat] [INFO] Loaded aic_widget_custom_css = " . (empty($widget_custom_css) ? '(empty)' : substr($widget_custom_css, 0, 50) . '...'));
+    error_log('[AI Chat] [INFO] === LOADING SETTINGS END ===');
+}
 ?>
 
 <div class="wrap">

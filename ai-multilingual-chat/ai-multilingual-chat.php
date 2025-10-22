@@ -791,23 +791,63 @@ class AI_Multilingual_Chat {
     private function save_settings($post_data) {
         $settings = array('aic_ai_provider', 'aic_ai_api_key', 'aic_admin_language', 'aic_mobile_api_key', 'aic_chat_widget_position', 'aic_chat_widget_color', 'aic_notification_email', 'aic_welcome_message', 'aic_admin_notification_sound', 'aic_client_notification_sound', 'aic_theme_mode', 'aic_admin_avatar', 'aic_widget_border_radius', 'aic_widget_font_size', 'aic_widget_padding', 'aic_widget_bg_color', 'aic_chat_button_color', 'aic_header_bg_color', 'aic_header_text_color', 'aic_header_status_color', 'aic_header_icons_color', 'aic_header_close_color', 'aic_user_msg_bg_color', 'aic_admin_msg_bg_color', 'aic_user_msg_text_color', 'aic_admin_msg_text_color', 'aic_send_button_color', 'aic_input_border_color');
         
+        $this->log('=== SAVING SETTINGS START ===', 'info');
+        
         foreach ($settings as $setting) {
             if (isset($post_data[$setting])) {
-                update_option($setting, sanitize_text_field($post_data[$setting]));
+                $value = sanitize_text_field($post_data[$setting]);
+                $this->log("Saving {$setting} = {$value}", 'info');
+                
+                $result = update_option($setting, $value);
+                
+                if ($result === false) {
+                    $this->log("FAILED to save {$setting}", 'error');
+                } else {
+                    $saved_value = get_option($setting);
+                    $this->log("Saved {$setting}, verification: {$saved_value}", 'info');
+                }
             }
         }
         
         // Handle custom CSS separately (needs sanitization for textarea)
         if (isset($post_data['aic_widget_custom_css'])) {
-            update_option('aic_widget_custom_css', wp_strip_all_tags($post_data['aic_widget_custom_css']));
+            $value = wp_strip_all_tags($post_data['aic_widget_custom_css']);
+            $this->log("Saving aic_widget_custom_css = {$value}", 'info');
+            
+            $result = update_option('aic_widget_custom_css', $value);
+            
+            if ($result === false) {
+                $this->log("FAILED to save aic_widget_custom_css", 'error');
+            } else {
+                $saved_value = get_option('aic_widget_custom_css');
+                $this->log("Saved aic_widget_custom_css, verification: {$saved_value}", 'info');
+            }
         }
         
-        update_option('aic_enable_translation', isset($post_data['aic_enable_translation']) ? '1' : '0');
-        update_option('aic_enable_email_notifications', isset($post_data['aic_enable_email_notifications']) ? '1' : '0');
-        update_option('aic_enable_emoji_picker', isset($post_data['aic_enable_emoji_picker']) ? '1' : '0');
-        update_option('aic_enable_dark_theme', isset($post_data['aic_enable_dark_theme']) ? '1' : '0');
-        update_option('aic_enable_sound_notifications', isset($post_data['aic_enable_sound_notifications']) ? '1' : '0');
+        // Handle checkbox settings
+        $checkbox_settings = array(
+            'aic_enable_translation',
+            'aic_enable_email_notifications',
+            'aic_enable_emoji_picker',
+            'aic_enable_dark_theme',
+            'aic_enable_sound_notifications'
+        );
         
+        foreach ($checkbox_settings as $setting) {
+            $value = isset($post_data[$setting]) ? '1' : '0';
+            $this->log("Saving {$setting} = {$value}", 'info');
+            
+            $result = update_option($setting, $value);
+            
+            if ($result === false) {
+                $this->log("FAILED to save {$setting}", 'error');
+            } else {
+                $saved_value = get_option($setting);
+                $this->log("Saved {$setting}, verification: {$saved_value}", 'info');
+            }
+        }
+        
+        $this->log('=== SAVING SETTINGS END ===', 'info');
         $this->log(__('Settings updated', 'ai-multilingual-chat'));
     }
     
