@@ -714,7 +714,8 @@ class AI_Multilingual_Chat {
                 'error_export_empty_response' => __('Export error: empty response from server', 'ai-multilingual-chat'),
                 'error_export_details' => __('Export error: %s', 'ai-multilingual-chat'),
                 'error_export_no_csv_data' => __('Export error: no CSV data', 'ai-multilingual-chat'),
-                'error_processing_csv' => __('Error processing CSV: %s', 'ai-multilingual-chat')
+                'error_processing_csv' => __('Error processing CSV: %s', 'ai-multilingual-chat'),
+                'export_csv' => __('Export CSV', 'ai-multilingual-chat')
             )
         ));
     }

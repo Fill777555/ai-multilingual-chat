@@ -365,7 +365,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
             
             <tr>
                 <th scope="row">
-                    <label for="aic_chat_button_color">Цвет кнопки открытия чата</label>
+                    <label for="aic_chat_button_color"><?php echo esc_html__('Chat Button Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -377,16 +377,16 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($chat_button_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет круглой кнопки для открытия чата</p>
+                    <p class="description"><?php echo esc_html__('Color of the round button to open chat', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
         </table>
         
-        <h4>Цвета заголовка чата</h4>
+        <h4><?php echo esc_html__('Chat Header Colors', 'ai-multilingual-chat'); ?></h4>
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="aic_header_bg_color">Цвет фона заголовка</label>
+                    <label for="aic_header_bg_color"><?php echo esc_html__('Header Background Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -398,13 +398,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($header_bg_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет фона заголовка чата</p>
+                    <p class="description"><?php echo esc_html__('Chat header background color', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_header_text_color">Цвет текста заголовка</label>
+                    <label for="aic_header_text_color"><?php echo esc_html__('Header Text Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -416,13 +416,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($header_text_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет текста заголовка чата</p>
+                    <p class="description"><?php echo esc_html__('Chat header text color', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_header_status_color">Цвет текста статуса</label>
+                    <label for="aic_header_status_color"><?php echo esc_html__('Status Text Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -434,13 +434,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($header_status_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет текста статуса ('Мы онлайн')</p>
+                    <p class="description"><?php echo esc_html__('Status text color (\'We are online\')', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_header_icons_color">Цвет иконок кнопок</label>
+                    <label for="aic_header_icons_color"><?php echo esc_html__('Button Icons Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -452,13 +452,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($header_icons_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет иконок кнопок в заголовке</p>
+                    <p class="description"><?php echo esc_html__('Color of button icons in header', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_header_close_color">Цвет кнопки закрытия</label>
+                    <label for="aic_header_close_color"><?php echo esc_html__('Close Button Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -470,16 +470,16 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($header_close_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет кнопки закрытия (×)</p>
+                    <p class="description"><?php echo esc_html__('Close button color (×)', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
         </table>
         
-        <h4>Цвета сообщений</h4>
+        <h4><?php echo esc_html__('Message Colors', 'ai-multilingual-chat'); ?></h4>
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="aic_user_msg_bg_color">Цвет сообщений пользователя</label>
+                    <label for="aic_user_msg_bg_color"><?php echo esc_html__('User Message Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -491,13 +491,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($user_msg_bg_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет фона сообщений от пользователя</p>
+                    <p class="description"><?php echo esc_html__('Background color of user messages', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_admin_msg_bg_color">Цвет сообщений администратора</label>
+                    <label for="aic_admin_msg_bg_color"><?php echo esc_html__('Admin Message Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -509,13 +509,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($admin_msg_bg_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет фона сообщений от администратора/бота</p>
+                    <p class="description"><?php echo esc_html__('Background color of admin/bot messages', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_user_msg_text_color">Цвет текста сообщений пользователя</label>
+                    <label for="aic_user_msg_text_color"><?php echo esc_html__('User Message Text Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -527,13 +527,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($user_msg_text_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет текста в сообщениях пользователя</p>
+                    <p class="description"><?php echo esc_html__('Text color in user messages', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_admin_msg_text_color">Цвет текста сообщений администратора</label>
+                    <label for="aic_admin_msg_text_color"><?php echo esc_html__('Admin Message Text Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -545,16 +545,16 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($admin_msg_text_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет текста в сообщениях администратора</p>
+                    <p class="description"><?php echo esc_html__('Text color in admin messages', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
         </table>
         
-        <h4>Цвета элементов управления</h4>
+        <h4><?php echo esc_html__('Control Element Colors', 'ai-multilingual-chat'); ?></h4>
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="aic_send_button_color">Цвет кнопки отправки</label>
+                    <label for="aic_send_button_color"><?php echo esc_html__('Send Button Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -566,13 +566,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($send_button_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет кнопки отправки сообщения</p>
+                    <p class="description"><?php echo esc_html__('Message send button color', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_input_border_color">Цвет границы поля ввода</label>
+                    <label for="aic_input_border_color"><?php echo esc_html__('Input Field Border Color', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="color" 
@@ -584,7 +584,7 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            class="aic-color-hex-input" 
                            value="<?php echo esc_attr($input_border_color); ?>"
                            placeholder="#000000">
-                    <p class="description">Цвет границы поля ввода сообщения</p>
+                    <p class="description"><?php echo esc_html__('Message input field border color', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
@@ -592,9 +592,9 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                 <th scope="row"></th>
                 <td>
                     <button type="button" id="aic_reset_colors" class="aic-button" style="background: #dc3545; margin-top: 10px;">
-                        <span class="dashicons dashicons-image-rotate"></span> Сбросить цвета к значениям по умолчанию
+                        <span class="dashicons dashicons-image-rotate"></span> <?php echo esc_html__('Reset colors to default values', 'ai-multilingual-chat'); ?>
                     </button>
-                    <p class="description">Вернуть все цвета к исходным значениям</p>
+                    <p class="description"><?php echo esc_html__('Return all colors to original values', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
         </table>
@@ -857,7 +857,7 @@ jQuery(document).ready(function($) {
             $('#' + id).siblings('.aic-color-hex-input').val(color);
         });
         
-        alert('Цвета сброшены к значениям по умолчанию. Не забудьте сохранить настройки.');
+        alert('<?php echo esc_js(__('Colors reset to default values. Don\'t forget to save settings.', 'ai-multilingual-chat')); ?>');
     });
 });
 </script>

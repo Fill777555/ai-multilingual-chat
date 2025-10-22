@@ -547,3 +547,97 @@ msgstr "Ошибка экспорта: отсутствуют данные CSV"
 msgid "Error processing CSV: %s"
 msgstr "Ошибка обработки CSV: %s"
 
+msgid "Chat Button Color"
+msgstr "Цвет кнопки открытия чата"
+
+msgid "Color of the round button to open chat"
+msgstr "Цвет круглой кнопки для открытия чата"
+
+msgid "Chat Header Colors"
+msgstr "Цвета заголовка чата"
+
+msgid "Header Background Color"
+msgstr "Цвет фона заголовка"
+
+msgid "Chat header background color"
+msgstr "Цвет фона заголовка чата"
+
+msgid "Header Text Color"
+msgstr "Цвет текста заголовка"
+
+msgid "Chat header text color"
+msgstr "Цвет текста заголовка чата"
+
+msgid "Status Text Color"
+msgstr "Цвет текста статуса"
+
+msgid "Status text color ('We are online')"
+msgstr "Цвет текста статуса ('Мы онлайн')"
+
+msgid "Button Icons Color"
+msgstr "Цвет иконок кнопок"
+
+msgid "Color of button icons in header"
+msgstr "Цвет иконок кнопок в заголовке"
+
+msgid "Close Button Color"
+msgstr "Цвет кнопки закрытия"
+
+msgid "Close button color (×)"
+msgstr "Цвет кнопки закрытия (×)"
+
+msgid "Message Colors"
+msgstr "Цвета сообщений"
+
+msgid "User Message Color"
+msgstr "Цвет сообщений пользователя"
+
+msgid "Background color of user messages"
+msgstr "Цвет фона сообщений от пользователя"
+
+msgid "Admin Message Color"
+msgstr "Цвет сообщений администратора"
+
+msgid "Background color of admin/bot messages"
+msgstr "Цвет фона сообщений от администратора/бота"
+
+msgid "User Message Text Color"
+msgstr "Цвет текста сообщений пользователя"
+
+msgid "Text color in user messages"
+msgstr "Цвет текста в сообщениях пользователя"
+
+msgid "Admin Message Text Color"
+msgstr "Цвет текста сообщений администратора"
+
+msgid "Text color in admin messages"
+msgstr "Цвет текста в сообщениях администратора"
+
+msgid "Control Element Colors"
+msgstr "Цвета элементов управления"
+
+msgid "Send Button Color"
+msgstr "Цвет кнопки отправки"
+
+msgid "Message send button color"
+msgstr "Цвет кнопки отправки сообщения"
+
+msgid "Input Field Border Color"
+msgstr "Цвет границы поля ввода"
+
+msgid "Message input field border color"
+msgstr "Цвет границы поля ввода сообщения"
+
+msgid "Reset colors to default values"
+msgstr "Сбросить цвета к значениям по умолчанию"
+
+msgid "Return all colors to original values"
+msgstr "Вернуть все цвета к исходным значениям"
+
+msgid "Colors reset to default values. Don't forget to save settings."
+msgstr "Цвета сброшены к значениям по умолчанию. Не забудьте сохранить настройки."
+
+msgid "Export CSV"
+msgstr "Экспорт CSV"
+
+
