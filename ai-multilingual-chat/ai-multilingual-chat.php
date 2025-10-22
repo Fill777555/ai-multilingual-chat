@@ -24,7 +24,19 @@ class AI_Multilingual_Chat {
     
     public static function get_instance() {
         if (null === self::$instance) {
-            self::$instance = new self();
+            // Additional check to prevent re-initialization during conflicts
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('[AI Chat] [INFO] Creating new plugin instance.');
+            }
+            
+            try {
+                self::$instance = new self();
+            } catch (Exception $e) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('[AI Chat] [ERROR] Exception in get_instance: ' . $e->getMessage());
+                }
+                throw $e; // Re-throw to be caught by calling function
+            }
         }
         return self::$instance;
     }
@@ -1935,10 +1947,64 @@ class AI_Multilingual_Chat {
 
 // Инициализация
 function aic_get_instance() {
-    return AI_Multilingual_Chat::get_instance();
+    // Check if class exists to prevent conflicts
+    if (!class_exists('AI_Multilingual_Chat')) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [ERROR] AI_Multilingual_Chat class does not exist. Plugin may have conflicts.');
+        }
+        
+        // Add admin notice about the conflict
+        add_action('admin_notices', function() {
+            echo '<div class="notice notice-error is-dismissible">';
+            echo '<p><strong>AI Multilingual Chat Error:</strong> ';
+            echo 'Plugin class could not be initialized. This may be due to conflicts with other plugins. ';
+            echo 'Please try deactivating other plugins one by one to identify the conflict.';
+            echo '</p></div>';
+        });
+        
+        return null;
+    }
+    
+    // Ensure singleton instance is created only once
+    static $instance_created = false;
+    
+    if ($instance_created) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [WARNING] Attempted to create instance multiple times.');
+        }
+        return AI_Multilingual_Chat::get_instance();
+    }
+    
+    try {
+        $instance_created = true;
+        $instance = AI_Multilingual_Chat::get_instance();
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [INFO] Plugin instance created successfully via plugins_loaded hook.');
+        }
+        
+        return $instance;
+    } catch (Exception $e) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('[AI Chat] [ERROR] Failed to create plugin instance: ' . $e->getMessage());
+            error_log('[AI Chat] [ERROR] Stack trace: ' . $e->getTraceAsString());
+        }
+        
+        // Add admin notice about the initialization failure
+        add_action('admin_notices', function() use ($e) {
+            echo '<div class="notice notice-error is-dismissible">';
+            echo '<p><strong>AI Multilingual Chat Error:</strong> ';
+            echo 'Failed to initialize plugin: ' . esc_html($e->getMessage());
+            echo '</p></div>';
+        });
+        
+        return null;
+    }
 }
 
-add_action('plugins_loaded', 'aic_get_instance');
+// Use priority 20 to load after most other plugins (including page builders)
+// This helps avoid conflicts with plugins like Ultimate Addons for WPBakery Page Builder
+add_action('plugins_loaded', 'aic_get_instance', 20);
 
 register_activation_hook(__FILE__, array('AI_Multilingual_Chat', 'activate_plugin'));
 
