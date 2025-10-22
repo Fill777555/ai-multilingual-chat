@@ -1,0 +1,110 @@
+# AI Multilingual Chat - English Translation
+# Copyright (C) 2024 Oleg Filin
+# This file is distributed under the same license as the AI Multilingual Chat plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Multilingual Chat 2.0.8\n"
+"Report-Msgid-Bugs-To: https://web-proekt.com\n"
+"POT-Creation-Date: 2025-10-22 14:03+0000\n"
+"PO-Revision-Date: 2025-10-22 15:45+0000\n"
+"Last-Translator: Oleg Filin\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Manual\n"
+
+msgid "Chat Button Color"
+msgstr "Chat Button Color"
+
+msgid "Color of the round button to open chat"
+msgstr "Color of the round button to open chat"
+
+msgid "Chat Header Colors"
+msgstr "Chat Header Colors"
+
+msgid "Header Background Color"
+msgstr "Header Background Color"
+
+msgid "Chat header background color"
+msgstr "Chat header background color"
+
+msgid "Header Text Color"
+msgstr "Header Text Color"
+
+msgid "Chat header text color"
+msgstr "Chat header text color"
+
+msgid "Status Text Color"
+msgstr "Status Text Color"
+
+msgid "Status text color ('We are online')"
+msgstr "Status text color ('We are online')"
+
+msgid "Button Icons Color"
+msgstr "Button Icons Color"
+
+msgid "Color of button icons in header"
+msgstr "Color of button icons in header"
+
+msgid "Close Button Color"
+msgstr "Close Button Color"
+
+msgid "Close button color (×)"
+msgstr "Close button color (×)"
+
+msgid "Message Colors"
+msgstr "Message Colors"
+
+msgid "User Message Color"
+msgstr "User Message Color"
+
+msgid "Background color of user messages"
+msgstr "Background color of user messages"
+
+msgid "Admin Message Color"
+msgstr "Admin Message Color"
+
+msgid "Background color of admin/bot messages"
+msgstr "Background color of admin/bot messages"
+
+msgid "User Message Text Color"
+msgstr "User Message Text Color"
+
+msgid "Text color in user messages"
+msgstr "Text color in user messages"
+
+msgid "Admin Message Text Color"
+msgstr "Admin Message Text Color"
+
+msgid "Text color in admin messages"
+msgstr "Text color in admin messages"
+
+msgid "Control Element Colors"
+msgstr "Control Element Colors"
+
+msgid "Send Button Color"
+msgstr "Send Button Color"
+
+msgid "Message send button color"
+msgstr "Message send button color"
+
+msgid "Input Field Border Color"
+msgstr "Input Field Border Color"
+
+msgid "Message input field border color"
+msgstr "Message input field border color"
+
+msgid "Reset colors to default values"
+msgstr "Reset colors to default values"
+
+msgid "Return all colors to original values"
+msgstr "Return all colors to original values"
+
+msgid "Colors reset to default values. Don't forget to save settings."
+msgstr "Colors reset to default values. Don't forget to save settings."
+
+msgid "Export CSV"
+msgstr "Export CSV"

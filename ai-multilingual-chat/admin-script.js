@@ -386,7 +386,7 @@ jQuery(document).ready(function($) {
                 <div style="padding: 15px; border-top: 1px solid #eee; var(--aic-tab);">
                 <div style="margin-top: 10px; display: flex; gap: 10px;">
                         <button id="aic_export_conversation" class="button">
-                            <span class="dashicons dashicons-download" style="vertical-align: middle;"></span> Экспорт CSV
+                            <span class="dashicons dashicons-download" style="vertical-align: middle;"></span> ${aicAdmin.i18n.export_csv}
                         </button>
                   </div>
                     <div style="display: flex; gap: 5px; align-items: flex-end;">
@@ -541,7 +541,7 @@ jQuery(document).ready(function($) {
                     if (!response) {
                         console.error('[AIC Export] Empty response from server');
                         alert(aicAdmin.i18n.error_export_empty_response);
-                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> ' + aicAdmin.i18n.export_csv);
                         return;
                     }
                     
@@ -549,14 +549,14 @@ jQuery(document).ready(function($) {
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Неизвестная ошибка';
                         console.error('[AIC Export] Export failed:', errorMsg);
                         alert(aicAdmin.i18n.error_export_details.replace('%s', errorMsg));
-                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> ' + aicAdmin.i18n.export_csv);
                         return;
                     }
                     
                     if (!response.data || !response.data.csv) {
                         console.error('[AIC Export] Invalid response data:', response.data);
                         alert(aicAdmin.i18n.error_export_no_csv_data);
-                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> ' + aicAdmin.i18n.export_csv);
                         return;
                     }
                     
@@ -593,12 +593,12 @@ jQuery(document).ready(function($) {
                         }, 100);
                         
                         console.log('[AIC Export] Export successful:', response.data.filename);
-                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> ' + aicAdmin.i18n.export_csv);
                         
                     } catch (error) {
                         console.error('[AIC Export] Error processing CSV:', error);
                         alert(aicAdmin.i18n.error_processing_csv.replace('%s', error.message));
-                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                        $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> ' + aicAdmin.i18n.export_csv);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -622,7 +622,7 @@ jQuery(document).ready(function($) {
                     }
                     
                     alert(aicAdmin.i18n.error_export_details.replace('%s', errorMsg));
-                    $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
+                    $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> ' + aicAdmin.i18n.export_csv);
                 }
             });
         }

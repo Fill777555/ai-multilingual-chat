@@ -897,3 +897,128 @@ msgstr ""
 msgid "[%s] New chat message"
 msgstr ""
 
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:368
+msgid "Chat Button Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:380
+msgid "Color of the round button to open chat"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:385
+msgid "Chat Header Colors"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:389
+msgid "Header Background Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:401
+msgid "Chat header background color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:407
+msgid "Header Text Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:419
+msgid "Chat header text color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:425
+msgid "Status Text Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:437
+msgid "Status text color ('We are online')"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:443
+msgid "Button Icons Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:455
+msgid "Color of button icons in header"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:461
+msgid "Close Button Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:473
+msgid "Close button color (×)"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:478
+msgid "Message Colors"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:482
+msgid "User Message Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:494
+msgid "Background color of user messages"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:500
+msgid "Admin Message Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:512
+msgid "Background color of admin/bot messages"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:518
+msgid "User Message Text Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:530
+msgid "Text color in user messages"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:536
+msgid "Admin Message Text Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:548
+msgid "Text color in admin messages"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:553
+msgid "Control Element Colors"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:557
+msgid "Send Button Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:569
+msgid "Message send button color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:575
+msgid "Input Field Border Color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:587
+msgid "Message input field border color"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:595
+msgid "Reset colors to default values"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:597
+msgid "Return all colors to original values"
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/templates/settings.php:860
+msgid "Colors reset to default values. Don't forget to save settings."
+msgstr ""
+
+#: /home/runner/work/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat/ai-multilingual-chat.php:718
+msgid "Export CSV"
+msgstr ""
+
+
