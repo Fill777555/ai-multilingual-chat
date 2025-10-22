@@ -705,7 +705,17 @@ class AI_Multilingual_Chat {
                 'chime' => __('Chime', 'ai-multilingual-chat'),
                 'soft' => __('Soft', 'ai-multilingual-chat')
             ),
-            'user_language' => $this->get_user_language()
+            'user_language' => $this->get_user_language(),
+            'i18n' => array(
+                'error_sending_message' => __('Error sending message', 'ai-multilingual-chat'),
+                'error_sending_message_details' => __('Error sending message: %s', 'ai-multilingual-chat'),
+                'error_select_conversation_first' => __('Error: Please select a conversation for export first', 'ai-multilingual-chat'),
+                'error_invalid_conversation_id' => __('Error: Invalid conversation ID', 'ai-multilingual-chat'),
+                'error_export_empty_response' => __('Export error: empty response from server', 'ai-multilingual-chat'),
+                'error_export_details' => __('Export error: %s', 'ai-multilingual-chat'),
+                'error_export_no_csv_data' => __('Export error: no CSV data', 'ai-multilingual-chat'),
+                'error_processing_csv' => __('Error processing CSV: %s', 'ai-multilingual-chat')
+            )
         ));
     }
     
@@ -797,7 +807,7 @@ class AI_Multilingual_Chat {
         update_option('aic_enable_dark_theme', isset($post_data['aic_enable_dark_theme']) ? '1' : '0');
         update_option('aic_enable_sound_notifications', isset($post_data['aic_enable_sound_notifications']) ? '1' : '0');
         
-        $this->log('Настройки обновлены');
+        $this->log(__('Settings updated', 'ai-multilingual-chat'));
     }
     
     public function render_stats_page() {
@@ -2016,13 +2026,13 @@ register_deactivation_hook(__FILE__, function() {
 });
 
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), function($links) {
-    $settings_link = '<a href="' . admin_url('admin.php?page=ai-chat-settings') . '">Настройки</a>';
+    $settings_link = '<a href="' . admin_url('admin.php?page=ai-chat-settings') . '">' . esc_html__('Settings', 'ai-multilingual-chat') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 });
 
 add_action('wp_dashboard_setup', function() {
-    wp_add_dashboard_widget('aic_dashboard_widget', 'AI Chat - Статистика', function() {
+    wp_add_dashboard_widget('aic_dashboard_widget', __('AI Chat - Statistics', 'ai-multilingual-chat'), function() {
         $plugin = AI_Multilingual_Chat::get_instance();
         $stats = $plugin->get_dashboard_stats();
         ?>
@@ -2031,30 +2041,30 @@ add_action('wp_dashboard_setup', function() {
                 <div style="font-size: 32px; font-weight: bold; color: #2271b1;">
                     <?php echo $stats['active_conversations']; ?>
                 </div>
-                <div style="color: #646970; font-size: 13px;">Активных диалогов</div>
+                <div style="color: #646970; font-size: 13px;"><?php _e('Active Conversations', 'ai-multilingual-chat'); ?></div>
             </div>
             <div style="text-align: center; padding: 15px; background: #f0f0f1; border-radius: 4px;">
                 <div style="font-size: 32px; font-weight: bold; color: #d63638;">
                     <?php echo $stats['unread_messages']; ?>
                 </div>
-                <div style="color: #646970; font-size: 13px;">Непрочитанных</div>
+                <div style="color: #646970; font-size: 13px;"><?php _e('Unread', 'ai-multilingual-chat'); ?></div>
             </div>
             <div style="text-align: center; padding: 15px; background: #f0f0f1; border-radius: 4px;">
                 <div style="font-size: 32px; font-weight: bold; color: #00a32a;">
                     <?php echo $stats['total_conversations']; ?>
                 </div>
-                <div style="color: #646970; font-size: 13px;">Всего диалогов</div>
+                <div style="color: #646970; font-size: 13px;"><?php _e('Total Conversations', 'ai-multilingual-chat'); ?></div>
             </div>
             <div style="text-align: center; padding: 15px; background: #f0f0f1; border-radius: 4px;">
                 <div style="font-size: 32px; font-weight: bold; color: #996800;">
                     <?php echo $stats['today_messages']; ?>
                 </div>
-                <div style="color: #646970; font-size: 13px;">Сообщений сегодня</div>
+                <div style="color: #646970; font-size: 13px;"><?php _e('Messages Today', 'ai-multilingual-chat'); ?></div>
             </div>
         </div>
         <div style="margin-top: 15px; text-align: center;">
             <a href="<?php echo admin_url('admin.php?page=ai-multilingual-chat'); ?>" class="button button-primary">
-                Открыть чат
+                <?php _e('Open Chat', 'ai-multilingual-chat'); ?>
             </a>
         </div>
         <?php

@@ -455,12 +455,12 @@ jQuery(document).ready(function($) {
                         self.loadConversations(); // Обновить список диалогов
                     } else {
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error';
-                        alert('Ошибка отправки сообщения: ' + errorMsg);
+                        alert(aicAdmin.i18n.error_sending_message_details.replace('%s', errorMsg));
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('Ошибка отправки:', error);
-                    alert('Ошибка отправки сообщения');
+                    alert(aicAdmin.i18n.error_sending_message);
                 },
                 complete: function() {
                     $button.prop('disabled', false).html(originalText);
@@ -506,7 +506,7 @@ jQuery(document).ready(function($) {
             
             if (!conversationId || conversationId === null || conversationId === 'null' || conversationId === undefined) {
                 console.error('[AIC Export] Invalid conversation ID:', conversationId);
-                alert('Ошибка: Сначала выберите диалог для экспорта');
+                alert(aicAdmin.i18n.error_select_conversation_first);
                 return;
             }
             
@@ -514,7 +514,7 @@ jQuery(document).ready(function($) {
             conversationId = parseInt(conversationId, 10);
             if (isNaN(conversationId) || conversationId <= 0) {
                 console.error('[AIC Export] Conversation ID is not a valid positive number:', conversationId);
-                alert('Ошибка: Неверный ID диалога');
+                alert(aicAdmin.i18n.error_invalid_conversation_id);
                 return;
             }
             
@@ -540,7 +540,7 @@ jQuery(document).ready(function($) {
                     // Validate response structure
                     if (!response) {
                         console.error('[AIC Export] Empty response from server');
-                        alert('Ошибка экспорта: пустой ответ от сервера');
+                        alert(aicAdmin.i18n.error_export_empty_response);
                         $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
                         return;
                     }
@@ -548,14 +548,14 @@ jQuery(document).ready(function($) {
                     if (!response.success) {
                         const errorMsg = response.data && response.data.message ? response.data.message : 'Неизвестная ошибка';
                         console.error('[AIC Export] Export failed:', errorMsg);
-                        alert('Ошибка экспорта: ' + errorMsg);
+                        alert(aicAdmin.i18n.error_export_details.replace('%s', errorMsg));
                         $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
                         return;
                     }
                     
                     if (!response.data || !response.data.csv) {
                         console.error('[AIC Export] Invalid response data:', response.data);
-                        alert('Ошибка экспорта: отсутствуют данные CSV');
+                        alert(aicAdmin.i18n.error_export_no_csv_data);
                         $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
                         return;
                     }
@@ -597,7 +597,7 @@ jQuery(document).ready(function($) {
                         
                     } catch (error) {
                         console.error('[AIC Export] Error processing CSV:', error);
-                        alert('Ошибка обработки CSV: ' + error.message);
+                        alert(aicAdmin.i18n.error_processing_csv.replace('%s', error.message));
                         $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
                     }
                 },
@@ -621,7 +621,7 @@ jQuery(document).ready(function($) {
                         errorMsg = 'Ошибка разбора ответа сервера';
                     }
                     
-                    alert('Ошибка экспорта: ' + errorMsg);
+                    alert(aicAdmin.i18n.error_export_details.replace('%s', errorMsg));
                     $button.prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Экспорт CSV');
                 }
             });

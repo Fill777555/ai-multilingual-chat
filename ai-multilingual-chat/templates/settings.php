@@ -140,29 +140,29 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                         <span class="dashicons dashicons-update"></span> <?php echo esc_html__('Generate', 'ai-multilingual-chat'); ?>
                     </button>
                     <button type="button" id="aic_copy_api_key" class="aic-button">
-                        <span class="dashicons dashicons-admin-page"></span> Копировать
+                        <span class="dashicons dashicons-admin-page"></span> <?php echo esc_html__('Copy', 'ai-multilingual-chat'); ?>
                     </button>
-                    <p class="description">Используется для доступа через REST API</p>
+                    <p class="description"><?php echo esc_html__('Used for REST API access', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_chat_widget_position">Позиция виджета чата</label>
+                    <label for="aic_chat_widget_position"><?php echo esc_html__('Chat Widget Position', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <select name="aic_chat_widget_position" id="aic_chat_widget_position" class="regular-text">
-                        <option value="bottom-right" <?php selected($widget_position, 'bottom-right'); ?>>Справа снизу</option>
-                        <option value="bottom-left" <?php selected($widget_position, 'bottom-left'); ?>>Слева снизу</option>
-                        <option value="top-right" <?php selected($widget_position, 'top-right'); ?>>Справа сверху</option>
-                        <option value="top-left" <?php selected($widget_position, 'top-left'); ?>>Слева сверху</option>
+                        <option value="bottom-right" <?php selected($widget_position, 'bottom-right'); ?>><?php echo esc_html__('Bottom Right', 'ai-multilingual-chat'); ?></option>
+                        <option value="bottom-left" <?php selected($widget_position, 'bottom-left'); ?>><?php echo esc_html__('Bottom Left', 'ai-multilingual-chat'); ?></option>
+                        <option value="top-right" <?php selected($widget_position, 'top-right'); ?>><?php echo esc_html__('Top Right', 'ai-multilingual-chat'); ?></option>
+                        <option value="top-left" <?php selected($widget_position, 'top-left'); ?>><?php echo esc_html__('Top Left', 'ai-multilingual-chat'); ?></option>
                     </select>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_enable_emoji_picker">Emoji picker</label>
+                    <label for="aic_enable_emoji_picker"><?php echo esc_html__('Emoji Picker', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <label>
@@ -171,14 +171,14 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                                id="aic_enable_emoji_picker" 
                                value="1" 
                                <?php checked($enable_emoji, '1'); ?>>
-                        Включить выбор эмодзи в чате
+                        <?php echo esc_html__('Enable emoji picker in chat', 'ai-multilingual-chat'); ?>
                     </label>
                 </td>
             </tr>
             
             <!--<tr>
                 <th scope="row">
-                    <label for="aic_enable_dark_theme">Темная тема</label>
+                    <label for="aic_enable_dark_theme"><?php echo esc_html__('Dark Theme', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <label>
@@ -187,31 +187,31 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                                id="aic_enable_dark_theme" 
                                value="1" 
                                <?php checked($enable_dark_theme, '1'); ?>>
-                        Включить темную тему для чата
+                        <?php echo esc_html__('Enable dark theme for chat', 'ai-multilingual-chat'); ?>
                     </label>
                 </td>
             </tr>-->
              
             <tr>
                 <th scope="row">
-                    <label for="aic_theme_mode">Тема оформления админки</label>
+                    <label for="aic_theme_mode"><?php echo esc_html__('Admin Panel Theme', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <?php
                     $theme_mode = get_option('aic_theme_mode', 'auto');
                     ?>
                     <select name="aic_theme_mode" id="aic_theme_mode" style="min-width:140px;">
-                        <option value="light" <?php selected($theme_mode, 'light'); ?>>Светлая</option>
-                        <option value="dark"  <?php selected($theme_mode, 'dark'); ?>>Тёмная</option>
-                        <option value="auto"  <?php selected($theme_mode, 'auto'); ?>>Авто (по системе)</option>
+                        <option value="light" <?php selected($theme_mode, 'light'); ?>><?php echo esc_html__('Light', 'ai-multilingual-chat'); ?></option>
+                        <option value="dark"  <?php selected($theme_mode, 'dark'); ?>><?php echo esc_html__('Dark', 'ai-multilingual-chat'); ?></option>
+                        <option value="auto"  <?php selected($theme_mode, 'auto'); ?>><?php echo esc_html__('Auto (System)', 'ai-multilingual-chat'); ?></option>
                     </select>
-                    <p class="description">Выберите тему для админ-панели плагина. "Авто" использует системную тему вашего устройства.</p>
+                    <p class="description"><?php echo esc_html__('Choose theme for plugin admin panel. "Auto" uses your device system theme.', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_enable_sound_notifications">Звуковые уведомления</label>
+                    <label for="aic_enable_sound_notifications"><?php echo esc_html__('Sound Notifications', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <label>
@@ -220,29 +220,28 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                                id="aic_enable_sound_notifications" 
                                value="1" 
                                <?php checked($enable_sound, '1'); ?>>
-                        Включить звуковые уведомления в админке и для клиентов
+                        <?php echo esc_html__('Enable sound notifications in admin panel and for clients', 'ai-multilingual-chat'); ?>
                     </label>
                     <p class="description">
-                        Администраторы слышат звук при новых сообщениях от клиентов, клиенты — при ответах администратора. 
-                        Клиенты могут отключить звук для себя через кнопку в чате.
+                        <?php echo esc_html__('Administrators hear sound for new messages from clients, clients hear sound for admin replies. Clients can disable sound via button in chat.', 'ai-multilingual-chat'); ?>
                     </p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_admin_notification_sound">Мелодия оповещения</label>
+                    <label for="aic_admin_notification_sound"><?php echo esc_html__('Notification Sound', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <select id="aic_admin_notification_sound" name="aic_admin_notification_sound">
                         <?php
                         $current_sound = get_option('aic_admin_notification_sound', 'default');
                         $sounds = array(
-                            'default' => 'По умолчанию',
-                            'bell' => 'Колокольчик',
-                            'ding' => 'Динь',
-                            'chime' => 'Перезвон',
-                            'soft' => 'Мягкий звук'
+                            'default' => __('Default', 'ai-multilingual-chat'),
+                            'bell' => __('Bell', 'ai-multilingual-chat'),
+                            'ding' => __('Ding', 'ai-multilingual-chat'),
+                            'chime' => __('Chime', 'ai-multilingual-chat'),
+                            'soft' => __('Soft', 'ai-multilingual-chat')
                         );
                         foreach ($sounds as $key => $label) {
                             $selected = ($current_sound === $key) ? 'selected' : '';
@@ -251,9 +250,9 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                         ?>
                     </select>
                     <button type="button" class="aic-button" id="aic_preview_admin_sound" style="margin-left: 10px;">
-                        <span class="dashicons dashicons-controls-volumeon"></span> Прослушать
+                        <span class="dashicons dashicons-controls-volumeon"></span> <?php echo esc_html__('Preview', 'ai-multilingual-chat'); ?>
                     </button>
-                    <p class="description">Выберите мелодию для звуковых уведомлений в админ-панели</p>
+                    <p class="description"><?php echo esc_html__('Choose melody for sound notifications in admin panel', 'ai-multilingual-chat'); ?></p>
                     
                     <script>
                     jQuery(document).ready(function($) {
@@ -281,18 +280,18 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
             
             <tr>
                 <th scope="row">
-                    <label for="aic_client_notification_sound">Мелодия оповещения для клиентов</label>
+                    <label for="aic_client_notification_sound"><?php echo esc_html__('Client Notification Sound', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <select id="aic_client_notification_sound" name="aic_client_notification_sound">
                         <?php
                         $current_client_sound = get_option('aic_client_notification_sound', 'default');
                         $sounds = array(
-                            'default' => 'По умолчанию',
-                            'bell' => 'Колокольчик',
-                            'ding' => 'Динь',
-                            'chime' => 'Перезвон',
-                            'soft' => 'Мягкий звук'
+                            'default' => __('Default', 'ai-multilingual-chat'),
+                            'bell' => __('Bell', 'ai-multilingual-chat'),
+                            'ding' => __('Ding', 'ai-multilingual-chat'),
+                            'chime' => __('Chime', 'ai-multilingual-chat'),
+                            'soft' => __('Soft', 'ai-multilingual-chat')
                         );
                         foreach ($sounds as $key => $label) {
                             $selected = ($current_client_sound === $key) ? 'selected' : '';
@@ -301,15 +300,15 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                         ?>
                     </select>
                     <button type="button" class="aic-button" id="aic_preview_client_sound" style="margin-left: 10px;">
-                        <span class="dashicons dashicons-controls-volumeon"></span> Прослушать
+                        <span class="dashicons dashicons-controls-volumeon"></span> <?php echo esc_html__('Preview', 'ai-multilingual-chat'); ?>
                     </button>
-                    <p class="description">Выберите мелодию для звуковых уведомлений клиентов в чате</p>
+                    <p class="description"><?php echo esc_html__('Choose melody for client sound notifications in chat', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_admin_avatar">Аватар администратора</label>
+                    <label for="aic_admin_avatar"><?php echo esc_html__('Administrator Avatar', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <?php
@@ -327,12 +326,12 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            id="aic_admin_avatar" 
                            value="<?php echo esc_attr($admin_avatar); ?>">
                     <button type="button" id="aic_upload_avatar" class="aic-button">
-                        <span class="dashicons dashicons-upload"></span> Загрузить изображение
+                        <span class="dashicons dashicons-upload"></span> <?php echo esc_html__('Upload Image', 'ai-multilingual-chat'); ?>
                     </button>
                     <button type="button" id="aic_remove_avatar" class="aic-button" <?php echo empty($admin_avatar) ? 'style="display:none;"' : ''; ?>>
-                        <span class="dashicons dashicons-no"></span> Удалить
+                        <span class="dashicons dashicons-no"></span> <?php echo esc_html__('Remove', 'ai-multilingual-chat'); ?>
                     </button>
-                    <p class="description">Аватар будет отображаться рядом с сообщениями администратора в чате. Рекомендуемый размер: 100x100 пикселей</p>
+                    <p class="description"><?php echo esc_html__('Avatar will be displayed next to administrator messages in chat. Recommended size: 100x100 pixels', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
         </table>
@@ -600,11 +599,11 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
             </tr>
         </table>
         
-        <h3 style="margin-top: 30px;">Параметры виджета</h3>
+        <h3 style="margin-top: 30px;"><?php echo esc_html__('Widget Parameters', 'ai-multilingual-chat'); ?></h3>
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="aic_widget_border_radius">Скругление углов (px)</label>
+                    <label for="aic_widget_border_radius"><?php echo esc_html__('Border Radius (px)', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="number" 
@@ -614,13 +613,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            min="0" 
                            max="50"
                            class="small-text">
-                    <p class="description">Радиус скругления углов окна чата (0-50px). По умолчанию: 12px</p>
+                    <p class="description"><?php echo esc_html__('Border radius of chat window corners (0-50px). Default: 12px', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_widget_font_size">Размер шрифта (px)</label>
+                    <label for="aic_widget_font_size"><?php echo esc_html__('Font Size (px)', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="number" 
@@ -630,13 +629,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            min="10" 
                            max="24"
                            class="small-text">
-                    <p class="description">Размер шрифта в чате (10-24px). По умолчанию: 14px</p>
+                    <p class="description"><?php echo esc_html__('Font size in chat (10-24px). Default: 14px', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_widget_padding">Внутренние отступы (px)</label>
+                    <label for="aic_widget_padding"><?php echo esc_html__('Padding (px)', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <input type="number" 
@@ -646,13 +645,13 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                            min="5" 
                            max="40"
                            class="small-text">
-                    <p class="description">Внутренние отступы заголовка чата (5-40px). По умолчанию: 20px</p>
+                    <p class="description"><?php echo esc_html__('Inner padding of chat header (5-40px). Default: 20px', 'ai-multilingual-chat'); ?></p>
                 </td>
             </tr>
             
             <tr>
                 <th scope="row">
-                    <label for="aic_widget_custom_css">Произвольный CSS</label>
+                    <label for="aic_widget_custom_css"><?php echo esc_html__('Custom CSS', 'ai-multilingual-chat'); ?></label>
                 </th>
                 <td>
                     <textarea 
@@ -660,11 +659,11 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
                         id="aic_widget_custom_css" 
                         rows="10" 
                         class="large-text code"
-                        placeholder="/* Введите ваш CSS код здесь */&#10;#aic-chat-widget .aic-chat-window {&#10;    /* your custom styles */&#10;}"><?php echo esc_textarea($widget_custom_css); ?></textarea>
+                        placeholder="/* <?php echo esc_attr__('Enter your CSS code here', 'ai-multilingual-chat'); ?> */&#10;#aic-chat-widget .aic-chat-window {&#10;    /* your custom styles */&#10;}"><?php echo esc_textarea($widget_custom_css); ?></textarea>
                     <p class="description">
-                        Добавьте собственный CSS код для полного контроля над дизайном виджета.<br>
-                        Примеры: изменение цветов, размеров, отступов, анимаций и т.д.<br>
-                        <strong>Внимание:</strong> Используйте осторожно, неправильный CSS может нарушить работу виджета.
+                        <?php echo esc_html__('Add your own CSS code for full control over widget design.', 'ai-multilingual-chat'); ?><br>
+                        <?php echo esc_html__('Examples: change colors, sizes, padding, animations, etc.', 'ai-multilingual-chat'); ?><br>
+                        <strong><?php echo esc_html__('Warning:', 'ai-multilingual-chat'); ?></strong> <?php echo esc_html__('Use carefully, incorrect CSS may break widget functionality.', 'ai-multilingual-chat'); ?>
                     </p>
                 </td>
             </tr>
@@ -673,39 +672,39 @@ $widget_custom_css = get_option('aic_widget_custom_css', '');
         
         <!-- REST API Tab -->
         <div id="tab-api" class="aic-settings-tab" style="display: none;">
-        <h2>REST API для мобильного приложения</h2>
+        <h2><?php echo esc_html__('REST API for Mobile Application', 'ai-multilingual-chat'); ?></h2>
         
-        <p>Используйте эти endpoints для интеграции с мобильным приложением:</p>
+        <p><?php echo esc_html__('Use these endpoints for mobile application integration:', 'ai-multilingual-chat'); ?></p>
         
         <table class="widefat" style="margin-top: 20px;">
             <thead>
                 <tr>
-                    <th>Метод</th>
-                    <th>Endpoint</th>
-                    <th>Описание</th>
+                    <th><?php echo esc_html__('Method', 'ai-multilingual-chat'); ?></th>
+                    <th><?php echo esc_html__('Endpoint', 'ai-multilingual-chat'); ?></th>
+                    <th><?php echo esc_html__('Description', 'ai-multilingual-chat'); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><code>GET</code></td>
                     <td><code><?php echo rest_url('ai-chat/v1/conversations'); ?></code></td>
-                    <td>Получить список разговоров</td>
+                    <td><?php echo esc_html__('Get list of conversations', 'ai-multilingual-chat'); ?></td>
                 </tr>
                 <tr>
                     <td><code>GET</code></td>
                     <td><code><?php echo rest_url('ai-chat/v1/messages/{id}'); ?></code></td>
-                    <td>Получить сообщения разговора</td>
+                    <td><?php echo esc_html__('Get conversation messages', 'ai-multilingual-chat'); ?></td>
                 </tr>
                 <tr>
                     <td><code>POST</code></td>
                     <td><code><?php echo rest_url('ai-chat/v1/send'); ?></code></td>
-                    <td>Отправить сообщение</td>
+                    <td><?php echo esc_html__('Send message', 'ai-multilingual-chat'); ?></td>
                 </tr>
             </tbody>
         </table>
         
         <p style="margin-top: 15px;">
-            <strong>Важно:</strong> Все запросы должны содержать заголовок <code>X-API-Key</code> с API ключом.
+            <strong><?php echo esc_html__('Important:', 'ai-multilingual-chat'); ?></strong> <?php echo esc_html__('All requests must contain X-API-Key header with API key.', 'ai-multilingual-chat'); ?>
         </p>
         </div>
         
@@ -729,7 +728,7 @@ jQuery(document).ready(function($) {
         $('#tab-' + targetTab).show().addClass('aic-settings-tab-active');
     });
     
-    // Генерация API ключа
+    // Generate API key
     $('#aic_generate_api_key').on('click', function() {
         const key = 'aic_' + Math.random().toString(36).substring(2, 15) + 
                     Math.random().toString(36).substring(2, 15) +
@@ -737,18 +736,18 @@ jQuery(document).ready(function($) {
         $('#aic_mobile_api_key').val(key).prop('readonly', false);
     });
     
-    // Копирование API ключа
+    // Copy API key
     $('#aic_copy_api_key').on('click', function() {
         const apiKey = $('#aic_mobile_api_key').val();
         if (!apiKey) {
-            alert('Сначала сгенерируйте API ключ');
+            alert('<?php echo esc_js(__('Please generate API key first', 'ai-multilingual-chat')); ?>');
             return;
         }
         
         navigator.clipboard.writeText(apiKey).then(function() {
             const btn = $('#aic_copy_api_key');
             const originalText = btn.html();
-            btn.html('<span class="dashicons dashicons-yes"></span> Скопировано!');
+            btn.html('<span class="dashicons dashicons-yes"></span> <?php echo esc_js(__('Copied!', 'ai-multilingual-chat')); ?>');
             setTimeout(function() {
                 btn.html(originalText);
             }, 2000);
@@ -769,9 +768,9 @@ jQuery(document).ready(function($) {
         
         // Create the media uploader
         avatarUploader = wp.media({
-            title: 'Выберите аватар администратора',
+            title: '<?php echo esc_js(__('Select Administrator Avatar', 'ai-multilingual-chat')); ?>',
             button: {
-                text: 'Использовать это изображение'
+                text: '<?php echo esc_js(__('Use This Image', 'ai-multilingual-chat')); ?>'
             },
             library: {
                 type: 'image'
@@ -833,7 +832,7 @@ jQuery(document).ready(function($) {
     
     // Reset colors to defaults
     $('#aic_reset_colors').on('click', function() {
-        if (!confirm('Вы уверены, что хотите сбросить все цвета к значениям по умолчанию?')) {
+        if (!confirm('<?php echo esc_js(__('Are you sure you want to reset all colors to default values?', 'ai-multilingual-chat')); ?>')) {
             return;
         }
         
