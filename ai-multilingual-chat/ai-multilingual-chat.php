@@ -830,30 +830,7 @@ class AI_Multilingual_Chat {
     }
     
     public function render_faq_page() {
-        global $wpdb;
-        $faq_table = $wpdb->prefix . 'ai_chat_faq';
-        
-        // Handle form submissions
-        if (isset($_POST['aic_add_faq']) && check_admin_referer('aic_faq_nonce')) {
-            $wpdb->insert($faq_table, array(
-                'question' => sanitize_text_field($_POST['question']),
-                'answer' => sanitize_textarea_field($_POST['answer']),
-                'keywords' => sanitize_text_field($_POST['keywords']),
-                'language' => sanitize_text_field($_POST['language']),
-                'is_active' => 1
-            ), array('%s', '%s', '%s', '%s', '%d'));
-            
-            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('FAQ added!', 'ai-multilingual-chat') . '</p></div>';
-        }
-        
-        if (isset($_POST['aic_delete_faq']) && check_admin_referer('aic_faq_nonce')) {
-            $faq_id = intval($_POST['faq_id']);
-            $wpdb->delete($faq_table, array('id' => $faq_id), array('%d'));
-            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('FAQ deleted!', 'ai-multilingual-chat') . '</p></div>';
-        }
-        
-        $faqs = $wpdb->get_results("SELECT * FROM {$faq_table} ORDER BY created_at DESC");
-        
+        // Template handles all POST requests and redirects (Post/Redirect/Get pattern)
         include AIC_PLUGIN_DIR . 'templates/faq.php';
     }
     
