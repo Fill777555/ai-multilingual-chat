@@ -81,7 +81,6 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
     error_log('  - widget_bg_color: ' . $widget_bg_color);
     error_log('  - theme_mode: ' . get_option('aic_theme_mode', 'auto'));
     error_log('  - provider: ' . $provider);
-if (defined('WP_DEBUG') && WP_DEBUG) {
     error_log("[AI Chat] [INFO] Loaded aic_widget_border_radius = {$widget_border_radius}");
     error_log("[AI Chat] [INFO] Loaded aic_widget_font_size = {$widget_font_size}");
     error_log("[AI Chat] [INFO] Loaded aic_widget_padding = {$widget_padding}");
