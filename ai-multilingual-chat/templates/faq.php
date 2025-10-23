@@ -168,6 +168,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         wp_die(__('Security check failed.', 'ai-multilingual-chat'), 403);
     }
 
+    // Note: Add and Delete are now handled via AJAX
+    // This POST handler is kept for backward compatibility only
+    
     // Add
     if (isset($_POST['aic_add_faq'])) {
         $question = isset($_POST['question']) ? sanitize_text_field(wp_unslash($_POST['question'])) : '';
@@ -256,7 +259,7 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
     <div style="background: var(--aic-tab); padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
         <h2><?php esc_html_e('Add New FAQ', 'ai-multilingual-chat'); ?></h2>
 
-        <form method="post" action="">
+        <form method="post" action="" id="aic-add-faq-form">
             <?php wp_nonce_field('aic_faq_nonce'); ?>
 
             <table class="form-table">
@@ -304,7 +307,7 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
                     <th scope="row"><?php esc_html_e('Active', 'ai-multilingual-chat'); ?></th>
                     <td>
                         <label>
-                            <input type="checkbox" name="is_active" value="1" checked>
+                            <input type="checkbox" name="is_active" id="is_active" value="1" checked>
                             <?php esc_html_e('Enable this FAQ (will be used for auto-reply)', 'ai-multilingual-chat'); ?>
                         </label>
                     </td>
@@ -312,7 +315,7 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
             </table>
 
             <p class="submit">
-                <input type="submit" name="aic_add_faq" class="aic-btn primary" value="<?php esc_attr_e('Add FAQ', 'ai-multilingual-chat'); ?>">
+                <input type="submit" name="aic_add_faq" id="aic-add-faq-btn" class="aic-btn primary" value="<?php esc_attr_e('Add FAQ', 'ai-multilingual-chat'); ?>">
             </p>
         </form>
     </div>
@@ -334,9 +337,9 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
                         <th style="width: 15%;"><?php esc_html_e('Actions', 'ai-multilingual-chat'); ?></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="aic-faq-list">
                     <?php foreach ($faqs as $faq): ?>
-                        <tr>
+                        <tr data-faq-id="<?php echo esc_attr($faq->id); ?>">
                             <td><?php echo esc_html($faq->question); ?></td>
                             <td>
                                 <?php
@@ -362,14 +365,13 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
                                     <?php echo !empty($faq->is_active) ? esc_html__('Disable', 'ai-multilingual-chat') : esc_html__('Enable', 'ai-multilingual-chat'); ?>
                                 </button>
 
-                                <!-- Delete form -->
-                                <form method="post" style="display:inline; margin-left:8px;">
-                                    <?php wp_nonce_field('aic_faq_nonce'); ?>
-                                    <input type="hidden" name="faq_id" value="<?php echo esc_attr($faq->id); ?>">
-                                    <button type="submit" name="aic_delete_faq" class="aic-btn primary" onclick="return confirm('<?php echo esc_js(__('Delete this FAQ?', 'ai-multilingual-chat')); ?>')">
-                                        <?php esc_html_e('Delete', 'ai-multilingual-chat'); ?>
-                                    </button>
-                                </form>
+                                <!-- Delete button (AJAX) -->
+                                <button type="button" 
+                                        class="aic-btn primary aic-faq-delete" 
+                                        data-faq-id="<?php echo esc_attr($faq->id); ?>"
+                                        style="margin-left:8px;">
+                                    <?php esc_html_e('Delete', 'ai-multilingual-chat'); ?>
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -381,6 +383,185 @@ $aic_msg = isset($_GET['aic_msg']) ? sanitize_text_field(wp_unslash($_GET['aic_m
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+    // Handle FAQ add with AJAX
+    $('#aic-add-faq-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        var $form = $(this);
+        var $button = $('#aic-add-faq-btn');
+        var originalText = $button.val();
+        
+        // Validate fields
+        var question = $('#question').val().trim();
+        var answer = $('#answer').val().trim();
+        var keywords = $('#keywords').val().trim();
+        
+        if (!question || !answer || !keywords) {
+            var $notice = $('<div class="notice notice-error is-dismissible"><p><?php echo esc_js(__('Please fill in all required fields.', 'ai-multilingual-chat')); ?></p></div>');
+            $('.wrap h1').after($notice);
+            setTimeout(function() {
+                $notice.fadeOut(function() { $(this).remove(); });
+            }, 3000);
+            return;
+        }
+        
+        // Disable button during request
+        $button.prop('disabled', true).val('<?php echo esc_js(__('Adding...', 'ai-multilingual-chat')); ?>');
+        
+        $.ajax({
+            url: aicAdmin.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'aic_add_faq',
+                nonce: aicAdmin.nonce,
+                question: question,
+                answer: answer,
+                keywords: keywords,
+                language: $('#language').val(),
+                is_active: $('#is_active').is(':checked') ? '1' : '0'
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Show success message
+                    var $notice = $('<div class="notice notice-success is-dismissible"><p>' + response.data.message + '</p></div>');
+                    $('.wrap h1').after($notice);
+                    
+                    // Auto-dismiss notice after 3 seconds
+                    setTimeout(function() {
+                        $notice.fadeOut(function() { $(this).remove(); });
+                    }, 3000);
+                    
+                    // Clear form
+                    $form[0].reset();
+                    
+                    // Add new FAQ to the list
+                    if (response.data.faq) {
+                        var faq = response.data.faq;
+                        var answerPreview = faq.answer.replace(/<[^>]*>/g, '');
+                        if (answerPreview.length > 100) {
+                            answerPreview = answerPreview.substring(0, 100) + '...';
+                        }
+                        
+                        var statusHtml = faq.is_active == 1 
+                            ? '<span style="color: green;">✓ <?php echo esc_js(__('Active', 'ai-multilingual-chat')); ?></span>'
+                            : '<span style="color: red;">✗ <?php echo esc_js(__('Inactive', 'ai-multilingual-chat')); ?></span>';
+                        
+                        var toggleText = faq.is_active == 1 
+                            ? '<?php echo esc_js(__('Disable', 'ai-multilingual-chat')); ?>'
+                            : '<?php echo esc_js(__('Enable', 'ai-multilingual-chat')); ?>';
+                        
+                        var newRow = $('<tr data-faq-id="' + faq.id + '">' +
+                            '<td>' + $('<div>').text(faq.question).html() + '</td>' +
+                            '<td>' + $('<div>').text(answerPreview).html() + '</td>' +
+                            '<td>' + $('<div>').text(faq.keywords).html() + '</td>' +
+                            '<td>' + $('<div>').text(faq.language).html() + '</td>' +
+                            '<td>' + statusHtml + '</td>' +
+                            '<td>' +
+                                '<button type="button" class="aic-btn primary aic-faq-toggle" data-faq-id="' + faq.id + '" data-is-active="' + faq.is_active + '">' +
+                                    toggleText +
+                                '</button>' +
+                                '<button type="button" class="aic-btn primary aic-faq-delete" data-faq-id="' + faq.id + '" style="margin-left:8px;">' +
+                                    '<?php echo esc_js(__('Delete', 'ai-multilingual-chat')); ?>' +
+                                '</button>' +
+                            '</td>' +
+                        '</tr>');
+                        
+                        // If list was empty, replace the "No FAQs" message
+                        var $tbody = $('#aic-faq-list');
+                        if ($tbody.length === 0) {
+                            // Reload page if table doesn't exist (no FAQs were present)
+                            location.reload();
+                        } else {
+                            $tbody.prepend(newRow);
+                        }
+                    }
+                } else {
+                    var errorMsg = response.data && response.data.message ? response.data.message : '<?php echo esc_js(__('Unknown error', 'ai-multilingual-chat')); ?>';
+                    alert('<?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>: ' + errorMsg);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('FAQ add error:', error);
+                var errorMsg = '<?php echo esc_js(__('Connection error with server', 'ai-multilingual-chat')); ?>';
+                
+                if (xhr.status === 403) {
+                    errorMsg = '<?php echo esc_js(__('Security check failed. Please refresh the page.', 'ai-multilingual-chat')); ?>';
+                } else if (status === 'timeout') {
+                    errorMsg = '<?php echo esc_js(__('Request timeout', 'ai-multilingual-chat')); ?>';
+                }
+                
+                alert('<?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>: ' + errorMsg);
+            },
+            complete: function() {
+                // Re-enable button
+                $button.prop('disabled', false).val(originalText);
+            }
+        });
+    });
+    
+    // Handle FAQ delete with AJAX
+    $(document).on('click', '.aic-faq-delete', function() {
+        if (!confirm('<?php echo esc_js(__('Delete this FAQ?', 'ai-multilingual-chat')); ?>')) {
+            return;
+        }
+        
+        var $button = $(this);
+        var faqId = $button.data('faq-id');
+        var $row = $button.closest('tr');
+        
+        // Disable button during request
+        $button.prop('disabled', true).text('<?php echo esc_js(__('Deleting...', 'ai-multilingual-chat')); ?>');
+        
+        $.ajax({
+            url: aicAdmin.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'aic_delete_faq',
+                nonce: aicAdmin.nonce,
+                faq_id: faqId
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Remove row with fade effect
+                    $row.fadeOut(400, function() {
+                        $(this).remove();
+                        
+                        // Check if list is now empty
+                        if ($('#aic-faq-list tr').length === 0) {
+                            location.reload();
+                        }
+                    });
+                    
+                    // Show success message
+                    var $notice = $('<div class="notice notice-success is-dismissible"><p>' + response.data.message + '</p></div>');
+                    $('.wrap h1').after($notice);
+                    
+                    // Auto-dismiss notice after 3 seconds
+                    setTimeout(function() {
+                        $notice.fadeOut(function() { $(this).remove(); });
+                    }, 3000);
+                } else {
+                    var errorMsg = response.data && response.data.message ? response.data.message : '<?php echo esc_js(__('Unknown error', 'ai-multilingual-chat')); ?>';
+                    alert('<?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>: ' + errorMsg);
+                    $button.prop('disabled', false).text('<?php echo esc_js(__('Delete', 'ai-multilingual-chat')); ?>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('FAQ delete error:', error);
+                var errorMsg = '<?php echo esc_js(__('Connection error with server', 'ai-multilingual-chat')); ?>';
+                
+                if (xhr.status === 403) {
+                    errorMsg = '<?php echo esc_js(__('Security check failed. Please refresh the page.', 'ai-multilingual-chat')); ?>';
+                } else if (status === 'timeout') {
+                    errorMsg = '<?php echo esc_js(__('Request timeout', 'ai-multilingual-chat')); ?>';
+                }
+                
+                alert('<?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>: ' + errorMsg);
+                $button.prop('disabled', false).text('<?php echo esc_js(__('Delete', 'ai-multilingual-chat')); ?>');
+            }
+        });
+    });
+    
     // Handle FAQ toggle with AJAX
     $(document).on('click', '.aic-faq-toggle', function() {
         var $button = $(this);
@@ -406,17 +587,17 @@ jQuery(document).ready(function($) {
                     
                     // Update button state
                     $button.data('is-active', newState);
-                    $button.text(newState ? 'Отключить' : 'Включить');
+                    $button.text(newState ? '<?php echo esc_js(__('Disable', 'ai-multilingual-chat')); ?>' : '<?php echo esc_js(__('Enable', 'ai-multilingual-chat')); ?>');
                     
                     // Update status display
                     if (newState) {
-                        $statusCell.html('<span style="color: green;">✓ Активен</span>');
+                        $statusCell.html('<span style="color: green;">✓ <?php echo esc_js(__('Active', 'ai-multilingual-chat')); ?></span>');
                     } else {
-                        $statusCell.html('<span style="color: red;">✗ Неактивен</span>');
+                        $statusCell.html('<span style="color: red;">✗ <?php echo esc_js(__('Inactive', 'ai-multilingual-chat')); ?></span>');
                     }
                     
                     // Show success message
-                    var $notice = $('<div class="notice notice-success is-dismissible"><p>Статус FAQ успешно обновлён!</p></div>');
+                    var $notice = $('<div class="notice notice-success is-dismissible"><p><?php echo esc_js(__('FAQ status updated successfully!', 'ai-multilingual-chat')); ?></p></div>');
                     $('.wrap h1').after($notice);
                     
                     // Auto-dismiss notice after 3 seconds
@@ -426,21 +607,21 @@ jQuery(document).ready(function($) {
                         });
                     }, 3000);
                 } else {
-                    var errorMsg = response.data && response.data.message ? response.data.message : 'Неизвестная ошибка';
-                    alert('Ошибка: ' + errorMsg);
+                    var errorMsg = response.data && response.data.message ? response.data.message : '<?php echo esc_js(__('Unknown error', 'ai-multilingual-chat')); ?>';
+                    alert('<?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>: ' + errorMsg);
                 }
             },
             error: function(xhr, status, error) {
                 console.error('FAQ toggle error:', error);
-                var errorMsg = 'Ошибка соединения с сервером';
+                var errorMsg = '<?php echo esc_js(__('Connection error with server', 'ai-multilingual-chat')); ?>';
                 
                 if (xhr.status === 403) {
-                    errorMsg = 'Проверка безопасности не пройдена. Обновите страницу.';
+                    errorMsg = '<?php echo esc_js(__('Security check failed. Please refresh the page.', 'ai-multilingual-chat')); ?>';
                 } else if (status === 'timeout') {
-                    errorMsg = 'Превышено время ожидания';
+                    errorMsg = '<?php echo esc_js(__('Request timeout', 'ai-multilingual-chat')); ?>';
                 }
                 
-                alert('Ошибка: ' + errorMsg);
+                alert('<?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>: ' + errorMsg);
             },
             complete: function() {
                 // Re-enable button

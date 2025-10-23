@@ -100,7 +100,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
         <a href="#api" class="nav-tab" data-tab="api"><?php echo esc_html__('REST API', 'ai-multilingual-chat'); ?></a>
     </h2>
     
-    <form method="post" action="">
+    <form method="post" action="" id="aic-settings-form">
         <?php wp_nonce_field('aic_settings_nonce'); ?>
         
         <!-- General Settings Tab -->
@@ -922,6 +922,93 @@ jQuery(document).ready(function($) {
         });
         
         alert('<?php echo esc_js(__('Colors reset to default values. Don\'t forget to save settings.', 'ai-multilingual-chat')); ?>');
+    });
+    
+    // Handle settings save with AJAX
+    $('#aic-settings-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        var $form = $(this);
+        var $submitButton = $form.find('input[type="submit"]');
+        var originalText = $submitButton.val();
+        
+        // Disable submit button during request
+        $submitButton.prop('disabled', true).val('<?php echo esc_js(__('Saving...', 'ai-multilingual-chat')); ?>');
+        
+        // Serialize form data
+        var formData = $form.serialize();
+        formData += '&action=aic_save_settings&nonce=' + aicAdmin.nonce;
+        
+        $.ajax({
+            url: aicAdmin.ajax_url,
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    // Show success message
+                    var $notice = $('<div class="notice notice-success is-dismissible"><p><strong>' + response.data.message + '</strong></p></div>');
+                    $('.wrap h1').after($notice);
+                    
+                    // Auto-dismiss notice after 5 seconds
+                    setTimeout(function() {
+                        $notice.fadeOut(function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    
+                    // Scroll to top to show message
+                    $('html, body').animate({ scrollTop: 0 }, 300);
+                } else {
+                    var errorMsg = response.data && response.data.message ? response.data.message : '<?php echo esc_js(__('Unknown error', 'ai-multilingual-chat')); ?>';
+                    var $notice = $('<div class="notice notice-error is-dismissible"><p><strong><?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>:</strong> ' + errorMsg + '</p></div>');
+                    $('.wrap h1').after($notice);
+                    
+                    // Auto-dismiss error after 5 seconds
+                    setTimeout(function() {
+                        $notice.fadeOut(function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    
+                    // Scroll to top to show message
+                    $('html, body').animate({ scrollTop: 0 }, 300);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Settings save error:', error);
+                var errorMsg = '<?php echo esc_js(__('Connection error with server', 'ai-multilingual-chat')); ?>';
+                
+                if (xhr.status === 403) {
+                    errorMsg = '<?php echo esc_js(__('Security check failed. Please refresh the page.', 'ai-multilingual-chat')); ?>';
+                } else if (status === 'timeout') {
+                    errorMsg = '<?php echo esc_js(__('Request timeout', 'ai-multilingual-chat')); ?>';
+                }
+                
+                var $notice = $('<div class="notice notice-error is-dismissible"><p><strong><?php echo esc_js(__('Error', 'ai-multilingual-chat')); ?>:</strong> ' + errorMsg + '</p></div>');
+                $('.wrap h1').after($notice);
+                
+                // Auto-dismiss error after 5 seconds
+                setTimeout(function() {
+                    $notice.fadeOut(function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+                
+                // Scroll to top to show message
+                $('html, body').animate({ scrollTop: 0 }, 300);
+            },
+            complete: function() {
+                // Re-enable submit button
+                $submitButton.prop('disabled', false).val(originalText);
+            }
+        });
+    });
+    
+    // Handle dismissible notices
+    $(document).on('click', '.notice.is-dismissible .notice-dismiss', function() {
+        $(this).closest('.notice').fadeOut(function() {
+            $(this).remove();
+        });
     });
 });
 </script>
