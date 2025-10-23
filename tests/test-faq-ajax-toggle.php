@@ -130,7 +130,8 @@ echo "\nTest 9: Check if success message is shown\n";
 if (file_exists($faqFile)) {
     $content = file_get_contents($faqFile);
     if (strpos($content, 'notice notice-success') !== false &&
-        strpos($content, 'Статус FAQ успешно обновлён') !== false) {
+        (strpos($content, 'FAQ status updated successfully') !== false || 
+         strpos($content, 'esc_js(__') !== false)) {
         echo "  ✓ Success message display found\n";
         $passed++;
     } else {

@@ -120,6 +120,9 @@ class AI_Multilingual_Chat {
             add_action('wp_ajax_nopriv_aic_user_typing', array($this, 'ajax_user_typing'));
             add_action('wp_ajax_aic_export_conversation', array($this, 'ajax_export_conversation'));
             add_action('wp_ajax_aic_toggle_faq', array($this, 'ajax_toggle_faq'));
+            add_action('wp_ajax_aic_add_faq', array($this, 'ajax_add_faq'));
+            add_action('wp_ajax_aic_delete_faq', array($this, 'ajax_delete_faq'));
+            add_action('wp_ajax_aic_save_settings', array($this, 'ajax_save_settings'));
             
             $this->log('Additional AJAX hooks registered', 'info');
             
@@ -1601,6 +1604,131 @@ class AI_Multilingual_Chat {
         wp_send_json_success(array(
             'message' => 'FAQ status updated',
             'is_active' => $new_state
+        ));
+    }
+    
+    public function ajax_add_faq() {
+        // Verify nonce
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => __('Security check failed. Please refresh the page.', 'ai-multilingual-chat'), 'code' => 'nonce_failed'));
+            return;
+        }
+        
+        // Check user permissions
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'ai-multilingual-chat')));
+            return;
+        }
+        
+        global $wpdb;
+        $faq_table = $wpdb->prefix . 'ai_chat_faq';
+        
+        // Sanitize and validate input
+        $question = isset($_POST['question']) ? sanitize_text_field(wp_unslash($_POST['question'])) : '';
+        $answer = isset($_POST['answer']) ? wp_kses_post(wp_unslash($_POST['answer'])) : '';
+        $keywords = isset($_POST['keywords']) ? sanitize_text_field(wp_unslash($_POST['keywords'])) : '';
+        $language = isset($_POST['language']) ? sanitize_text_field(wp_unslash($_POST['language'])) : 'ru';
+        $is_active = isset($_POST['is_active']) && $_POST['is_active'] === '1' ? 1 : 0;
+        
+        // Validate required fields
+        if (empty($question) || empty($answer) || empty($keywords)) {
+            wp_send_json_error(array('message' => __('Please fill in all required fields.', 'ai-multilingual-chat')));
+            return;
+        }
+        
+        // Insert FAQ
+        $result = $wpdb->insert(
+            $faq_table,
+            array(
+                'question' => $question,
+                'answer' => $answer,
+                'keywords' => $keywords,
+                'language' => $language,
+                'is_active' => $is_active,
+                'created_at' => current_time('mysql'),
+            ),
+            array('%s', '%s', '%s', '%s', '%d', '%s')
+        );
+        
+        if ($result === false) {
+            wp_send_json_error(array('message' => __('Database error when adding FAQ.', 'ai-multilingual-chat') . ' ' . $wpdb->last_error));
+            return;
+        }
+        
+        $new_faq_id = $wpdb->insert_id;
+        
+        // Get the newly created FAQ to return its data
+        $new_faq = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$faq_table} WHERE id = %d", $new_faq_id));
+        
+        wp_send_json_success(array(
+            'message' => __('FAQ added successfully.', 'ai-multilingual-chat'),
+            'faq' => $new_faq
+        ));
+    }
+    
+    public function ajax_delete_faq() {
+        // Verify nonce
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => __('Security check failed. Please refresh the page.', 'ai-multilingual-chat'), 'code' => 'nonce_failed'));
+            return;
+        }
+        
+        // Check user permissions
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'ai-multilingual-chat')));
+            return;
+        }
+        
+        global $wpdb;
+        $faq_table = $wpdb->prefix . 'ai_chat_faq';
+        
+        $faq_id = isset($_POST['faq_id']) ? intval($_POST['faq_id']) : 0;
+        
+        if ($faq_id <= 0) {
+            wp_send_json_error(array('message' => __('Invalid FAQ ID', 'ai-multilingual-chat')));
+            return;
+        }
+        
+        // Check if FAQ exists
+        $faq = $wpdb->get_row($wpdb->prepare("SELECT id FROM {$faq_table} WHERE id = %d", $faq_id));
+        
+        if (!$faq) {
+            wp_send_json_error(array('message' => __('FAQ not found', 'ai-multilingual-chat')));
+            return;
+        }
+        
+        // Delete FAQ
+        $result = $wpdb->delete($faq_table, array('id' => $faq_id), array('%d'));
+        
+        if ($result === false) {
+            wp_send_json_error(array('message' => __('Database error when deleting FAQ.', 'ai-multilingual-chat') . ' ' . $wpdb->last_error));
+            return;
+        }
+        
+        wp_send_json_success(array(
+            'message' => __('FAQ deleted successfully.', 'ai-multilingual-chat'),
+            'faq_id' => $faq_id
+        ));
+    }
+    
+    public function ajax_save_settings() {
+        // Verify nonce
+        if (!check_ajax_referer('aic_admin_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => __('Security check failed. Please refresh the page.', 'ai-multilingual-chat'), 'code' => 'nonce_failed'));
+            return;
+        }
+        
+        // Check user permissions
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'ai-multilingual-chat')));
+            return;
+        }
+        
+        // Save settings using existing save_settings method
+        $this->save_settings($_POST);
+        
+        wp_send_json_success(array(
+            'message' => __('Settings saved successfully!', 'ai-multilingual-chat')
         ));
     }
     
