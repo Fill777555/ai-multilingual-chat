@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MessageItem from '../components/MessageItem';
 import { ChatAPI, APIError } from '../services/ChatAPI';
 import { t } from '../utils/i18n';
-import { API_CONFIG } from '../config/api.config';
+import { API_CONFIG, UI_CONFIG } from '../config/api.config';
 
 const ChatScreen = ({ route }) => {
   const { conversationId } = route.params;
@@ -34,7 +34,7 @@ const ChatScreen = ({ route }) => {
       // Scroll to bottom after loading messages
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: true });
-      }, 100);
+      }, UI_CONFIG.scrollDelay);
     } catch (error) {
       if (error instanceof APIError) {
         switch (error.type) {
@@ -150,7 +150,7 @@ const ChatScreen = ({ route }) => {
             placeholder={t('enterMessage', language)}
             placeholderTextColor="#999"
             multiline
-            maxLength={1000}
+            maxLength={UI_CONFIG.maxMessageLength}
             onSubmitEditing={handleSend}
             blurOnSubmit={false}
             editable={!sending}

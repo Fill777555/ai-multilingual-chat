@@ -1,4 +1,4 @@
-import { API_CONFIG, ENDPOINTS } from '../config/api.config';
+import { API_CONFIG, ENDPOINTS, RETRY_CONFIG } from '../config/api.config';
 
 class APIError extends Error {
   constructor(message, status, type) {
@@ -58,7 +58,7 @@ export class ChatAPI {
     }
   }
 
-  static async requestWithRetry(endpoint, options = {}, maxRetries = 3) {
+  static async requestWithRetry(endpoint, options = {}, maxRetries = RETRY_CONFIG.maxRetries) {
     let lastError;
     for (let i = 0; i < maxRetries; i++) {
       try {
@@ -70,7 +70,8 @@ export class ChatAPI {
           throw error;
         }
         // Wait before retrying (exponential backoff)
-        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+        const delay = RETRY_CONFIG.baseDelay * (i + 1);
+        await new Promise(resolve => setTimeout(resolve, delay));
       }
     }
     throw lastError;
