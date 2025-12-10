@@ -10,9 +10,9 @@ const ConversationItem = ({ conversation, onPress, language = 'ru' }) => {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     
     if (hours < 1) {
-      return 'только что';
+      return t('justNow', language);
     } else if (hours < 24) {
-      return `${hours}ч назад`;
+      return `${hours}${t('hoursAgo', language)}`;
     } else {
       return date.toLocaleDateString();
     }

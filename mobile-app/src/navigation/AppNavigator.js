@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ConversationsScreen from '../screens/ConversationsScreen';
 import ChatScreen from '../screens/ChatScreen';
+import { t } from '../utils/i18n';
 
 const Stack = createStackNavigator();
 
@@ -20,12 +21,12 @@ export default function AppNavigator() {
         <Stack.Screen
           name="Conversations"
           component={ConversationsScreen}
-          options={{ title: 'Разговоры' }}
+          options={{ title: t('conversations', 'ru') }}
         />
         <Stack.Screen
           name="Chat"
           component={ChatScreen}
-          options={({ route }) => ({ title: route.params?.userName || 'Чат' })}
+          options={({ route }) => ({ title: route.params?.userName || t('chat', 'ru') })}
         />
       </Stack.Navigator>
     </NavigationContainer>

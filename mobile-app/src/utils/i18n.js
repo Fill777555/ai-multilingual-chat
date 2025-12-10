@@ -1,6 +1,7 @@
 export const translations = {
   ru: {
     conversations: 'Разговоры',
+    chat: 'Чат',
     selectConversation: 'Выберите разговор',
     enterMessage: 'Введите сообщение...',
     send: 'Отправить',
@@ -13,9 +14,12 @@ export const translations = {
     retrying: 'Повторная попытка...',
     noConversations: 'Нет разговоров',
     pullToRefresh: 'Потяните для обновления',
+    justNow: 'только что',
+    hoursAgo: 'ч назад',
   },
   en: {
     conversations: 'Conversations',
+    chat: 'Chat',
     selectConversation: 'Select conversation',
     enterMessage: 'Enter message...',
     send: 'Send',
@@ -28,6 +32,8 @@ export const translations = {
     retrying: 'Retrying...',
     noConversations: 'No conversations',
     pullToRefresh: 'Pull to refresh',
+    justNow: 'just now',
+    hoursAgo: 'h ago',
   },
 };
 
