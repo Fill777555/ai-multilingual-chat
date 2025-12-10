@@ -25,4 +25,5 @@ export const RETRY_CONFIG = {
 export const UI_CONFIG = {
   scrollDelay: 100, // Delay before scrolling to bottom after loading messages
   maxMessageLength: 1000, // Maximum message length
+  defaultLanguage: 'ru', // Default language for the app (ru or en)
 };

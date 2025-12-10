@@ -12,13 +12,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ConversationItem from '../components/ConversationItem';
 import { ChatAPI, APIError } from '../services/ChatAPI';
 import { t } from '../utils/i18n';
-import { API_CONFIG } from '../config/api.config';
+import { API_CONFIG, UI_CONFIG } from '../config/api.config';
 
 const ConversationsScreen = ({ navigation }) => {
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [language] = useState('ru');
+  const [language] = useState(UI_CONFIG.defaultLanguage);
 
   const loadConversations = useCallback(async (isRefreshing = false) => {
     try {

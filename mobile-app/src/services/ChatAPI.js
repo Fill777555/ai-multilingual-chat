@@ -58,7 +58,8 @@ export class ChatAPI {
     }
   }
 
-  static async requestWithRetry(endpoint, options = {}, maxRetries = RETRY_CONFIG.maxRetries) {
+  static async requestWithRetry(endpoint, options = {}) {
+    const maxRetries = RETRY_CONFIG.maxRetries;
     let lastError;
     for (let i = 0; i < maxRetries; i++) {
       try {

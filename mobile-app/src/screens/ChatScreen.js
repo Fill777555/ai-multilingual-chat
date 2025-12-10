@@ -23,7 +23,7 @@ const ChatScreen = ({ route }) => {
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
-  const [language] = useState('ru');
+  const [language] = useState(UI_CONFIG.defaultLanguage);
   const flatListRef = useRef(null);
   const pollIntervalRef = useRef(null);
 
